@@ -1,0 +1,369 @@
+\ProvidesPackage{jason}
+% Last updated January 26, 2015
+\usepackage{amsmath,amssymb,amsthm}
+
+% Default Arguments
+% We include "Jason" in all of these to make sure
+% that they do not conflict with any other packages
+\newif\ifjasonmargins\jasonmarginstrue
+\newif\ifjasonspacing\jasonspacingtrue
+\newif\ifjasonfont\jasonfonttrue
+\newif\ifjasonfancy\jasonfancytrue
+\newif\ifjasonhdr\jasonhdrtrue
+\newif\ifjasonheadrule\jasonheadruletrue
+\newif\ifjasonhref\jasonhreftrue
+\newif\ifjasonsetup\jasonsetuptrue
+\newif\ifjasonthm\jasonthmtrue
+\newif\ifjasonht\jasonhtfalse
+\newif\ifjasonpkg\jasonpkgtrue
+\newif\ifjasontitling\jasontitlingtrue
+\newif\ifjasonauthor\jasonauthortrue
+\newif\ifjasonchinese\jasonchinesefalse
+\newif\ifjasonhints\jasonhintsfalse
+\newif\ifjasonasy\jasonasytrue
+
+%Receive Arguments
+\DeclareOption{chinese}{\jasonhreffalse\jasonchinesetrue} % Chinese support
+% allow href to override this one
+
+\DeclareOption{largemargins}{\jasonmarginsfalse}
+\DeclareOption{normalspacing}{\jasonspacingfalse}
+\DeclareOption{fancy}{\jasonfancytrue}
+\DeclareOption{nofancy}{\jasonfancyfalse}
+\DeclareOption{normalfont}{\jasonfontfalse}
+\DeclareOption{hdr}{\jasonhdrtrue}
+\DeclareOption{noheadrule}{\jasonheadrulefalse}
+\DeclareOption{nohdr}{\jasonhdrfalse}
+\DeclareOption{href}{\jasonhreftrue}
+\DeclareOption{nohref}{\jasonhreffalse}
+
+\DeclareOption{nosetup}{\jasonsetupfalse}
+\DeclareOption{thm}{\jasonthmtrue}
+\DeclareOption{nothm}{\jasonthmfalse}
+\DeclareOption{ht}{\jasonhttrue}
+\DeclareOption{nopkg}{\jasonpkgfalse}
+\DeclareOption{oldtitle}{\jasontitlingfalse}
+\DeclareOption{newtitle}{\jasontitlingtrue}
+\DeclareOption{noauthor}{\jasonauthorfalse}
+
+\DeclareOption{noasy}{\jasonasyfalse}
+\DeclareOption{hints}{\jasonhintstrue}
+
+\ProcessOptions\relax
+
+%% Small commands
+% Symbols
+\newcommand{\eps}{\varepsilon}
+\newcommand{\dang}{\measuredangle} %% Directed angle
+\def\dg{^\circ}
+\def\ii{\item}
+\renewcommand{\iff}{\Leftrightarrow}
+\renewcommand{\implies}{\Rightarrow}
+\renewcommand\labelitemi{\tiny$\bullet$}
+% Arguments
+\newcommand{\cbrt}[1]{\sqrt[3]{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\ray}[1]{\overrightarrow{#1}} 
+\newcommand{\seg}[1]{\overline{#1}}
+\newcommand{\arc}[1]{\wideparen{#1}}
+\newcommand{\vocab}[1]{\textbf{\color{blue} #1}}
+\newcommand{\hrulebar}{
+  \par\hspace{\fill}\rule{0.95\linewidth}{.7pt}\hspace{\fill}
+  \par\nointerlineskip \vspace{\baselineskip}
+}
+\def\half{\frac{1}{2}}
+% Authoring
+\newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
+\newcommand{\plusemail}[1]{\\ \normalfont \texttt{\mailto{#1}}}
+
+% More commands and math operators
+\DeclareMathOperator{\cis}{cis}
+\DeclareMathOperator{\lcm}{lcm}
+\newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
+\renewcommand{\mod}[1]{\ \text{mod}\ #1}
+\newcommand{\NewPage}{\vfill\eject}
+\newcommand{\supnewline}{\leavevmode\par\vspace*{\dimexpr-3pt-\parskip-\baselineskip}}
+
+% Convenient Environments
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% Sets
+\def\CC{\mathbb C}
+\def\FF{\mathbb F}
+\def\NN{\mathbb N}
+\def\QQ{\mathbb Q}
+\def\RR{\mathbb R}
+\def\ZZ{\mathbb Z}
+
+%Inequalities
+\newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
+\newcommand{\symsum}{\sum_{\mathrm{sym}}}
+\newcommand{\cycprod}{\prod_{\mathrm{cyc}}}
+\newcommand{\symprod}{\prod_{\mathrm{sym}}}
+
+% syntactically named delimiters
+\newcommand{\braces}[1]{\left\lbrace #1 \right\rbrace}
+\newcommand{\angles}[1]{\left\langle #1 \right\rangle}
+\newcommand{\verts}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\Verts}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+% semantically named delimiters
+\newcommand{\set}{\braces}
+\newcommand{\abs}{\verts}
+\newcommand{\size}{\verts}
+\newcommand{\norm}{\Verts}
+\newcommand{\tuple}{\angles}
+\newcommand{\st}{\;\mdelim\vert\;}
+
+% Asy Commands
+\ifjasonasy
+	\usepackage{asymptote}
+	\PassOptionsToPackage{noplaybutton}{media9}
+	
+	\begin{asydef}
+		import olympiad;
+		import cse5;
+		pointpen = black;
+		pathpen = black;
+		pathfontpen = black;
+		anglepen = black;
+		anglefontpen = black;
+		pointfontsize = 9;
+		defaultpen(fontsize(9pt));
+		size(7cm);
+		usepackage("amsmath");
+		usepackage("amssymb");
+		
+		pair bary(real a, real b, real c, pair X, pair Y, pair Z){
+			return (a*X + b*Y + c*Z)/(a + b + c);
+		}
+		
+		pair excenter(pair A, pair B, pair C){
+			return bary(-d(B,C), d(C,A), d(A,B), A, B, C);
+		}
+		
+		path excircle(pair A, pair B, pair C){
+			return CP(excenter(A,B,C),foot(excenter(A,B,C),B,C));
+		}
+		
+		void drawaxes(real minx, real miny, real maxx, real maxy, bool drawticks = true, real xa=0, real ya=0){
+			D((minx,ya)--(maxx,ya),Arrows(size=2,TeXHead));
+			D((xa,miny)--(xa,maxy),Arrows(size=2,TeXHead));
+			
+			if(drawticks){
+				for(int i = ceil(minx) + 1; i < floor(maxx); ++i){
+					D((i,(maxy-miny)/100)--(i,(miny-maxy)/100));
+				}
+				
+				for(int i = ceil(miny) + 1; i < floor(maxy); ++i){
+					D(((maxx-minx)/100,i)--((minx-maxx)/100,i));
+				}
+			}
+		}
+		
+		pair A = dir(110), B = dir(210), C = dir(330), D = dir(20),
+		O = origin, H = orthocenter(A,B,C), I = incenter(A,B,C);
+	\end{asydef}
+\fi
+
+\ifjasonsetup
+	% Packages
+	\ifjasonpkg
+	\usepackage{cancel}
+	\usepackage{microtype}
+	\usepackage{enumitem}
+	\usepackage{graphicx}
+	\usepackage{sectsty}
+	\usepackage{mathtools}
+	\usepackage{nccmath}
+	\usepackage{endnotes}
+	\usepackage{listings}
+	\usepackage{float}
+	\usepackage[obeyFinal]{todonotes}
+	
+	\lstdefinestyle{customc}{
+		belowcaptionskip=1\baselineskip,
+		breaklines=true,
+		frame=L,
+		xleftmargin=\parindent,
+		language=C,
+		showstringspaces=false,
+		basicstyle=\footnotesize\ttfamily,
+		keywordstyle=\bfseries\color{green!40!black},
+		commentstyle=\itshape\color{purple!40!black},
+		identifierstyle=\color{blue},
+		stringstyle=\color{orange},
+	}
+	\lstset{style=customc}
+	\fi
+	
+	% Smaller Margins
+	\ifjasonmargins
+		\usepackage[margin=2.5cm]{geometry}
+	\else
+		\usepackage{geometry}
+	\fi
+	
+	% Setup Title/Auth/Date
+	\ifjasonauthor
+		\AtBeginDocument{%
+			\author{Jason Chen}
+			\date{\today}
+		}
+	\fi
+	
+	\ifjasonpkg
+		\ifjasonhref
+			\usepackage{hyperref}
+		\fi
+		\usepackage[nameinlink]{cleveref}
+	\fi
+	
+	\ifjasonthm
+		\usepackage{thmtools}
+		\theoremstyle{plain}
+		
+		\newtheorem{theorem}{Theorem}
+		\newtheorem{lemma}[theorem]{Lemma}
+		\newtheorem{proposition}[theorem]{Proposition}
+		\newtheorem{corollary}[theorem]{Corollary}
+		\newtheorem*{theorem*}{Theorem}
+		\newtheorem*{lemma*}{Lemma}
+		\newtheorem*{proposition*}{Proposition}
+		\newtheorem*{corollary*}{Corollary}
+		
+		% Def-style theorems
+		% Less Italics
+		\theoremstyle{definition}
+		
+		\newtheorem{claim}[theorem]{Claim}
+		\newtheorem*{claim*}{Claim}
+		
+		\newtheorem{conj}[theorem]{Conjecture}
+		\newtheorem*{conj*}{Conjecture}
+		
+		\newtheorem{definition}[theorem]{Definition}
+		\newtheorem*{definition*}{Definition}
+		
+		\newtheorem{question}[theorem]{Question}
+		\newtheorem*{question*}{Question}
+		
+		\newtheorem{answer}[theorem]{Answer}
+		\newtheorem*{answer*}{Answer}
+		
+		\newtheorem{fact}[theorem]{Fact}
+		\newtheorem*{fact*}{Fact}
+		
+		\newtheorem{case}[theorem]{Case}
+		\newtheorem*{case*}{Case}
+		
+		\newtheorem{exercise}[theorem]{Exercise}
+		\newtheorem*{exercise*}{Exercise}
+		
+		\newtheorem{example}[theorem]{Example}
+		\newtheorem*{example*}{Example}
+		
+		\newtheorem{problem}[theorem]{Problem}
+		\newtheorem*{problem*}{Problem}
+		
+		\newtheorem{algorithm}[theorem]{Algorithm}
+		\newtheorem*{algorithm*}{Algorithm}
+		
+		\newtheorem*{joke*}{Joke}
+		
+		% Remark-style theorems
+		%\theoremstyle{remark}
+		\newtheorem{note}[theorem]{Note}
+		\newtheorem*{note*}{Note}
+		
+		\newtheorem{remark}[theorem]{Remark}
+		\newtheorem*{remark*}{Remark}
+		
+		\newtheorem{abuse}[theorem]{Abuse of Notation}
+		\newtheorem*{abuse*}{Abuse of Notation}
+	\fi
+	
+	% Wider spacing
+	% 1.5 Spacing looks better in my opinion
+	\ifjasonspacing
+		\usepackage[nodisplayskipstretch]{setspace}
+		\onehalfspacing
+		\AtBeginDocument{
+			\setlength{\belowdisplayskip}{5pt}
+			\setlength{\belowdisplayshortskip}{2pt}
+			\setlength{\abovedisplayskip}{5pt}
+			\setlength{\abovedisplayshortskip}{2pt}
+		}
+		
+		\setitemize{itemsep=0pt}
+	\fi
+	
+	%Titling
+	\ifjasontitling
+		\usepackage{titling}
+		
+		\newcommand{\thesubtitle}{}
+		\providecommand{\subtitle}{}
+		
+		\renewcommand{\subtitle}[1]{%
+			\renewcommand{\thesubtitle}{#1}
+			\posttitle{\\ {\normalsize \thesubtitle} \end{center}\vspace{\posttitledrop}}}
+			\newlength{\posttitledrop}
+			\setlength{\posttitledrop}{-0.7em}
+			\newlength{\postauthordrop}
+			\setlength{\postauthordrop}{-1.2em}
+			\pretitle{\begin{center}\bfseries \sffamily \Large}
+			\posttitle{\end{center}\vspace{\posttitledrop}}
+			\preauthor{\begin{center} \scshape}
+			\postauthor{\end{center}\vspace{\postauthordrop}}
+			\predate{\begin{center}\small}
+			\postdate{\end{center}}
+	\fi
+	
+	\ifjasonfont
+		\allsectionsfont{\sffamily}
+	\fi
+	
+	\ifjasonfancy
+		\usepackage{fancyhdr}
+		\pagestyle{fancy}
+		\setlength{\headheight}{35pt}
+		
+		%Setup FancyHeaders
+		\ifjasonhdr
+			\ifjasonheadrule
+				\renewcommand{\headrulewidth}{0.5pt}
+			\else
+				\renewcommand{\headrulewidth}{0pt}
+			\fi
+			\renewcommand{\footrulewidth}{0pt}
+			\pagestyle{fancy}
+			
+			\ifjasontitling
+				\lhead{\theauthor}
+			\else
+				\lhead{Jason Chen}
+			\fi
+			\chead{}
+			\rhead{\nouppercase{\leftmark}}
+			\lfoot{}
+			\cfoot{\thepage}
+			\rfoot{}
+		\fi
+	\fi
+	
+	\ifjasonchinese
+	\usepackage[encapsulated]{CJK}
+	\usepackage{ucs}
+	\usepackage[utf8x]{inputenc}
+	\newenvironment{bsmi}{\begin{CJK}{UTF8}{bsmi}}{\end{CJK}}
+	\newcommand{\cn}[1]{\begin{bsmi}#1\end{bsmi}}
+	\AtBeginDocument{\begin{CJK}{UTF8}{bsmi}}
+		\AtEndDocument{\end{CJK}}
+	\fi
+\fi
