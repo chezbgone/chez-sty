@@ -59,7 +59,7 @@
 \def\ii{\item}
 \renewcommand{\iff}{\Leftrightarrow}
 \renewcommand{\implies}{\Rightarrow}
-\renewcommand\labelitemi{\tiny$\bullet$}
+\renewcommand\labelitemi{\raisebox{1.5pt}{\tiny$\bullet$}}
 % Arguments
 \newcommand{\cbrt}[1]{\sqrt[3]{#1}}
 \newcommand{\ol}[1]{\overline{#1}}
@@ -151,17 +151,17 @@
 			return CP(excenter(A,B,C),foot(excenter(A,B,C),B,C));
 		}
 		
-		void drawaxes(real minx, real miny, real maxx, real maxy, bool drawticks = true, real xa=0, real ya=0){
-			D((minx,ya)--(maxx,ya),Arrows(size=2,TeXHead));
-			D((xa,miny)--(xa,maxy),Arrows(size=2,TeXHead));
+		void drawaxes(real minx, real miny, real maxx, real maxy, bool drawticks = true, real xa=0, real ya=0, pen p = black){
+			D((minx,ya)--(maxx,ya), p, Arrows(size=2,TeXHead));
+			D((xa,miny)--(xa,maxy), p, Arrows(size=2,TeXHead));
 			
 			if(drawticks){
 				for(int i = ceil(minx) + 1; i < floor(maxx); ++i){
-					D((i,(maxy-miny)/100)--(i,(miny-maxy)/100));
+					D((i,(maxy-miny)/100)--(i,(miny-maxy)/100), p);
 				}
 				
 				for(int i = ceil(miny) + 1; i < floor(maxy); ++i){
-					D(((maxx-minx)/100,i)--((minx-maxx)/100,i));
+					D(((maxx-minx)/100,i)--((minx-maxx)/100,i), p);
 				}
 			}
 		}
@@ -172,36 +172,6 @@
 \fi
 
 \ifjasonsetup
-	% Packages
-	\ifjasonpkg
-	\usepackage{cancel}
-	\usepackage{microtype}
-	\usepackage{enumitem}
-	\usepackage{graphicx}
-	\usepackage{sectsty}
-	\usepackage{mathtools}
-	\usepackage{nccmath}
-	\usepackage{endnotes}
-	\usepackage{listings}
-	\usepackage{float}
-	\usepackage[obeyFinal]{todonotes}
-	
-	\lstdefinestyle{customc}{
-		belowcaptionskip=1\baselineskip,
-		breaklines=true,
-		frame=L,
-		xleftmargin=\parindent,
-		language=C,
-		showstringspaces=false,
-		basicstyle=\footnotesize\ttfamily,
-		keywordstyle=\bfseries\color{green!40!black},
-		commentstyle=\itshape\color{purple!40!black},
-		identifierstyle=\color{blue},
-		stringstyle=\color{orange},
-	}
-	\lstset{style=customc}
-	\fi
-	
 	% Smaller Margins
 	\ifjasonmargins
 		\usepackage[margin=2.5cm]{geometry}
@@ -288,10 +258,40 @@
 		\newtheorem*{abuse*}{Abuse of Notation}
 	\fi
 	
+	% Packages
+	\ifjasonpkg
+		\usepackage{cancel}
+		\usepackage{microtype}
+		\usepackage{enumitem}
+		\usepackage{graphicx}
+		\usepackage{sectsty}
+		\usepackage{mathtools}
+		\usepackage{nccmath}
+		\usepackage{endnotes}
+		\usepackage{listings}
+		\usepackage{float}
+		\usepackage[obeyFinal]{todonotes}
+		
+		\lstdefinestyle{customc}{
+			belowcaptionskip=1\baselineskip,
+			breaklines=true,
+			frame=L,
+			xleftmargin=\parindent,
+			language=C,
+			showstringspaces=false,
+			basicstyle=\footnotesize\ttfamily,
+			keywordstyle=\bfseries\color{green!40!black},
+			commentstyle=\itshape\color{purple!40!black},
+			identifierstyle=\color{blue},
+			stringstyle=\color{orange},
+		}
+		\lstset{style=customc}
+	\fi
+	
 	% Wider spacing
 	% 1.5 Spacing looks better in my opinion
 	\ifjasonspacing
-		\usepackage[nodisplayskipstretch]{setspace}
+		\usepackage{setspace}
 		\onehalfspacing
 		\AtBeginDocument{
 			\setlength{\belowdisplayskip}{5pt}
@@ -332,7 +332,6 @@
 	\ifjasonfancy
 		\usepackage{fancyhdr}
 		\pagestyle{fancy}
-		\setlength{\headheight}{35pt}
 		
 		%Setup FancyHeaders
 		\ifjasonhdr
