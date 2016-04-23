@@ -293,6 +293,13 @@
 	\ifjasonspacing
 		\usepackage[nodisplayskipstretch]{setspace}
 		\onehalfspacing
+		
+		\let\oldcases\cases
+		\let\oldendcases\endcases
+		\renewenvironment{cases}{\setstretch{1}\oldcases}{\oldendcases}
+		
+		% \renewcommand{\arraystretch}{1.2}
+		
 		\AtBeginDocument{
 			\setlength{\belowdisplayskip}{5pt}
 			\setlength{\belowdisplayshortskip}{2pt}
