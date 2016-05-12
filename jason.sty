@@ -344,10 +344,8 @@
 		\newtheorem{definition}[theorem]{Definition}
 		\newtheorem{exercise}[theorem]{Exercise}
 		\newtheorem{fact}[theorem]{Fact}
-		\newtheorem{note}[theorem]{Note}
 		\newtheorem{problem}[theorem]{Problem}
 		\newtheorem{question}[theorem]{Question}
-		\newtheorem{remark}[theorem]{Remark}
 
 		\newtheorem*{answer*}{Answer}
 		\newtheorem*{case*}{Case}
@@ -357,9 +355,22 @@
 		\newtheorem*{exercise*}{Exercise}
 		\newtheorem*{fact*}{Fact}
 		\newtheorem*{joke*}{Joke}
-		\newtheorem*{note*}{Note}
 		\newtheorem*{problem*}{Problem}
 		\newtheorem*{question*}{Question}
+
+    \ifjasonboxedthms
+			\declaretheorem[style=thmrecbox,name=Example,sibling=theorem]{example}
+			\declaretheorem[style=thmrecbox,name=Example,numbered=no]{example*}
+		\else
+			\newtheorem{example}[theorem]{Example}
+			\newtheorem*{example*}{Example}
+		\fi
+
+		% Remark-style theorems
+		%\theoremstyle{remark}
+		\newtheorem{note}[theorem]{Note}
+		\newtheorem{remark}[theorem]{Remark}
+		\newtheorem*{note*}{Note}
 		\newtheorem*{remark*}{Remark}
   \fi
 \fi
