@@ -1,4 +1,4 @@
-\ProvidesPackage{jasonx}[2016/05/11]
+\ProvidesPackage{jason}[2016/05/11]
 % Heavily based off of Evan Chen's .sty
 \usepackage{amsmath,amssymb,amsthm}
 
@@ -30,7 +30,7 @@
 \newif\ifjasonfancy     \jasonfancytrue
 \newif\ifjasonheadrule  \jasonheadruletrue
 \newif\ifjasonthm       \jasonthmtrue
-\newif\ifjasonsectthm   \jasonsectthmfalse
+\newif\ifjasonsectthms  \jasonsectthmsfalse
 \newif\ifjasonboxedthms \jasonboxedthmstrue
 
 \DeclareOption{normalmargins}{\jasonmarginsfalse}
@@ -40,10 +40,15 @@
 \DeclareOption{nofancy}{\jasonfancyfalse}
 \DeclareOption{noheadrule}{\jasonheadrulefalse}
 \DeclareOption{nothms}{\jasonthmfalse}
-\DeclareOption{sectthms}{\jasonsectthmtrue}
+\DeclareOption{sectthms}{\jasonsectthmstrue}
 \DeclareOption{regularthms}{\jasonboxedthmsfalse}
 
 % BEAMER
+\newif\ifjasonbeamernobutton  \jasonbeamernobuttonfalse
+\newif\ifjasonbeamersimple    \jasonbeamersimplefalse
+
+\DeclareOption{nobuttons}{\jasonbeamernobuttontrue}
+\DeclareOption{simple}{\jasonbeamersimpletrue}
 
 \ProcessOptions\relax
 
@@ -151,10 +156,9 @@
 \usepackage{nccmath}
 \usepackage{graphicx}
 \usepackage{endnotes}
-\usepackage{listings}
 \usepackage{float}
-\usepackage[dvipsnames]{xcolor}
 \usepackage[obeyFinal]{todonotes}
+\usepackage{listings}
 % must stay in this order:
 \usepackage{hyperref}
 \usepackage[nameinlink]{cleveref}
@@ -168,19 +172,21 @@
 \fi
 
 \ifjasonchinese
-\usepackage[encapsulated]{CJK}
-\usepackage{ucs}
-\usepackage[utf8x]{inputenc}
-\newenvironment{bsmi}{\begin{CJK}{UTF8}{bsmi}}{\end{CJK}}
-\newcommand{\cn}[1]{\begin{bsmi}#1\end{bsmi}}
-\AtBeginDocument{\begin{CJK}{UTF8}{bsmi}}
-  \AtEndDocument{\end{CJK}}
+  \usepackage[encapsulated]{CJK}
+  \usepackage{ucs}
+  \usepackage[utf8x]{inputenc}
+  \newenvironment{bsmi}{\begin{CJK}{UTF8}{bsmi}}{\end{CJK}}
+  \newcommand{\cn}[1]{\begin{bsmi}#1\end{bsmi}}
+  \AtBeginDocument{\begin{CJK}{UTF8}{bsmi}}
+    \AtEndDocument{\end{CJK}}
 \fi
 
 % % % % % % % % % % % % % % % % % % % % % % % %
 % % % % % % % % % % ARTICLE % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % % %
 \ifjasonarticle
+  \usepackage[dvipsnames]{xcolor}
+
   \ifjasonmargins
     \PassOptionsToPackage{margin=2.5cm}{geometry}
   \fi
@@ -218,18 +224,19 @@
 		\providecommand{\subtitle}{}
 
 		\renewcommand{\subtitle}[1]{%
-			\renewcommand{\thesubtitle}{#1}
-			\posttitle{\\ {\normalsize \thesubtitle} \end{center}\vspace{\posttitledrop}}}
-			\newlength{\posttitledrop}
-			\setlength{\posttitledrop}{-0.7em}
-			\newlength{\postauthordrop}
-			\setlength{\postauthordrop}{-1.2em}
-			\pretitle{\begin{center}\bfseries \ifjasonfont\sffamily\fi \Large}
-			\posttitle{\end{center}\vspace{\posttitledrop}}
-			\preauthor{\begin{center} \scshape}
-			\postauthor{\end{center}\vspace{\postauthordrop}}
-			\predate{\begin{center}\small}
-			\postdate{\end{center}}
+  		\renewcommand{\thesubtitle}{#1}
+  		\posttitle{\\ {\normalsize \thesubtitle} \end{center}\vspace{\posttitledrop}}}
+  		\newlength{\posttitledrop}
+  		\setlength{\posttitledrop}{-0.7em}
+  		\newlength{\postauthordrop}
+  		\setlength{\postauthordrop}{-1.2em}
+  		\pretitle{\begin{center}\bfseries \ifjasonfont\sffamily\fi \Large}
+  		\posttitle{\end{center}\vspace{\posttitledrop}}
+  		\preauthor{\begin{center} \scshape}
+  		\postauthor{\end{center}\vspace{\postauthordrop}}
+  		\predate{\begin{center}\small}
+  		\postdate{\end{center}
+    }
 	\fi
 
   \ifjasonfancy
@@ -244,9 +251,11 @@
       \renewcommand{\headrulewidth}{0pt}
     \fi
     \renewcommand{\footrulewidth}{0pt}
+
     \ifjasontitling
       \lhead{\theauthor}
     \fi
+
     \chead{}
     \rhead{\nouppercase{\leftmark}}
     \lfoot{}
@@ -299,7 +308,7 @@
     \theoremstyle{plain}
 
     \ifjasonboxedthms
-      \ifjasonsectthm
+      \ifjasonsectthms
         \declaretheorem[%
         style=thmbluebox,name=Theorem,numberwithin=section]{theorem}
       \else
@@ -314,7 +323,7 @@
 			\declaretheorem[style=thmbluebox,name=Proposition,numbered=no]{proposition*}
 			\declaretheorem[style=thmbluebox,name=Corollary,numbered=no]{corollary*}
     \else
-      \ifjasonsectthm
+      \ifjasonsectthms
         \newtheorem{theorem}{Theorem}[section]
       \else
         \newtheorem{theorem}{Theorem}
@@ -379,6 +388,17 @@
 % % % % % % % % % % % % % % % % % % % % % % %
 % % % % % % % % % % BEAMER % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % %
+\ifjasonbeamer
+  \ifjasonbeamernobutton
+    \beamertemplatenavigationsymbolsempty
+  \fi
 
+  \ifjasonbeamersimple
+    \usetheme{default}
+  \else
+    \usetheme{Rochester}
+    \usecolortheme{whale}
+  \fi
+\fi
 
 \fi
