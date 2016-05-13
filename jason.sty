@@ -61,7 +61,7 @@
 	\def\dg{^\circ}
 	\def\ii{\item}
 	\def\half{\frac{1}{2}}
-
+	
 	% Arguments
 	\newcommand{\cbrt}[1]{\sqrt[3]{#1}}
 	\newcommand{\ol}[1]{\overline{#1}}
@@ -74,17 +74,17 @@
 		\par\hspace{\fill}\rule{0.95\linewidth}{.7pt}\hspace{\fill}
 		\par\nointerlineskip \vspace{\baselineskip}
 	}
-
+	
 	% Operators
 	\DeclareMathOperator{\cis}{cis}
 	\DeclareMathOperator{\lcm}{lcm}
 	\newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
 	\renewcommand{\mod}[1]{\ \text{mod}\ #1}
-
+	
 	% Commands
 	\newcommand{\NewPage}{\vfill\eject}
 	\newcommand{\supnewline}{\leavevmode\par\vspace*{\dimexpr-3pt-\parskip-\baselineskip}}
-
+	
 	% Sets
 	\def\CC{\mathbb C}
 	\def\FF{\mathbb F}
@@ -92,13 +92,13 @@
 	\def\QQ{\mathbb Q}
 	\def\RR{\mathbb R}
 	\def\ZZ{\mathbb Z}
-
+	
 	% Inequalities
 	\newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
 	% \newcommand{\symsum}{\sum_{\mathrm{sym}}}
 	\newcommand{\cycprod}{\prod_{\mathrm{cyc}}}
 	\newcommand{\symprod}{\prod_{\mathrm{sym}}}
-
+	
 	% syntactically named delimiters
 	\newcommand{\braces}[1]{\left\lbrace #1 \right\rbrace}
 	\newcommand{\angles}[1]{\left\langle #1 \right\rangle}
@@ -108,7 +108,7 @@
 	\newcommand{\parens}[1]{\left( #1 \right)}
 	\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
 	\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
-
+	
 	% semantically named delimiters
 	\newcommand{\set}{\braces}
 	\newcommand{\abs}{\verts}
@@ -128,19 +128,19 @@
 		pointfontsize = 9; defaultpen(fontsize(9pt));
 		usepackage("amsmath"); usepackage("amssymb");
 		size(7cm);
-
+		
 		pair bary(real a, real b, real c, pair X, pair Y, pair Z){
 			return (a*X + b*Y + c*Z)/(a + b + c);
 		}
-
+		
 		pair excenter(pair A, pair B, pair C){
 			return bary(-d(B,C), d(C,A), d(A,B), A, B, C);
 		}
-
+		
 		path excircle(pair A, pair B, pair C){
 			return CP(excenter(A,B,C),foot(excenter(A,B,C),B,C));
 		}
-
+		
 		pair A = dir(110), B = dir(210), C = dir(330), D = dir(20),
 		O = origin, H = orthocenter(A,B,C), I = incenter(A,B,C);
 	\end{asydef}
@@ -186,18 +186,17 @@
 % % % % % % % % % % ARTICLE % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % % %
 \ifjasonarticle
-	
-	
+	\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
 	
 	\ifjasonmargins
 		\PassOptionsToPackage{margin=2.5cm}{geometry}
 	\fi
 	\usepackage{geometry}
-
+	
 	\usepackage{enumitem} % \setitemize
 	\ifjasonspacing
 		\usepackage[nodisplayskipstretch,onehalfspacing]{setspace}
-
+		
 		%\let\oldcases\cases
 		%\let\oldendcases\endcases
 		%\renewenvironment{cases}{\setstretch{1}\oldcases}{\oldendcases}
@@ -207,24 +206,24 @@
 			\setlength{\abovedisplayskip}{5pt}
 			\setlength{\abovedisplayshortskip}{2pt}
 		}
-
+		
 		\setitemize{itemsep=0pt}
 		\renewcommand\labelitemi{\raisebox{1.5pt}{\tiny$\bullet$}}
 	\fi
-
+	
 	% Sans Serif Headings
 	\usepackage{sectsty} % \allsectionsfont
 	\ifjasonfont
 		\allsectionsfont{\sffamily}
 	\fi
-
+	
 	%Titling
 	\ifjasontitling
 		\usepackage{titling}
-
+		
 		\newcommand{\thesubtitle}{}
 		\providecommand{\subtitle}{}
-
+		
 		\renewcommand{\subtitle}[1]{%
 		\renewcommand{\thesubtitle}{#1}
 		\posttitle{\\ {\normalsize \thesubtitle} \end{center}\vspace{\posttitledrop}}}
@@ -245,30 +244,30 @@
 		\usepackage{fancyhdr}
 		\pagestyle{fancy}
 		\setlength{\headheight}{36pt}
-
-	% Setup Fancy Headers
-	\ifjasonheadrule
-		\renewcommand{\headrulewidth}{0.5pt}
-	\else
-		\renewcommand{\headrulewidth}{0pt}
-	\fi
-	\renewcommand{\footrulewidth}{0pt}
-
+		
+		% Setup Fancy Headers
+		\ifjasonheadrule
+			\renewcommand{\headrulewidth}{0.5pt}
+		\else
+			\renewcommand{\headrulewidth}{0pt}
+		\fi
+		\renewcommand{\footrulewidth}{0pt}
+		
 		\ifjasontitling
 			\lhead{\theauthor}
 		\fi
-
+		
 		\chead{}
 		\rhead{\nouppercase{\leftmark}}
 		\lfoot{}
 		\cfoot{\thepage}
 		\rfoot{}
 	\fi
-
+	
 	\ifjasonboxedthms
 		\usepackage{thmtools}
 		\usepackage[framemethod=TikZ]{mdframed}
-
+		
 		\mdfdefinestyle{mdbluebox}{%
 			roundcorner = 5pt,
 			linewidth=1pt,
@@ -305,10 +304,10 @@
 			postheadspace={0pt},
 		]{thmrecbox}
 	\fi
-
+	
 	\ifjasonthm
 		\theoremstyle{plain}
-
+		
 		\ifjasonboxedthms
 			\ifjasonsectthms
 				\declaretheorem[%
@@ -338,17 +337,17 @@
 			\newtheorem*{proposition*}{Proposition}
 			\newtheorem*{corollary*}{Corollary}
 		\fi
-
+		
 		% Def-style Theorems
 		\theoremstyle{definition}
-
+		
 		\ifjasonboxedthms
 			\declaretheorem[style=thmbluebox,name=Algorithm,sibling=theorem]{algorithm}
 		\else
 			\newtheorem{algorithm}[theorem]{Algorithm}
 			\newtheorem*{algorithm*}{Algorithm}
 		\fi
-
+		
 		\newtheorem{answer}[theorem]{Answer}
 		\newtheorem{case}[theorem]{Case}
 		\newtheorem{claim}[theorem]{Claim}
@@ -358,7 +357,7 @@
 		\newtheorem{fact}[theorem]{Fact}
 		\newtheorem{problem}[theorem]{Problem}
 		\newtheorem{question}[theorem]{Question}
-
+		
 		\newtheorem*{answer*}{Answer}
 		\newtheorem*{case*}{Case}
 		\newtheorem*{claim*}{Claim}
@@ -369,7 +368,7 @@
 		\newtheorem*{joke*}{Joke}
 		\newtheorem*{problem*}{Problem}
 		\newtheorem*{question*}{Question}
-
+		
 		\ifjasonboxedthms
 			\declaretheorem[style=thmrecbox,name=Example,sibling=theorem]{example}
 			\declaretheorem[style=thmrecbox,name=Example,numbered=no]{example*}
@@ -377,7 +376,7 @@
 			\newtheorem{example}[theorem]{Example}
 			\newtheorem*{example*}{Example}
 		\fi
-
+		
 		% Remark-style theorems
 		%\theoremstyle{remark}
 		\newtheorem{note}[theorem]{Note}
@@ -394,7 +393,7 @@
 	\ifjasonbeamernobutton
 		\beamertemplatenavigationsymbolsempty
 	\fi
-
+	
 	\ifjasonbeamersimple
 		\usetheme{default}
 	\else
