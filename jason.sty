@@ -5,14 +5,14 @@
 % We include "jason" in all of these to make sure
 % that they do not conflict with any other packages
 \newif\ifjasonarticle \jasonarticletrue
-\newif\ifjasonbeamer	\jasonbeamerfalse
+\newif\ifjasonbeamer  \jasonbeamerfalse
 \DeclareOption{beamer}{\jasonarticlefalse\jasonbeamertrue}
 
-\newif\ifjasonsetup	 \jasonsetuptrue
-\newif\ifjasonshorts	\jasonshortstrue
-\newif\ifjasonasy		 \jasonasytrue
+\newif\ifjasonsetup   \jasonsetuptrue
+\newif\ifjasonshorts  \jasonshortstrue
+\newif\ifjasonasy     \jasonasytrue
 	\newif\ifjasonasypredef \jasonasypredeftrue
-\newif\ifjasonauthor	\jasonauthortrue
+\newif\ifjasonauthor  \jasonauthortrue
 \newif\ifjasonchinese \jasonchinesefalse
 
 \DeclareOption{nosetup}{\jasonasyfalse}
@@ -23,14 +23,14 @@
 \DeclareOption{chinese}{\jasonchinesetrue}
 
 % ARTICLE
-\newif\ifjasonmargins	 \jasonmarginstrue % Smaller Margins
-\newif\ifjasonspacing	 \jasonspacingtrue
-\newif\ifjasonfont			\jasonfonttrue
-\newif\ifjasontitling	 \jasontitlingtrue
-\newif\ifjasonfancy		 \jasonfancytrue
-\newif\ifjasonheadrule	\jasonheadruletrue
-\newif\ifjasonthm			 \jasonthmtrue
-\newif\ifjasonsectthms	\jasonsectthmsfalse
+\newif\ifjasonmargins   \jasonmarginstrue
+\newif\ifjasonspacing   \jasonspacingtrue
+\newif\ifjasonfont      \jasonfonttrue
+\newif\ifjasontitling   \jasontitlingtrue
+\newif\ifjasonfancy     \jasonfancytrue
+\newif\ifjasonheadrule  \jasonheadruletrue
+\newif\ifjasonthm       \jasonthmtrue
+\newif\ifjasonsectthms  \jasonsectthmsfalse
 \newif\ifjasonboxedthms \jasonboxedthmstrue
 
 \DeclareOption{normalmargins}{\jasonmarginsfalse}
@@ -44,8 +44,8 @@
 \DeclareOption{regularthms}{\jasonboxedthmsfalse}
 
 % BEAMER
-\newif\ifjasonbeamernobutton	\jasonbeamernobuttonfalse
-\newif\ifjasonbeamersimple		\jasonbeamersimplefalse
+\newif\ifjasonbeamernobutton  \jasonbeamernobuttonfalse
+\newif\ifjasonbeamersimple    \jasonbeamersimplefalse
 
 \DeclareOption{nobuttons}{\jasonbeamernobuttontrue}
 \DeclareOption{simple}{\jasonbeamersimpletrue}
