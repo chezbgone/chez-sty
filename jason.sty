@@ -158,9 +158,6 @@
 \usepackage{float}
 \usepackage[obeyFinal]{todonotes}
 \usepackage{listings}
-% must stay in this order:
-\usepackage{hyperref}
-\usepackage[nameinlink]{cleveref}
 
 % Set up Author
 \ifjasonauthor
@@ -183,6 +180,10 @@
 % % % % % % % % % % ARTICLE % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % % %
 \ifjasonarticle
+	% must stay in this order:
+	\usepackage{hyperref}
+	\usepackage[nameinlink]{cleveref}
+	
 	\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
 	
 	\ifjasonmargins
