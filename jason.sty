@@ -129,6 +129,12 @@
 		usepackage("amsmath"); usepackage("amssymb");
 		size(7cm);
 		
+		pen n_purple = rgb(0.7,0.4,1),
+			n_blue = rgb(0,0.6,1),
+			n_green = rgb(0,0.4,0),
+			n_orange = rgb(1,0.4,0.1),
+			n_red = rgb(1,0.2,0.4);
+		
 		pair bary(real a, real b, real c, pair X, pair Y, pair Z){
 			return (a*X + b*Y + c*Z)/(a + b + c);
 		}
