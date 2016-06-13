@@ -269,7 +269,8 @@
 	\fi
 	
 	\ifjasonboxedthms
-		\usepackage[dvipsnames]{xcolor}
+		\PassOptionsToPackage{dvipsnames}{xcolor}
+		\usepackage{xcolor}
 		\usepackage{thmtools}
 		\usepackage[framemethod=TikZ]{mdframed}
 		
