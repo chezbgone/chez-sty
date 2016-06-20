@@ -32,6 +32,7 @@
 \newif\ifjasonthm       \jasonthmtrue
 \newif\ifjasonsectthms  \jasonsectthmsfalse
 \newif\ifjasonboxedthms \jasonboxedthmstrue
+\newif\ifjasoncode      \jasoncodetrue
 
 \DeclareOption{normalmargins}{\jasonmarginsfalse}
 \DeclareOption{normalspacing}{\jasonspacingfalse}
@@ -42,6 +43,7 @@
 \DeclareOption{nothms}{\jasonthmfalse}
 \DeclareOption{sectthms}{\jasonsectthmstrue}
 \DeclareOption{regularthms}{\jasonboxedthmsfalse}
+\DeclareOption{nocode}{\jasoncodefalse}
 
 % BEAMER
 \newif\ifjasonbeamernobutton  \jasonbeamernobuttonfalse
@@ -164,8 +166,6 @@
 \usepackage{endnotes}
 \usepackage{float}
 \usepackage[obeyFinal,textsize=scriptsize,shadow]{todonotes}
-\usepackage{listings}
-\usepackage{algpseudocode}
 
 % Set up Author
 \ifjasonauthor
@@ -390,6 +390,23 @@
 		\newtheorem{remark}[theorem]{Remark}
 		\newtheorem*{note*}{Note}
 		\newtheorem*{remark*}{Remark}
+	\fi
+	
+	\ifjasoncode
+		\usepackage{listings}
+		\usepackage{algpseudocode}
+		
+		\newcommand{\function}{\Function}
+			\newcommand{\endfunction}{\EndFunction}
+		\newcommand{\for}{\For}
+			\newcommand{\endfor}{\EndFor}
+		\newcommand{\while}{\While}
+			\newcommand{\endwhile}{\endWhile}
+		\newcommand{\if}{\If}
+			\newcommand{\endif}{\EndIf}
+			\newcommand{\else}{\Else}
+		\newcommand{\state}{\State}
+		\newcommand{\return}{\Return}
 	\fi
 \fi
 
