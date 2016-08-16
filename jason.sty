@@ -32,6 +32,8 @@
 \newif\ifjasonthm       \jasonthmtrue
 \newif\ifjasonsectthms  \jasonsectthmsfalse
 \newif\ifjasonboxedthms \jasonboxedthmstrue
+\newif\ifjasonref       \jasonreftrue
+\newif\ifjasonhref      \jasonhreffalse
 \newif\ifjasoncode      \jasoncodetrue
 
 \DeclareOption{normalmargins}{\jasonmarginsfalse}
@@ -43,6 +45,8 @@
 \DeclareOption{nothms}{\jasonthmfalse}
 \DeclareOption{sectthms}{\jasonsectthmstrue}
 \DeclareOption{regularthms}{\jasonboxedthmsfalse}
+\DeclareOption{noref}{\jasonreffalse}
+\DeclareOption{href}{\jasonhreftrue}
 \DeclareOption{nocode}{\jasoncodefalse}
 
 % BEAMER
@@ -165,6 +169,7 @@
 \usepackage{graphicx}
 \usepackage{endnotes}
 \usepackage{float}
+\usepackage{siunitx}
 \usepackage[obeyFinal,textsize=scriptsize,shadow]{todonotes}
 
 % Set up Author
@@ -189,7 +194,13 @@
 % % % % % % % % % % % % % % % % % % % % % % % %
 \ifjasonarticle
 	% must stay in this order:
-	\usepackage[nameinlink]{cleveref}
+	\ifjasonref
+		\ifjasonhref
+			\usepackage{hyperref}
+		\else
+			\usepackage[nameinlink]{cleveref}
+		\fi
+	\fi
 	
 	\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
 	
