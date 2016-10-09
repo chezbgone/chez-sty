@@ -179,9 +179,7 @@
 
 % Set up Author
 \ifjasonauthor
-	\AtBeginDocument{
-		\author{Jason Chen}
-	}
+	\author{Jason Chen}
 \fi
 
 \ifjasonchinese
@@ -249,19 +247,19 @@
 		\providecommand{\subtitle}{}
 		
 		\renewcommand{\subtitle}[1]{%
-		\renewcommand{\thesubtitle}{#1}
-		\posttitle{\\ {\normalsize \thesubtitle} \end{center}\vspace{\posttitledrop}}}
-		\newlength{\posttitledrop}
-		\setlength{\posttitledrop}{-0.7em}
-		\newlength{\postauthordrop}
-		\setlength{\postauthordrop}{-1.2em}
-		\pretitle{\vspace{-20pt}\begin{center}\bfseries \ifjasonfont\sffamily\fi \Large}
-		\posttitle{\end{center}\vspace{\posttitledrop}}
-		\preauthor{\begin{center} \scshape}
-		\postauthor{\end{center}\vspace{\postauthordrop}}
-		\predate{\begin{center}\small}
-		\postdate{\end{center}
-	}
+			\renewcommand{\thesubtitle}{#1}
+			\posttitle{\\ {\normalsize \thesubtitle} \end{center}\vspace{\posttitledrop}}}
+			\newlength{\posttitledrop}
+			\setlength{\posttitledrop}{-0.7em}
+			\newlength{\postauthordrop}
+			\setlength{\postauthordrop}{-1.2em}
+			\pretitle{\vspace{-20pt}\begin{center}\bfseries \ifjasonfont\sffamily\fi \Large}
+			\posttitle{\end{center}\vspace{\posttitledrop}}
+			\preauthor{\begin{center} \scshape}
+			\postauthor{\end{center}\vspace{\postauthordrop}}
+			\predate{\begin{center}\small}
+			\postdate{\end{center}
+		}
 	\fi
 
 	\ifjasonfancy
