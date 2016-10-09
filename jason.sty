@@ -108,8 +108,8 @@
 	% fixes \left \right kerning
 	\let\originalleft\left
 	\let\originalright\right
-	\def\left#1{\mathopen{}\originalleft#1}
-	\def\right#1{\originalright#1\mathclose{}}
+	\renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
+	\renewcommand{\right}{\aftergroup\egroup\originalright}
 	
 	% syntactically named delimiters
 	\newcommand{\braces}[1]{\left\lbrace #1 \right\rbrace}
