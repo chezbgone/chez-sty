@@ -245,23 +245,41 @@
 	\ifjasontitling
 		\usepackage{titling}
 		
-		\newcommand{\thesubtitle}{}
-		\providecommand{\subtitle}{}
+		\ifjasonfont
+			\pretitle{
+				\vspace{-30pt}
+				\begin{center}
+					\Large
+					\bfseries
+					\ifjasonfont \sffamily \fi
+			}
+		\fi
+		\posttitle{\\ \vspace{-0.1em}\end{center}}
 		
-		\renewcommand{\subtitle}[1]{%
+		\preauthor{\begin{center} \scshape}
+		\postauthor{\\ \vspace{-0.2em} \end{center}}
+		
+		\predate{\begin{center} \small}
+		\postdate{\\ \end{center}}
+		
+		\providecommand{\thesubtitle}{}
+		\newcommand{\subtitle}[1]{
 			\renewcommand{\thesubtitle}{#1}
-			\posttitle{\\ {\normalsize \thesubtitle} \end{center}\vspace{\posttitledrop}}}
-			\newlength{\posttitledrop}
-			\setlength{\posttitledrop}{-0.7em}
-			\newlength{\postauthordrop}
-			\setlength{\postauthordrop}{-1.2em}
-			\pretitle{\vspace{-20pt}\begin{center}\bfseries \ifjasonfont\sffamily\fi \Large}
-			\posttitle{\end{center}\vspace{\posttitledrop}}
-			\preauthor{\begin{center} \scshape}
-			\postauthor{\end{center}\vspace{\postauthordrop}}
-			\predate{\begin{center}\small}
-			\postdate{\end{center}
+			\posttitle{
+				\\ \vspace{0pt}
+				\end{center}
+				\begin{center}
+					\vspace{-0.8em}
+					\large
+					\bfseries
+					\ifjasonfont \sffamily \fi
+					\thesubtitle
+				\end{center}
+				\vspace{-1.5em}
+			}
 		}
+		
+		
 	\fi
 
 	\ifjasonfancy
