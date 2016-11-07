@@ -214,9 +214,18 @@
 	\fi
 	\usepackage{geometry}
 	
+	% Sans Serif Headings
+	\usepackage{sectsty} % \allsectionsfont
+	\ifjasonfont
+		\allsectionsfont{\sffamily}
+	\fi
+	
 	\usepackage{enumitem} % \setitemize
 	\ifjasonspacing
 		\usepackage[nodisplayskipstretch,onehalfspacing]{setspace}
+		
+		\usepackage{titlesec} % titlespacing
+		\titlespacing{\paragraph}{0pt}{0em}{0.5em}
 		
 		\allowdisplaybreaks
 		
@@ -233,12 +242,6 @@
 		\setitemize{itemsep=0pt, topsep=0pt}
 		\renewcommand\labelitemi{\raisebox{1.5pt}{\tiny$\bullet$}}
 		\renewcommand{\arraystretch}{0.8}
-	\fi
-	
-	% Sans Serif Headings
-	\usepackage{sectsty} % \allsectionsfont
-	\ifjasonfont
-		\allsectionsfont{\sffamily}
 	\fi
 	
 	%Titling
@@ -283,7 +286,7 @@
 			\author{Jason Chen}
 		\fi
 	\fi
-
+	
 	\ifjasonfancy
 		\usepackage{fancyhdr}
 		\pagestyle{fancy}
