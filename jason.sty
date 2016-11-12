@@ -36,7 +36,7 @@
 \newif\ifjasonboxedthms \jasonboxedthmstrue
 \newif\ifjasonref       \jasonreftrue
 \newif\ifjasonhref      \jasonhreffalse
-\newif\ifjasoncode      \jasoncodetrue
+\newif\ifjasoncode      \jasoncodefalse
 
 \DeclareOption{normalmargins}{\jasonmarginsfalse}
 \DeclareOption{normalspacing}{\jasonspacingfalse}
@@ -49,7 +49,7 @@
 \DeclareOption{regularthms}{\jasonboxedthmsfalse}
 \DeclareOption{noref}{\jasonreffalse}
 \DeclareOption{href}{\jasonhreftrue}
-\DeclareOption{nocode}{\jasoncodefalse}
+\DeclareOption{listings}{\jasoncodetrue}
 
 % BEAMER
 \newif\ifjasonbeamernobutton  \jasonbeamernobuttontrue
@@ -214,9 +214,18 @@
 	\fi
 	\usepackage{geometry}
 	
+	% Sans Serif Headings
+	\usepackage{sectsty} % \allsectionsfont
+	\ifjasonfont
+		\allsectionsfont{\sffamily}
+	\fi
+	
 	\usepackage{enumitem} % \setitemize
 	\ifjasonspacing
 		\usepackage[nodisplayskipstretch,onehalfspacing]{setspace}
+		
+		\usepackage{titlesec} % titlespacing
+		\titlespacing{\paragraph}{0pt}{0.3em}{0.5em}
 		
 		\allowdisplaybreaks
 		
@@ -233,12 +242,6 @@
 		\setitemize{itemsep=0pt, topsep=0pt}
 		\renewcommand\labelitemi{\raisebox{1.5pt}{\tiny$\bullet$}}
 		\renewcommand{\arraystretch}{0.8}
-	\fi
-	
-	% Sans Serif Headings
-	\usepackage{sectsty} % \allsectionsfont
-	\ifjasonfont
-		\allsectionsfont{\sffamily}
 	\fi
 	
 	%Titling
@@ -283,7 +286,7 @@
 			\author{Jason Chen}
 		\fi
 	\fi
-
+	
 	\ifjasonfancy
 		\usepackage{fancyhdr}
 		\pagestyle{fancy}
@@ -473,8 +476,10 @@
 	\fi
 	
 	\ifjasoncode
-		\usepackage{listings}
-		\usepackage{algpseudocode}
+		\usepackage{minted}
+		\usepackage{accsupp} % prevents selection of line numbers
+		\let\oldfancyVerbLine\theFancyVerbLine
+		\renewcommand{\theFancyVerbLine}{\BeginAccSupp{ActualText={}}\oldfancyVerbLine\EndAccSupp{}}
 	\fi
 \fi
 
