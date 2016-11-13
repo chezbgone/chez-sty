@@ -35,7 +35,6 @@
 \newif\ifjasonsectthms  \jasonsectthmsfalse
 \newif\ifjasonboxedthms \jasonboxedthmstrue
 \newif\ifjasonref       \jasonreftrue
-\newif\ifjasonhref      \jasonhreffalse
 \newif\ifjasoncode      \jasoncodefalse
 
 \DeclareOption{normalmargins}{\jasonmarginsfalse}
@@ -200,11 +199,8 @@
 \ifjasonarticle
 	% must stay in this order:
 	\ifjasonref
-		\ifjasonhref
-			\usepackage{hyperref}
-		\else
-			\usepackage[nameinlink]{cleveref}
-		\fi
+		\usepackage{hyperref}
+		\usepackage{cleveref}
 	\fi
 	
 	\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
