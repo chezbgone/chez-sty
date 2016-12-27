@@ -92,6 +92,7 @@
 	% Commands
 	\newcommand{\NewPage}{\vfill\eject}
 	\newcommand{\supnewline}{\leavevmode\par\vspace*{\dimexpr-3pt-\parskip-\baselineskip}}
+	\newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
 	
 	% Sets
 	\def\CC{\mathbb C}
@@ -107,24 +108,22 @@
 	\newcommand{\cycprod}{\prod_{\mathrm{cyc}}}
 	\newcommand{\symprod}{\prod_{\mathrm{sym}}}
 	
-	% fixes \left \right kerning
-	\let\originalleft\left
-	\let\originalright\right
-	\renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
-	\renewcommand{\right}{\aftergroup\egroup\originalright}
+	% for delimiters
+	\usepackage{mathtools}
 	
-	% syntactically named delimiters
-	\newcommand{\braces}[1]{\left\lbrace #1 \right\rbrace}
-	\newcommand{\angles}[1]{\left\langle #1 \right\rangle}
-	\newcommand{\verts}[1]{\left\lvert #1 \right\rvert}
-	\newcommand{\Verts}[1]{\left\lVert #1 \right\rVert}
-	\newcommand{\brackets}[1]{\left[ #1 \right]}
-	\newcommand{\parens}[1]{\left( #1 \right)}
-	\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
-	\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+	% syntactically-named delimiters
+	\DeclarePairedDelimiter{\braces}{\{}{\}}
+	\DeclarePairedDelimiter{\parens}{(}{)}
+	\DeclarePairedDelimiter{\brackets}{[}{]}
+	\DeclarePairedDelimiter{\angles}{\langle}{\rangle}
+	\DeclarePairedDelimiter{\verts}{\lvert}{\rvert}
+	\DeclarePairedDelimiter{\Verts}{\lVert}{\rVert}
+	\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+	\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 	
-	% semantically named delimiters
+	% semantically-named delimiters
 	\newcommand{\set}{\braces}
+		\newcommand{\Set}{\braces*}
 	\newcommand{\abs}{\verts}
 	\newcommand{\size}{\verts}
 	\newcommand{\norm}{\Verts}
@@ -174,7 +173,6 @@
 % % % % % % % % % % % % % % % % % % % % % % %
 \PassOptionsToPackage{svgnames,dvipsnames}{xcolor}
 \usepackage{microtype}
-\usepackage{mathtools}
 \usepackage{nccmath}
 \usepackage{graphicx}
 \usepackage{endnotes}
