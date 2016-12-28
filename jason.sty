@@ -1,4 +1,4 @@
-\ProvidesPackage{jason}[2016/10/16]
+\ProvidesPackage{jason}[2016/12/28]
 % Heavily based off of Evan Chen's .sty
 \usepackage{amsmath,amssymb,amsthm}
 
@@ -177,6 +177,11 @@
 \usepackage{endnotes}
 \usepackage{float}
 \usepackage[obeyFinal,textsize=scriptsize]{todonotes}
+
+% makes \oint circle smaller
+\let\oldoint\ointop
+\usepackage{esint}
+\renewcommand{\oint}{\oldoint\nolimits}
 
 % Set up Author
 \ifjasonauthor
