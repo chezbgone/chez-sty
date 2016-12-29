@@ -13,6 +13,7 @@
 \newif\ifjasonasy     \jasonasytrue
 	\newif\ifjasonasypredef \jasonasypredeftrue
 \newif\ifjasonauthor  \jasonauthortrue
+\newif\ifjasondate  \jasondatetrue
 \newif\ifjasoncolor \jasoncolortrue
 \newif\ifjasonchinese \jasonchinesefalse
 
@@ -21,6 +22,7 @@
 \DeclareOption{noasy}{\jasonasyfalse}
 \DeclareOption{noasypredef}{\jasonasypredeffalse}
 \DeclareOption{noauthor}{\jasonauthorfalse}
+\DeclareOption{nodate}{\jasondatefalse}
 \DeclareOption{nocolor}{\jasoncolorfalse}
 \DeclareOption{chinese}{\jasonchinesetrue}
 
@@ -285,6 +287,10 @@
 		
 		\ifjasonauthor
 			\author{Jason Chen}
+		\fi
+		
+		\ifjasondate\else
+			\date{~\vspace{-5ex}}
 		\fi
 	\fi
 	
