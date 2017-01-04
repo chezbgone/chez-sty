@@ -68,6 +68,8 @@
 \begin{asy}
 \end{asy}
 
+\subtitle{arg1}
+
 \begin{theorem}
 \begin{lemma}
 \begin{proposition}
