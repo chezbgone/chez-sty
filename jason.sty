@@ -1,5 +1,4 @@
-\ProvidesPackage{jason}[2016/12/28]
-% Heavily based off of Evan Chen's .sty
+\ProvidesPackage{jason}[2017/01/21]
 \usepackage{amsmath,amssymb,amsthm}
 
 % We include "jason" in all of these to make sure
@@ -15,7 +14,6 @@
 \newif\ifjasonauthor  \jasonauthortrue
 \newif\ifjasondate  \jasondatetrue
 \newif\ifjasoncolor \jasoncolortrue
-\newif\ifjasonchinese \jasonchinesefalse
 
 \DeclareOption{nosetup}{\jasonasyfalse}
 \DeclareOption{noshortcuts}{\jasonshortsfalse}
@@ -24,7 +22,6 @@
 \DeclareOption{noauthor}{\jasonauthorfalse}
 \DeclareOption{nodate}{\jasondatefalse}
 \DeclareOption{nocolor}{\jasoncolorfalse}
-\DeclareOption{chinese}{\jasonchinesetrue}
 
 % ARTICLE
 \newif\ifjasonmargins   \jasonmarginstrue
@@ -188,16 +185,6 @@
 % Set up Author
 \ifjasonauthor
 	\author{Jason Chen}
-\fi
-
-\ifjasonchinese
-	\usepackage[encapsulated]{CJK}
-	\usepackage{ucs}
-	\usepackage[utf8x]{inputenc}
-	\newenvironment{bsmi}{\begin{CJK}{UTF8}{bsmi}}{\end{CJK}}
-	\newcommand{\cn}[1]{\begin{bsmi}#1\end{bsmi}}
-	\AtBeginDocument{\begin{CJK}{UTF8}{bsmi}}
-		\AtEndDocument{\end{CJK}}
 \fi
 
 % % % % % % % % % % % % % % % % % % % % % % % %
