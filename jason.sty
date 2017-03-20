@@ -92,10 +92,10 @@
 		\par\hspace{\fill}\rule{0.95\linewidth}{.7pt}\hspace{\fill}
 		\par\nointerlineskip \vspace{\baselineskip}
 	}
+	\newlength{\preabovedisplayskip}
+	\newlength{\preabovedisplayshortskip}
 	\newcommand\Item[1][]{%
-		\newlength{\preabovedisplayskip}
 		\setlength{\preabovedisplayskip}{\abovedisplayskip}
-		\newlength{\preabovedisplayshortskip}
 		\setlength{\preabovedisplayshortskip}{\abovedisplayshortskip}
 		\ifx\relax#1\relax  \item \else \item[#1] \fi
 		\abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}
