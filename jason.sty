@@ -1,4 +1,4 @@
-\ProvidesPackage{jason}[2017/01/21]
+\ProvidesPackage{jason}[2017/03/19]
 \usepackage{amsmath,amssymb,amsthm}
 
 % We include "jason" in all of these to make sure
@@ -92,6 +92,16 @@
 		\par\hspace{\fill}\rule{0.95\linewidth}{.7pt}\hspace{\fill}
 		\par\nointerlineskip \vspace{\baselineskip}
 	}
+	\newcommand\Item[1][]{%
+		\newlength{\preabovedisplayskip}
+		\setlength{\preabovedisplayskip}{\abovedisplayskip}
+		\newlength{\preabovedisplayshortskip}
+		\setlength{\preabovedisplayshortskip}{\abovedisplayshortskip}
+		\ifx\relax#1\relax  \item \else \item[#1] \fi
+		\abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}
+		\setlength{\abovedisplayskip}{\preabovedisplayskip}
+		\setlength{\abovedisplayshortskip}{\preabovedisplayshortskip}
+	}
 	
 	% Sets
 	\def\CC{\mathbb C}
@@ -175,7 +185,7 @@
 \usepackage{graphicx}
 \usepackage{endnotes}
 \usepackage{float}
-\usepackage[obeyFinal,textsize=scriptsize]{todonotes}
+\usepackage[obeyFinal, textsize=scriptsize]{todonotes}
 
 % makes \oint circle smaller
 \let\oldoint\ointop
