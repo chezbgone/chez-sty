@@ -51,10 +51,10 @@
 
 % BEAMER
 \newif\ifjasonbeamernobutton  \jasonbeamernobuttontrue
-\newif\ifjasonbeamersimple    \jasonbeamersimplefalse
+\newif\ifjasonbeamernice    \jasonbeamernicetrue
 
 \DeclareOption{nobuttons}{\jasonbeamernobuttontrue}
-\DeclareOption{simple}{\jasonbeamersimpletrue}
+\DeclareOption{nobeamernice}{\jasonbeamernicefalse}
 
 \ProcessOptions\relax
 
@@ -183,9 +183,6 @@
 \usepackage{microtype}
 \usepackage{nccmath}
 \usepackage{graphicx}
-\usepackage{endnotes}
-\usepackage{float}
-\usepackage[obeyFinal, textsize=scriptsize]{todonotes}
 
 % makes \oint circle smaller
 \let\oldoint\ointop
@@ -201,6 +198,10 @@
 % % % % % % % % % % ARTICLE % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % % %
 \ifjasonarticle
+	\usepackage{endnotes}
+	\usepackage{float}
+	\usepackage[obeyFinal, textsize=scriptsize]{todonotes}
+	
 	% must stay in this order:
 	\ifjasonref
 		\usepackage{hyperref}
@@ -495,8 +496,13 @@
 		\beamertemplatenavigationsymbolsempty
 	\fi
 	
-	\ifjasonbeamersimple
-		\usetheme{default}
+	\ifjasonbeamernice
+		\IfFileExists{beamerthememetropolis.sty}{
+			\usetheme{metropolis}
+		}{
+			\usetheme{Rochester}
+			\usecolortheme{whale}
+		}
 	\else
 		\usetheme{Rochester}
 		\usecolortheme{whale}
