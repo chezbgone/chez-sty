@@ -52,9 +52,11 @@
 % BEAMER
 \newif\ifjasonbeamernobutton  \jasonbeamernobuttontrue
 \newif\ifjasonbeamernice    \jasonbeamernicetrue
+\newif\ifjasonallsmallcaps  \jasonallsmallcapstrue
 
 \DeclareOption{nobuttons}{\jasonbeamernobuttontrue}
 \DeclareOption{nobeamernice}{\jasonbeamernicefalse}
+\DeclareOption{noallsmallcaps}{\jasonallsmallcapsfalse}
 
 \ProcessOptions\relax
 
@@ -499,6 +501,17 @@
 	\ifjasonbeamernice
 		\IfFileExists{beamerthememetropolis.sty}{
 			\usetheme{metropolis}
+			\ifjasonallsmallcaps
+				\metroset{titleformat = allsmallcaps}
+				\setbeamerfont{title}{size=\Large, series=\mdseries}
+				\setbeamerfont{section title}{size=\Large, series=\mdseries}
+				\setbeamerfont{block title}{size=\normalsize, series=\mdseries}
+				\setbeamerfont{block title alerted}{size=\normalsize, series=\mdseries}
+				\setbeamerfont{frametitle}{size=\large, series=\mdseries}
+				\setbeamerfont{caption name}{series=\mdseries}
+				\setbeamerfont{description item}{series=\mdseries}
+				\setbeamerfont{standout}{size=\Large, series=\mdseries}
+			\fi
 		}{
 			\usetheme{Rochester}
 			\usecolortheme{whale}
