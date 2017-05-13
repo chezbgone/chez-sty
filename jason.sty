@@ -14,6 +14,7 @@
 \newif\ifjasonauthor  \jasonauthortrue
 \newif\ifjasondate  \jasondatetrue
 \newif\ifjasoncolor \jasoncolortrue
+\newif\ifjasonthm       \jasonthmtrue
 
 \DeclareOption{nosetup}{\jasonasyfalse}
 \DeclareOption{noshortcuts}{\jasonshortsfalse}
@@ -22,6 +23,7 @@
 \DeclareOption{noauthor}{\jasonauthorfalse}
 \DeclareOption{nodate}{\jasondatefalse}
 \DeclareOption{nocolor}{\jasoncolorfalse}
+\DeclareOption{nothms}{\jasonthmfalse}
 
 % ARTICLE
 \newif\ifjasonmargins   \jasonmarginstrue
@@ -30,7 +32,6 @@
 \newif\ifjasontitling   \jasontitlingtrue
 \newif\ifjasonfancy     \jasonfancytrue
 \newif\ifjasonheadrule  \jasonheadruletrue
-\newif\ifjasonthm       \jasonthmtrue
 \newif\ifjasonsectthms  \jasonsectthmsfalse
 \newif\ifjasonboxedthms \jasonboxedthmstrue
 \newif\ifjasonref       \jasonreftrue
@@ -42,7 +43,6 @@
 \DeclareOption{normaltitling}{\jasontitlingfalse}
 \DeclareOption{nofancy}{\jasonfancyfalse}
 \DeclareOption{noheadrule}{\jasonheadrulefalse}
-\DeclareOption{nothms}{\jasonthmfalse}
 \DeclareOption{sectthms}{\jasonsectthmstrue}
 \DeclareOption{regularthms}{\jasonboxedthmsfalse}
 \DeclareOption{noref}{\jasonreffalse}
@@ -185,6 +185,7 @@
 \usepackage{microtype}
 \usepackage{nccmath}
 \usepackage{graphicx}
+\usepackage{etoolbox}
 
 % makes \oint circle smaller
 \let\oldoint\ointop
@@ -372,10 +373,10 @@
 				linecolor=black,
 			}
 			\declaretheoremstyle[
-			headfont=\sffamily\bfseries,
-			mdframed={style=mdbluebox},
-			headpunct={\\[3pt]},
-			postheadspace={0pt}
+				headfont=\sffamily\bfseries,
+				mdframed={style=mdbluebox},
+				headpunct={\\[3pt]},
+				postheadspace={0pt}
 			]{thmbluebox}
 			
 			\mdfdefinestyle{mdrecbox}{%
@@ -391,11 +392,11 @@
 				linecolor=black,
 			}
 			\declaretheoremstyle[
-			headfont=\bfseries,
-			mdframed={style=mdrecbox},
-			headpunct={\\[3pt]},
-			postheadspace={0pt},
-			preheadhook={~\vspace{-6pt}},
+				headfont = \bfseries,
+				mdframed = {style=mdrecbox},
+				headpunct = {\\[3pt]},
+				postheadspace = {0pt},
+				preheadhook = {~\vspace{-6pt}},
 			]{thmrecbox}
 		\fi
 	\fi
@@ -406,10 +407,10 @@
 		\ifjasonboxedthms
 			\ifjasonsectthms
 				\declaretheorem[%
-				style=thmbluebox,name=Theorem,numberwithin=section]{theorem}
+				style=thmbluebox, name=Theorem, numberwithin=section]{theorem}
 			\else
 				\declaretheorem[%
-				style=thmbluebox,name=Theorem]{theorem}
+				style=thmbluebox, name=Theorem]{theorem}
 			\fi
 			\declaretheorem[style=thmbluebox, name=Lemma, sibling=theorem]{lemma}
 			\declaretheorem[style=thmbluebox, name=Proposition, sibling=theorem]{proposition}
@@ -498,10 +499,73 @@
 		\beamertemplatenavigationsymbolsempty
 	\fi
 	
+	\ifjasonthm
+		\newtheorem{proposition}[theorem]{Proposition}
+		\newtheorem{answer}[theorem]{Answer}
+		\newtheorem{case}[theorem]{Case}
+		\newtheorem{claim}[theorem]{Claim}
+		\newtheorem{conjecture}[theorem]{Conjecture}
+		\newtheorem{exercise}[theorem]{Exercise}
+		\newtheorem{idea}[theorem]{Idea}
+		\newtheorem{question}[theorem]{Question}
+		
+		\definecolor{jasondarkblue}{rgb}{0.148, 0.148, 0.523}
+		\definecolor{jasonpaleblue}{rgb}{0.910, 0.910, 0.949}
+		\definecolor{jasondarkgreen}{rgb}{0.148, 0.523, 0.148}
+		\definecolor{jasonpalegreen}{rgb}{0.910, 0.949, 0.910}
+		\definecolor{jasondarkgreen}{rgb}{0.523, 0.148, 0.148}
+		\definecolor{jasonpalegreen}{rgb}{0.949, 0.910, 0.910}
+		
+		\AtBeginEnvironment{theorem}{
+			\setbeamercolor{block title}{fg=white, bg=jasondarkblue}
+			\setbeamercolor{block body}{fg=black, bg=jasonpaleblue}
+		}
+		
+		\AtBeginEnvironment{lemma}{
+			\setbeamercolor{block title}{fg=white, bg=jasondarkblue}
+			\setbeamercolor{block body}{fg=black, bg=jasonpaleblue}
+		}
+		
+		\AtBeginEnvironment{proposition}{
+			\setbeamercolor{block title}{fg=white, bg=jasondarkblue}
+			\setbeamercolor{block body}{fg=black, bg=jasonpaleblue}
+		}
+		
+		\AtBeginEnvironment{corollary}{
+			\setbeamercolor{block title}{fg=white, bg=jasondarkblue}
+			\setbeamercolor{block body}{fg=black, bg=jasonpaleblue}
+		}
+		
+		\AtBeginEnvironment{conjecture}{
+			\setbeamercolor{block title}{fg=white, bg=jasondarkblue}
+			\setbeamercolor{block body}{fg=black, bg=jasonpaleblue}
+		}
+		
+		\AtBeginEnvironment{definition}{
+			\setbeamercolor{block title}{fg=white, bg=jasondarkblue}
+			\setbeamercolor{block body}{fg=black, bg=jasonpaleblue}
+		}
+		
+		\AtBeginEnvironment{example}{
+			\setbeamercolor{block title example}{fg=white, bg=jasondarkgreen}
+			\setbeamercolor{block body example}{fg=black, bg=jasonpalegreen}
+		}
+		
+		\AtBeginEnvironment{proof}{
+			\setbeamercolor{block title}{fg=white, bg=jasondarkblue}
+			\setbeamercolor{block body}{fg=black, bg=jasonpaleblue}
+		}
+		
+		\AtBeginEnvironment{alert}{
+			\setbeamercolor{block title alert}{fg=white, bg=jasondarkblue}
+			\setbeamercolor{block body alert}{fg=black, bg=jasonpaleblue}
+		}
+	\fi
+	
 	\ifjasonbeamernice
 		\IfFileExists{beamerthememetropolis.sty}{
 			\usepackage[sfdefault]{FiraSans}
-			\usetheme{metropolis}
+			\usetheme[block = fill]{metropolis}
 			\ifjasonallsmallcaps
 				\metroset{titleformat = allsmallcaps}
 				\setbeamerfont{title}{size=\Large, series=\mdseries}
