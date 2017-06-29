@@ -64,12 +64,10 @@
 	% Symbols
 	\newcommand{\eps}{\varepsilon}
 	\newcommand{\dang}{\measuredangle} % Directed angle
-	\newcommand{\iso}{\cong} % isomorphic
+	\newcommand{\iso}{\cong} % Isomorphic
 	\def\dg{^\circ}
 	\def\half{\frac{1}{2}}
 	\def\st{\; \middle\vert \;}
-	%\renewcommand{\iff}{\Leftrightarrow}
-	%\renewcommand{\implies}{\Rightarrow}
 	
 	% Arguments
 	\newcommand{\cbrt}[1]{\sqrt[3]{#1}}
@@ -145,11 +143,11 @@
 
 % Asymptote
 \ifjasonasy
-\PassOptionsToPackage{noplaybutton}{media9}
-\usepackage[inline]{asymptote}
-
-\ifjasonasypredef
-\begin{asydef}
+	\PassOptionsToPackage{noplaybutton}{media9}
+	\usepackage[inline]{asymptote}
+	
+	\ifjasonasypredef
+		\begin{asydef}
 import olympiad; import cse5;
 pointpen = pathpen = pathfontpen = anglepen = anglefontpen = black;
 pointfontsize = 9; defaultpen(fontsize(9pt));
@@ -175,9 +173,9 @@ path excircle(pair A, pair B, pair C){
 }
 
 pair A = dir(110), B = dir(210), C = dir(330), D = dir(20),
-     O = origin, H = orthocenter(A, B, C), I = incenter(A, B, C);
-\end{asydef}
-\fi
+	O = origin, H = orthocenter(A, B, C), I = incenter(A, B, C);
+		\end{asydef}
+	\fi
 \fi
 
 \ifjasonsetup
@@ -328,59 +326,81 @@ pair A = dir(110), B = dir(210), C = dir(330), D = dir(20),
 		\usepackage{thmtools}
 		\usepackage[framemethod=TikZ]{mdframed}
 		
-		\mdfdefinestyle{mdbluebox}{%
-			roundcorner = 2pt,
-			linewidth=1pt,
-			skipabove=5pt,
-			innerbottommargin=9pt,
-			nobreak=false,
-			skipbelow=2pt,
-			\ifjasoncolor
+		\ifjasoncolor
+			\mdfdefinestyle{mdbluebox}{%
+				roundcorner = 2pt,
+				linewidth=1pt,
+				skipabove=5pt,
+				innerbottommargin=9pt,
+				nobreak=false,
+				skipbelow=2pt,
 				linecolor=Blue,
 				backgroundcolor=DodgerBlue!5,
-			\else
-				linecolor=black
-			\fi
-		}
-		\declaretheoremstyle[
-			\ifjasoncolor
+			}
+			\declaretheoremstyle[
 				headfont=\sffamily\bfseries\color{MediumBlue},
-			\else
-				headfont=\sffamily\bfseries,
-			\fi
-			mdframed={style=mdbluebox},
-			headpunct={\\[3pt]},
-			postheadspace={0pt}
-		]{thmbluebox}
-
-		\mdfdefinestyle{mdrecbox}{%
-			roundcorner = 2pt,
-			linewidth=0.5pt,
-			skipabove=5pt,
-			frametitleaboveskip=5pt,
-			frametitlebelowskip=0pt,
-			skipbelow=2pt,
-			frametitlefont=\bfseries,
-			innertopmargin=4pt,
-			innerbottommargin=8pt,
-			\ifjasoncolor
+				mdframed={style=mdbluebox},
+				headpunct={\\[3pt]},
+				postheadspace={0pt}
+			]{thmbluebox}
+ 	
+			\mdfdefinestyle{mdrecbox}{%
+				roundcorner = 2pt,
+				linewidth=0.5pt,
+				skipabove=5pt,
+				frametitleaboveskip=5pt,
+				frametitlebelowskip=0pt,
+				skipbelow=2pt,
+				frametitlefont=\bfseries,
+				innertopmargin=4pt,
+				innerbottommargin=8pt,
 				linecolor=Green,
 				backgroundcolor=green!5,
-			\else
-				linecolor = black,
-			\fi
-		}
-		\declaretheoremstyle[
-			\ifjasoncolor
+			}
+			\declaretheoremstyle[
 				headfont=\bfseries\color{Green},
-			\else
-				headfont=\bfseries,
-			\fi
-			mdframed={style=mdrecbox},
-			headpunct={\\[3pt]},
-			postheadspace={0pt},
-			preheadhook={~\vspace{-6pt}},
-		]{thmrecbox}
+				mdframed={style=mdrecbox},
+				headpunct={\\[3pt]},
+				postheadspace={0pt},
+				preheadhook={~\vspace{-6pt}},
+			]{thmrecbox}
+		\else
+			\mdfdefinestyle{mdbluebox}{%
+				roundcorner = 2pt,
+				linewidth=1pt,
+				skipabove=5pt,
+				innerbottommargin=9pt,
+				nobreak=false,
+				skipbelow=2pt,
+				linecolor=black,
+			}
+			\declaretheoremstyle[
+				headfont=\sffamily\bfseries,
+				mdframed={style=mdbluebox},
+				headpunct={\\[3pt]},
+				postheadspace={0pt}
+			]{thmbluebox}
+			
+			\mdfdefinestyle{mdrecbox}{%
+				roundcorner = 2pt,
+				linewidth=0.5pt,
+				skipabove=5pt,
+				frametitleaboveskip=5pt,
+				frametitlebelowskip=0pt,
+				skipbelow=2pt,
+				frametitlefont=\bfseries,
+				innertopmargin=4pt,
+				innerbottommargin=8pt,
+				linecolor=black,
+			}
+			\declaretheoremstyle[
+				headfont = \bfseries,
+				mdframed = {style=mdrecbox},
+				headpunct = {\\[3pt]},
+				postheadspace = {0pt},
+				preheadhook = {~\vspace{-6pt}},
+			]{thmrecbox}
+		\fi
 	\fi
 	
 	\ifjasonthm
