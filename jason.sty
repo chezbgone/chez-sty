@@ -418,6 +418,8 @@ pair A = dir(110), B = dir(210), C = dir(330), D = dir(20),
 			\declaretheorem[style=thmbluebox, name=Lemma, numbered=no]{lemma*}
 			\declaretheorem[style=thmbluebox, name=Proposition, numbered=no]{proposition*}
 			\declaretheorem[style=thmbluebox, name=Corollary, numbered=no]{corollary*}
+
+			\declaretheorem[style=thmbluebox, name=Algorithm, sibling=theorem]{algorithm}
 		\else
 			\ifjasonsectthms
 				\newtheorem{theorem}{Theorem}[section]
@@ -431,17 +433,13 @@ pair A = dir(110), B = dir(210), C = dir(330), D = dir(20),
 			\newtheorem*{lemma*}{Lemma}
 			\newtheorem*{proposition*}{Proposition}
 			\newtheorem*{corollary*}{Corollary}
+
+			\newtheorem{algorithm}[theorem]{Algorithm}
+			\newtheorem*{algorithm*}{Algorithm}
 		\fi
 		
 		% Def-style Theorems
 		\theoremstyle{definition}
-		
-		\ifjasonboxedthms
-			\declaretheorem[style=thmbluebox,name=Algorithm,sibling=theorem]{algorithm}
-		\else
-			\newtheorem{algorithm}[theorem]{Algorithm}
-			\newtheorem*{algorithm*}{Algorithm}
-		\fi
 		
 		\newtheorem{answer}[theorem]{Answer}
 		\newtheorem{case}[theorem]{Case}
