@@ -163,21 +163,6 @@ pen n_purple = rgb(0.7, 0.4, 1.0),
     n_green = rgb(0.0, 0.4, 0.0),
     n_orange = rgb(1.0, 0.4, 0.1),
     n_red = rgb(1.0, 0.2, 0.4);
-
-pair bary(real a, real b, real c, pair X, pair Y, pair Z){
-	return (a*X + b*Y + c*Z)/(a + b + c);
-}
-
-pair excenter(pair A, pair B, pair C){
-	return bary(-d(B, C), d(C, A), d(A, B), A, B, C);
-}
-
-path excircle(pair A, pair B, pair C){
-	return CP(excenter(A, B, C), foot(excenter(A, B, C), B, C));
-}
-
-pair A = dir(110), B = dir(210), C = dir(330), D = dir(20),
-	O = origin, H = orthocenter(A, B, C), I = incenter(A, B, C);
 		\end{asydef}
 	\fi
 \fi
