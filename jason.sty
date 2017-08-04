@@ -218,6 +218,11 @@ pen n_purple = rgb(0.7, 0.4, 1.0),
 	\ifjasonfont
 		\allsectionsfont{\sffamily\boldmath}
 	\fi
+
+	% Section number before left margin
+	\renewcommand\sectionlinesformat[4]{%
+		\makebox[0pt][r]{#3}#4%
+	}
 	
 	\usepackage{enumitem} % \setitemize
 	\ifjasonspacing
