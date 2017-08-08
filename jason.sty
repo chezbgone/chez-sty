@@ -213,22 +213,53 @@ pen n_purple = rgb(0.7, 0.4, 1.0),
 	\fi
 	\usepackage{geometry}
 	
-	% Sans Serif Headings
 	\usepackage{sectsty} % \allsectionsfont
+	\usepackage{enumitem}
+	\usepackage{titlesec} % titlespacing
+	\usepackage{titling}
+
+	% Section number before left margin
+	\titleformat{\section}[hang]
+		{\Large\bfseries\sffamily\boldmath}
+		{\llap{\thesection\hskip 9pt}}
+		{0pt}
+		{}
+	\titleformat{name=\section, numberless}[hang]
+		{\Large\bfseries\sffamily\boldmath}
+		{}
+		{0em}
+		{}
+	
+	\titleformat{\subsection}[hang]
+		{\large\bfseries\sffamily\boldmath}
+		{\llap{\thesubsection\hskip 9pt}}
+		{0pt}
+		{}
+	\titleformat{name=\subsection, numberless}[hang]
+		{\large\bfseries\sffamily\boldmath}
+		{}
+		{0em}
+		{}
+
+	\titleformat{\subsubsection}[hang]
+		{\large\bfseries\sffamily\boldmath}
+		{\llap{\thesubsubsection\hskip 9pt}}
+		{0pt}
+		{}
+	\titleformat{name=\subsubsection, numberless}[hang]
+		{\large\bfseries\sffamily\boldmath}
+		{}
+		{0em}
+		{}
+
+	% Sans Serif Headings
 	\ifjasonfont
 		\allsectionsfont{\sffamily\boldmath}
 	\fi
 
-	% Section number before left margin
-	\renewcommand\sectionlinesformat[4]{%
-		\makebox[0pt][r]{#3}#4%
-	}
-	
-	\usepackage{enumitem} % \setitemize
 	\ifjasonspacing
 		\usepackage[nodisplayskipstretch, onehalfspacing]{setspace}
 		
-		\usepackage{titlesec} % titlespacing
 		\titlespacing{\paragraph}{0pt}{0.3em}{0.5em}
 		
 		\allowdisplaybreaks
@@ -250,8 +281,6 @@ pen n_purple = rgb(0.7, 0.4, 1.0),
 	
 	%Titling
 	\ifjasontitling
-		\usepackage{titling}
-		
 		\ifjasonfont
 			\pretitle{
 				\vspace{-30pt}
