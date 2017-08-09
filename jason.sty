@@ -1,4 +1,4 @@
-\ProvidesPackage{jason}[2017/06/10]
+\ProvidesPackage{jason}[2017/08/18]
 \usepackage{amsmath,amssymb,amsthm}
 
 % We include "jason" in all of these to make sure
@@ -64,48 +64,29 @@
 	% Symbols
 	\newcommand{\eps}{\varepsilon}
 	\newcommand{\dang}{\measuredangle} % Directed angle
+	\newcommand{\dg}{\ensuremath{^\circ}}
+	\newcommand{\half}{\ensuremath{\frac{1}{2}}}
+	\newcommand{\st}{\; \middle\vert \;}
 	\newcommand{\iso}{\cong} % Isomorphic
-	\def\dg{^\circ}
-	\def\half{\frac{1}{2}}
-	\def\st{\; \middle\vert \;}
 	
 	% Arguments
 	\newcommand{\cbrt}[1]{\sqrt[3]{#1}}
 	\newcommand{\ol}[1]{\overline{#1}}
 	\newcommand{\ul}[1]{\underline{#1}}
 	\newcommand{\ray}[1]{\overrightarrow{#1}}
-	\newcommand{\seg}[1]{\ol{#1}}
-	\newcommand{\arc}[1]{\wideparen{#1}}
-	\newcommand{\vocab}[1]{\textbf{\color{blue}\boldmath #1}}
-	\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
-	\newcommand{\pddv}[2]{\frac{\partial^2 #1}{\partial #2^2}}
-	\newcommand{\pdnv}[3]{\frac{\partial^#3 #1}{\partial #2^#3}}
 	
 	% Operators
 	\DeclareMathOperator{\cis}{cis}
 	\DeclareMathOperator{\lcm}{lcm}
+	\DeclareMathOperator*{\argmax}{argmax}
+	\DeclareMathOperator*{\argmin}{argmin}
 	\newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
 	\renewcommand{\mod}[1]{\ \text{mod}\ #1}
 	
 	% Commands
+	\newcommand{\vocab}[1]{\textbf{\color{blue}\boldmath #1}}
 	\newcommand{\NewPage}{\vfill\eject}
-	\newcommand{\supnewline}{\leavevmode\par\vspace*{\dimexpr-3pt-\parskip-\baselineskip}}
-	\newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
-	\newcommand{\hrulebar}{
-		\par\hspace{\fill}\rule{0.95\linewidth}{.7pt}\hspace{\fill}
-		\par\nointerlineskip \vspace{\baselineskip}
-	}
-	\newlength{\preabovedisplayskip}
-	\newlength{\preabovedisplayshortskip}
-	\newcommand\Item[1][]{%
-		\setlength{\preabovedisplayskip}{\abovedisplayskip}
-		\setlength{\preabovedisplayshortskip}{\abovedisplayshortskip}
-		\ifx\relax#1\relax  \item \else \item[#1] \fi
-		\abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}
-		\setlength{\abovedisplayskip}{\preabovedisplayskip}
-		\setlength{\abovedisplayshortskip}{\preabovedisplayshortskip}
-	}
-	
+
 	% Sets
 	\def\FF{\mathbb F}
 	\def\NN{\mathbb N}
@@ -114,9 +95,6 @@
 	\def\RR{\mathbb R}
 	\def\CC{\mathbb C}
 	\def\HH{\mathbb H}
-	
-	\def\EE{\mathbb E}
-	\def\PP{\mathbb P}
 	
 	% Inequalities
 	\newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
@@ -143,6 +121,16 @@
 	\newcommand{\size}{\verts}
 	\newcommand{\norm}{\Verts}
 	\newcommand{\tuple}{\angles}
+
+	% Calculus
+	\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
+	\newcommand{\pddv}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+	\newcommand{\pdnv}[3]{\frac{\partial^#3 #1}{\partial #2^#3}}
+	
+	% Stats
+	\def\EE{\mathbb E}
+	\def\PP{\mathbb P}
+
 \fi
 
 % Asymptote
