@@ -139,22 +139,6 @@
 \ifjasonasy
 	\PassOptionsToPackage{noplaybutton}{media9}
 	\usepackage[inline]{asymptote}
-	
-	\ifjasonasypredef
-		\begin{asydef}
-import olympiad; import cse5;
-pointpen = pathpen = pathfontpen = anglepen = anglefontpen = black;
-pointfontsize = 9; defaultpen(fontsize(9pt));
-usepackage("amsmath"); usepackage("amssymb");
-size(7cm);
-
-pen n_purple = rgb(0.7, 0.4, 1.0),
-    n_blue = rgb(0.0, 0.6, 1.0),
-    n_green = rgb(0.0, 0.4, 0.0),
-    n_orange = rgb(1.0, 0.4, 0.1),
-    n_red = rgb(1.0, 0.2, 0.4);
-		\end{asydef}
-	\fi
 \fi
 
 \ifjasonsetup
