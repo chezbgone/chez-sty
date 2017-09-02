@@ -149,10 +149,8 @@
 % % % % % % % % % % % % % % % % % % % % % % %
 \usepackage{mathrsfs}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
 
 \PassOptionsToPackage{svgnames, dvipsnames}{xcolor}
-\usepackage{microtype}
 \usepackage{nccmath}
 \usepackage{graphicx}
 \usepackage{etoolbox}
@@ -230,6 +228,8 @@
 
 	% Sans Serif Headings
 	\ifjasonfont
+		\usepackage{lmodern}
+		\usepackage{microtype}
 		\allsectionsfont{\sffamily\boldmath}
 	\fi
 
@@ -396,6 +396,8 @@
 				preheadhook = {~\vspace{-6pt}},
 			]{thmrecbox}
 		\fi
+
+		\newcommand{\boxhack}{~\vspace{-2em}}
 	\fi
 	
 	\ifjasonthm
