@@ -1,0 +1,122 @@
+\ProvidesPackage{chezbase}[2017/09/09]
+\usepackage{amsmath, amssymb, amsthm}
+
+% We include "chez" in all of these to make sure
+% that they do not conflict with any other packages
+\newif\ifchezsetup   \chezsetuptrue
+\newif\ifchezshorts  \chezshortstrue
+\newif\ifchezasy     \chezasytrue
+\newif\ifchezauthor  \chezauthortrue
+\newif\ifchezdate    \chezdatetrue
+
+\DeclareOption{nosetup}{\chezsetupfalse}
+\DeclareOption{noshorts}{\chezshortsfalse}
+\DeclareOption{noasy}{\chezasyfalse}
+\DeclareOption{noauthor}{\chezauthorfalse}
+\DeclareOption{nodate}{\chezdatefalse}
+
+\ProcessOptions\relax
+
+\ifchezshorts
+	% Symbols
+	\newcommand{\eps}{\varepsilon}
+	\newcommand{\dang}{\measuredangle} % Directed angle
+	\newcommand{\dg}{\ensuremath{^\circ}}
+	\newcommand{\half}{\ensuremath{\frac{1}{2}}}
+	\newcommand{\st}{\; \middle\vert \;}
+	\newcommand{\divides}{\; \middle\vert \;}
+	\newcommand{\iso}{\cong} % Isomorphic
+	
+	% Arguments
+	\newcommand{\cbrt}[1]{\sqrt[3]{#1}}
+	\newcommand{\ol}[1]{\overline{#1}}
+	\newcommand{\ul}[1]{\underline{#1}}
+	\newcommand{\ray}[1]{\overrightarrow{#1}}
+	
+	% Operators
+	\DeclareMathOperator{\cis}{cis}
+	\DeclareMathOperator{\lcm}{lcm}
+	\DeclareMathOperator*{\argmax}{argmax}
+	\DeclareMathOperator*{\argmin}{argmin}
+	\newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
+	\renewcommand{\mod}[1]{\ \text{mod}\ #1}
+	\renewcommand{\Re}{\operatorname{Re}}
+	\renewcommand{\Im}{\operatorname{Im}}
+	
+	% Commands
+	\newcommand{\vocab}[1]{\textbf{\color{blue}\boldmath #1}}
+	\newcommand{\NewPage}{\vfill\eject}
+
+	% Sets
+	\def\FF{\mathbb F}
+	\def\NN{\mathbb N}
+	\def\ZZ{\mathbb Z}
+	\def\QQ{\mathbb Q}
+	\def\RR{\mathbb R}
+	\def\CC{\mathbb C}
+	\def\HH{\mathbb H}
+	
+	% Inequalities
+	\newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
+	\newcommand{\symsum}{\sum_{\mathrm{sym}}}
+	\newcommand{\cycprod}{\prod_{\mathrm{cyc}}}
+	\newcommand{\symprod}{\prod_{\mathrm{sym}}}
+	
+	% for delimiters
+	\usepackage{mathtools}
+	
+	% syntactically-named delimiters
+	\DeclarePairedDelimiter{\braces}{\{}{\}}
+	\DeclarePairedDelimiter{\parens}{(}{)}
+	\DeclarePairedDelimiter{\brackets}{[}{]}
+	\DeclarePairedDelimiter{\angles}{\langle}{\rangle}
+	\DeclarePairedDelimiter{\verts}{\lvert}{\rvert}
+	\DeclarePairedDelimiter{\Verts}{\lVert}{\rVert}
+	\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+	\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+	\DeclarePairedDelimiter{\dnothing}{.}{.}
+	
+	% semantically-named delimiters
+	\newcommand{\set}{\braces}
+	\newcommand{\abs}{\verts}
+	\newcommand{\size}{\verts}
+	\newcommand{\norm}{\Verts}
+	\newcommand{\tuple}{\angles}
+
+	% Calculus
+	\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
+	\newcommand{\pddv}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+	\newcommand{\pdnv}[3]{\frac{\partial^#3 #1}{\partial #2^#3}}
+	
+	% Stats
+	\newcommand{\EE}{\mathbb E}
+	\newcommand{\PP}{\mathbb P}
+	\DeclareMathOperator{\Var}{Var}
+\fi
+
+% Asymptote
+\ifchezasy
+	\PassOptionsToPackage{noplaybutton}{media9}
+	\usepackage[inline]{asymptote}
+\fi
+
+\ifchezsetup
+\usepackage{mathrsfs}
+\usepackage[T1]{fontenc}
+
+\PassOptionsToPackage{svgnames, dvipsnames}{xcolor}
+\usepackage{nccmath}
+\usepackage{graphicx}
+\usepackage{etoolbox}
+\usepackage{adjustbox}
+
+% makes \oint circle smaller
+\let\oldoint\ointop
+\usepackage{esint}
+\renewcommand{\oint}{\oldoint\nolimits}
+
+% Set up Author
+\ifchezauthor
+	\author{Jason Chen}
+\fi
+\fi

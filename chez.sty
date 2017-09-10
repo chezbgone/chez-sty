@@ -1,0 +1,371 @@
+\ProvidesPackage{chez}[2017/09/09]
+\usepackage{amsmath, amssymb, amsthm}
+
+% We include "chez" in all of these to make sure
+% that they do not conflict with any other packages
+\newif\ifchezsetup   \chezsetuptrue
+\newif\ifchezshorts  \chezshortstrue
+\newif\ifchezasy     \chezasytrue
+\newif\ifchezauthor  \chezauthortrue
+\newif\ifchezdate    \chezdatetrue
+
+\DeclareOption{nosetup}{\chezasyfalse}
+\DeclareOption{noshorts}{\chezshortsfalse}
+\DeclareOption{noasy}{\chezasyfalse}
+\DeclareOption{noauthor}{\chezauthorfalse}
+\DeclareOption{nodate}{\chezdatefalse}
+
+\newif\ifchezmargins   \chezmarginstrue
+\newif\ifchezspacing   \chezspacingtrue
+\newif\ifchezfont      \chezfonttrue
+\newif\ifcheztitling   \cheztitlingtrue
+\newif\ifchezfancy     \chezfancytrue
+\newif\ifchezheadrule  \chezheadruletrue
+\newif\ifchezsectthms  \chezsectthmsfalse
+\newif\ifchezboxedthms \chezboxedthmstrue
+\newif\ifchezref       \chezreftrue
+\newif\ifchezcolor     \chezcolortrue
+\newif\ifchezcode      \chezcodefalse
+\newif\ifchezthm       \chezthmtrue
+
+\DeclareOption{normalmargins}{\chezmarginsfalse}
+\DeclareOption{normalspacing}{\chezspacingfalse}
+\DeclareOption{normalfont}{\chezfontfalse}
+\DeclareOption{normaltitling}{\cheztitlingfalse}
+\DeclareOption{nofancy}{\chezfancyfalse}
+\DeclareOption{noheadrule}{\chezheadrulefalse}
+\DeclareOption{sectthms}{\chezsectthmstrue}
+\DeclareOption{regularthms}{\chezboxedthmsfalse}
+\DeclareOption{noref}{\chezreffalse}
+\DeclareOption{href}{\chezhreftrue}
+\DeclareOption{nocolor}{\chezcolorfalse}
+\DeclareOption{code}{\chezcodetrue}
+\DeclareOption{nothms}{\chezthmfalse}
+
+\ProcessOptions\relax
+
+\ifchezasy \PassOptionsToPackage{nosetup}{jasonbase} \fi
+\ifchezshorts \PassOptionsToPackage{noshorts}{jasonbase} \fi
+\ifchezasy \PassOptionsToPackage{noasy}{jasonbase} \fi
+\ifchezauthor \PassOptionsToPackage{noauthor}{jasonbase} \fi
+\ifchezdate \PassOptionsToPackage{nodate}{jasonbase} \fi
+\usepackage{chezbase}
+
+\ifchezsetup
+\usepackage{endnotes}
+\usepackage{float}
+\usepackage[obeyFinal, textsize=scriptsize]{todonotes}
+
+% must stay in this order:
+\ifchezref
+	\usepackage{hyperref}
+	\usepackage{cleveref}
+\fi
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+\ifchezmargins
+	\PassOptionsToPackage{margin = 1in}{geometry}
+\fi
+\usepackage{geometry}
+
+\usepackage{sectsty} % \allsectionsfont
+\usepackage{enumitem}
+\usepackage{titlesec} % titlespacing
+\usepackage{titling}
+
+% Section number before left margin
+\titleformat{\section}[hang]
+	{\Large\bfseries\sffamily\boldmath}
+	{\llap{\thesection\hskip 9pt}}
+	{0pt}
+	{}
+\titleformat{name=\section, numberless}[hang]
+	{\Large\bfseries\sffamily\boldmath}
+	{}
+	{0em}
+	{}
+
+\titleformat{\subsection}[hang]
+	{\large\bfseries\sffamily\boldmath}
+	{\llap{\thesubsection\hskip 9pt}}
+	{0pt}
+	{}
+\titleformat{name=\subsection, numberless}[hang]
+	{\large\bfseries\sffamily\boldmath}
+	{}
+	{0em}
+	{}
+
+\titleformat{\subsubsection}[hang]
+	{\large\bfseries\sffamily\boldmath}
+	{\llap{\thesubsubsection\hskip 9pt}}
+	{0pt}
+	{}
+\titleformat{name=\subsubsection, numberless}[hang]
+	{\large\bfseries\sffamily\boldmath}
+	{}
+	{0em}
+	{}
+
+% Sans Serif Headings
+\ifchezfont
+	\usepackage{lmodern}
+	\usepackage{microtype}
+	\allsectionsfont{\sffamily\boldmath}
+\fi
+
+\ifchezspacing
+	\usepackage[nodisplayskipstretch, onehalfspacing]{setspace}
+	
+	\titlespacing{\paragraph}{0pt}{0.3em}{0.5em}
+	
+	\allowdisplaybreaks
+	
+	%\let\oldcases\cases
+	%\let\oldendcases\endcases
+	%\renewenvironment{cases}{\setstretch{1}\oldcases}{\oldendcases}
+	\AtBeginDocument{
+		\setlength{\belowdisplayskip}{0.5em}
+		\setlength{\belowdisplayshortskip}{0.2em}
+		\setlength{\abovedisplayskip}{0.5em}
+		\setlength{\abovedisplayshortskip}{0.2em}
+	}
+	
+	\setlist{noitemsep, topsep = 0.4em}
+	\renewcommand\labelitemi{\raisebox{0.15}{\tiny$\bullet$}}
+	\renewcommand{\arraystretch}{0.8}
+\fi
+
+%Titling
+\ifcheztitling
+	\ifchezfont
+		\pretitle{
+			\vspace{-30pt}
+			\begin{center}
+				\Large
+				\bfseries\boldmath
+				\ifchezfont \sffamily \fi
+		}
+	\fi
+	\posttitle{\\ \vspace{-0.1em}\end{center}}
+	
+	\preauthor{\begin{center} \scshape}
+	\postauthor{\\ \vspace{-0.2em} \end{center}}
+	
+	\predate{\begin{center} \small}
+	\postdate{\\ \end{center}}
+	
+	\providecommand{\thesubtitle}{}
+	\newcommand{\subtitle}[1]{
+		\renewcommand{\thesubtitle}{#1}
+		\posttitle{
+			\\ \vspace{0pt}
+			\end{center}
+			\begin{center}
+				\vspace{-0.8em}
+				\large
+				\bfseries
+				\ifchezfont \sffamily \fi
+				\thesubtitle
+			\end{center}
+			\vspace{-1.5em}
+		}
+	}
+	
+	\ifchezauthor
+		\author{Jason Chen}
+	\fi
+	
+	\ifchezdate\else
+		\date{~\vspace{-5ex}}
+	\fi
+\fi
+
+\ifchezfancy
+	\usepackage{fancyhdr}
+	\pagestyle{fancy}
+	\setlength{\headheight}{36pt}
+	
+	% Setup Fancy Headers
+	\ifchezheadrule
+		\renewcommand{\headrulewidth}{0.5pt}
+	\else
+		\renewcommand{\headrulewidth}{0pt}
+	\fi
+	\renewcommand{\footrulewidth}{0pt}
+	
+	\ifcheztitling
+		\lhead{\theauthor}
+	\fi
+	
+	\chead{}
+	\rhead{\nouppercase{\leftmark}}
+	\lfoot{}
+	\cfoot{\thepage}
+	\rfoot{}
+\fi
+
+\ifchezboxedthms
+	\usepackage{xcolor}
+	\usepackage{thmtools}
+	\usepackage[framemethod=TikZ]{mdframed}
+	
+	\ifchezcolor
+		\mdfdefinestyle{mdbluebox}{%
+			roundcorner = 2pt,
+			linewidth=1pt,
+			innerbottommargin=9pt,
+			nobreak=false,
+			linecolor=Blue,
+			backgroundcolor=DodgerBlue!5,
+		}
+		\declaretheoremstyle[
+			headfont=\sffamily\bfseries\color{MediumBlue},
+			mdframed={style=mdbluebox},
+			headpunct={\\[3pt]},
+			postheadspace={0pt}
+		]{thmbluebox}
+
+		\mdfdefinestyle{mdrecbox}{%
+			roundcorner = 2pt,
+			linewidth=0.5pt,
+			frametitleaboveskip=5pt,
+			frametitlebelowskip=0pt,
+			frametitlefont=\bfseries,
+			innertopmargin=4pt,
+			innerbottommargin=8pt,
+			linecolor=Green,
+			backgroundcolor=green!5,
+		}
+		\declaretheoremstyle[
+			headfont=\sffamily\bfseries\color{Green},
+			mdframed={style=mdrecbox},
+			headpunct={\\[3pt]},
+			postheadspace={0pt},
+			preheadhook={~\vspace{-6pt}},
+		]{thmrecbox}
+	\else
+		\mdfdefinestyle{mdbluebox}{%
+			roundcorner = 2pt,
+			linewidth=1pt,
+			innerbottommargin=9pt,
+			nobreak=false,
+			linecolor=black,
+		}
+		\declaretheoremstyle[
+			headfont=\sffamily\bfseries,
+			mdframed={style=mdbluebox},
+			headpunct={\\[3pt]},
+			postheadspace={0pt}
+		]{thmbluebox}
+		
+		\mdfdefinestyle{mdrecbox}{%
+			roundcorner = 2pt,
+			linewidth=0.5pt,
+			frametitleaboveskip=5pt,
+			frametitlebelowskip=0pt,
+			frametitlefont=\bfseries,
+			innertopmargin=4pt,
+			innerbottommargin=8pt,
+			linecolor=black,
+		}
+		\declaretheoremstyle[
+			headfont = \sffamily\bfseries,
+			mdframed = {style=mdrecbox},
+			headpunct = {\\[3pt]},
+			postheadspace = {0pt},
+			preheadhook = {~\vspace{-6pt}},
+		]{thmrecbox}
+	\fi
+
+	\newcommand{\boxhack}{~\vspace{-2em}}
+\fi
+
+\ifchezthm
+	\theoremstyle{plain}
+	
+	\ifchezboxedthms
+		\ifchezsectthms
+			\declaretheorem[%
+			style=thmbluebox, name=Theorem, numberwithin=section]{theorem}
+		\else
+			\declaretheorem[%
+			style=thmbluebox, name=Theorem]{theorem}
+		\fi
+		\declaretheorem[style=thmbluebox, name=Lemma, sibling=theorem]{lemma}
+		\declaretheorem[style=thmbluebox, name=Proposition, sibling=theorem]{proposition}
+		\declaretheorem[style=thmbluebox, name=Corollary, sibling=theorem]{corollary}
+		\declaretheorem[style=thmbluebox, name=Theorem, numbered=no]{theorem*}
+		\declaretheorem[style=thmbluebox, name=Lemma, numbered=no]{lemma*}
+		\declaretheorem[style=thmbluebox, name=Proposition, numbered=no]{proposition*}
+		\declaretheorem[style=thmbluebox, name=Corollary, numbered=no]{corollary*}
+
+		\declaretheorem[style=thmbluebox, name=Algorithm, sibling=theorem]{algorithm}
+	\else
+		\ifchezsectthms
+			\newtheorem{theorem}{Theorem}[section]
+		\else
+			\newtheorem{theorem}{Theorem}
+		\fi
+		\newtheorem{lemma}[theorem]{Lemma}
+		\newtheorem{proposition}[theorem]{Proposition}
+		\newtheorem{corollary}[theorem]{Corollary}
+		\newtheorem*{theorem*}{Theorem}
+		\newtheorem*{lemma*}{Lemma}
+		\newtheorem*{proposition*}{Proposition}
+		\newtheorem*{corollary*}{Corollary}
+
+		\newtheorem{algorithm}[theorem]{Algorithm}
+		\newtheorem*{algorithm*}{Algorithm}
+	\fi
+	
+	% Def-style Theorems
+	\theoremstyle{definition}
+	
+	\newtheorem{answer}[theorem]{Answer}
+	\newtheorem{case}[theorem]{Case}
+	\newtheorem{claim}[theorem]{Claim}
+	\newtheorem{conjecture}[theorem]{Conjecture}
+	\newtheorem{definition}[theorem]{Definition}
+	\newtheorem{exercise}[theorem]{Exercise}
+	\newtheorem{fact}[theorem]{Fact}
+	\newtheorem{problem}[theorem]{Problem}
+	\newtheorem{idea}[theorem]{Idea}
+	\newtheorem{question}[theorem]{Question}
+	
+	\newtheorem*{answer*}{Answer}
+	\newtheorem*{case*}{Case}
+	\newtheorem*{claim*}{Claim}
+	\newtheorem*{conjecture*}{Conjecture}
+	\newtheorem*{definition*}{Definition}
+	\newtheorem*{exercise*}{Exercise}
+	\newtheorem*{fact*}{Fact}
+	\newtheorem*{joke*}{Joke}
+	\newtheorem*{problem*}{Problem}
+	\newtheorem*{idea*}{Idea}
+	\newtheorem*{question*}{Question}
+	
+	\ifchezboxedthms
+		\declaretheorem[style=thmrecbox, name=Example, sibling=theorem]{example}
+		\declaretheorem[style=thmrecbox, name=Example, numbered=no]{example*}
+	\else
+		\newtheorem{example}[theorem]{Example}
+		\newtheorem*{example*}{Example}
+	\fi
+	
+	% Remark-style theorems
+	%\theoremstyle{remark}
+	%\newtheorem{note}[theorem]{Note} % note theorem-environment conflicts with endnotes
+	%\newtheorem*{note*}{Note}
+	\newtheorem{remark}[theorem]{Remark}
+	\newtheorem*{remark*}{Remark}
+\fi
+
+\ifchezcode
+	\usepackage{minted}
+	\usepackage{accsupp} % prevents selection of line numbers
+	\let\oldfancyVerbLine\theFancyVerbLine
+	\renewcommand{\theFancyVerbLine}{\BeginAccSupp{ActualText={}}\oldfancyVerbLine\EndAccSupp{}}
+\fi
+\fi
