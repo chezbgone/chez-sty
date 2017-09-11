@@ -115,8 +115,14 @@
 \usepackage{esint}
 \renewcommand{\oint}{\oldoint\nolimits}
 
-% Set up Author
 \ifchezauthor
 	\author{Jason Chen}
+\else
+	\author{~\vspace{-2em}}
 \fi
+
+\ifchezdate\else
+	\date{~\vspace{-5ex}}
+\fi
+
 \fi
