@@ -44,11 +44,11 @@
 
 \ProcessOptions\relax
 
-\ifchezasy \PassOptionsToPackage{nosetup}{jasonbase} \fi
-\ifchezshorts \PassOptionsToPackage{noshorts}{jasonbase} \fi
-\ifchezasy \PassOptionsToPackage{noasy}{jasonbase} \fi
-\ifchezauthor \PassOptionsToPackage{noauthor}{jasonbase} \fi
-\ifchezdate \PassOptionsToPackage{nodate}{jasonbase} \fi
+\ifchezasy\else \PassOptionsToPackage{noasy}{chezbase} \fi
+\ifchezshorts\else \PassOptionsToPackage{noshorts}{chezbase} \fi
+\ifchezasy\else \PassOptionsToPackage{noasy}{chezbase} \fi
+\ifchezauthor\else \PassOptionsToPackage{noauthor}{chezbase} \fi
+\ifchezdate\else \PassOptionsToPackage{nodate}{chezbase} \fi
 \usepackage{chezbase}
 
 \ifchezsetup
@@ -172,14 +172,6 @@
 			\vspace{-1.5em}
 		}
 	}
-	
-	\ifchezauthor
-		\author{Jason Chen}
-	\fi
-	
-	\ifchezdate\else
-		\date{~\vspace{-5ex}}
-	\fi
 \fi
 
 \ifchezfancy
