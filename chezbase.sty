@@ -1,20 +1,8 @@
 \ProvidesPackage{chezbase}[2017/09/09]
 \usepackage{amsmath, amssymb, amsthm}
 
-% We include "chez" in all of these to make sure
+% We include "chezbase" in all of these to make sure
 % that they do not conflict with any other packages
-\newif\ifchezsetup   \chezsetuptrue
-\newif\ifchezshorts  \chezshortstrue
-\newif\ifchezasy     \chezasytrue
-\newif\ifchezauthor  \chezauthortrue
-\newif\ifchezdate    \chezdatetrue
-
-\DeclareOption{nosetup}{\chezsetupfalse}
-\DeclareOption{noshorts}{\chezshortsfalse}
-\DeclareOption{noasy}{\chezasyfalse}
-\DeclareOption{noauthor}{\chezauthorfalse}
-\DeclareOption{nodate}{\chezdatefalse}
-
 \ProcessOptions\relax
 
 \ifchezshorts

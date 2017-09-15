@@ -44,11 +44,6 @@
 
 \ProcessOptions\relax
 
-\ifchezasy\else \PassOptionsToPackage{noasy}{chezbase} \fi
-\ifchezshorts\else \PassOptionsToPackage{noshorts}{chezbase} \fi
-\ifchezasy\else \PassOptionsToPackage{noasy}{chezbase} \fi
-\ifchezauthor\else \PassOptionsToPackage{noauthor}{chezbase} \fi
-\ifchezdate\else \PassOptionsToPackage{nodate}{chezbase} \fi
 \usepackage{chezbase}
 
 \ifchezsetup
@@ -172,6 +167,16 @@
 			\vspace{-1.5em}
 		}
 	}
+
+	\ifchezauthor
+		\author{Jason Chen}
+	\else
+		\author{~\vspace{-2em}}
+	\fi
+
+	\ifchezdate\else
+		\date{~\vspace{-5ex}}
+	\fi
 \fi
 
 \ifchezfancy
