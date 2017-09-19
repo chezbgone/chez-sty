@@ -361,6 +361,8 @@
 
 \ifchezcode
 	\usepackage{minted}
+	\setminted{linenos = true, breaklines = true, tabsize = 4}
+
 	\usepackage{accsupp} % prevents selection of line numbers
 	\let\oldfancyVerbLine\theFancyVerbLine
 	\renewcommand{\theFancyVerbLine}{\BeginAccSupp{ActualText={}}\oldfancyVerbLine\EndAccSupp{}}
