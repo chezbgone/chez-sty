@@ -33,6 +33,7 @@
 \usepackage{thmtools}
 \PassOptionsToPackage{svgnames, dvipsnames, usenames}{xcolor}
 \usepackage[framemethod = TikZ]{mdframed}
+\usepackage{silence} % for suppressing warnings
 
 % SETUP
 
@@ -73,9 +74,11 @@
 	innerbottommargin = 8pt,
 }
 
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
 \ifchezcolor
-	\colorlet{defforeground}{purple!50!black}
-	\colorlet{defbackground}{purple!5}
+	\colorlet{defforeground}{red!70!black}
+	\colorlet{defbackground}{red!5}
 	\colorlet{thmforeground}{blue}
 	\colorlet{thmbackground}{blue!5}
 	\colorlet{exforeground}{green!50!black}
@@ -89,13 +92,13 @@
 	\colorlet{exbackground}{white}
 \fi
 
-\mdfdefinestyle{mdpurplebox}{
+\mdfdefinestyle{mdredbox}{
 	linecolor = defforeground,
 	backgroundcolor = defbackground,
 }
 \declaretheoremstyle[
-	headfont = \sffamily\bfseries\color{thmforeground},
-	mdframed = {style = mdpurplebox},
+	headfont = \sffamily\bfseries\color{defforeground},
+	mdframed = {style = mdredbox},
 	headpunct = {\\[3pt]},
 	postheadspace = {0pt}
 ]{defbox}
@@ -148,6 +151,9 @@
 	
 \declaretheorem[style = exbox, name = Example, sibling = theorem]{example}
 \declaretheorem[style = exbox, name = Example, numbered = no]{example*}
+
+% Suppress mdframed warnings
+\WarningFilter{mdframed}{You got a bad break} % 'Cause you've had a bad day...
 
 \ifchezcode
 	\usepackage{minted}
