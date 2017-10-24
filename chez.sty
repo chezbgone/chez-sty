@@ -43,6 +43,10 @@
 	\date{~\vspace{-5ex}}
 \fi
 
+\makeatletter
+\patchcmd{\@maketitle}{\huge}{\Large}{}{}
+\makeatother
+
 \setkomafont{author}{\normalsize\scshape}
 \setkomafont{date}{\normalsize}
 
