@@ -50,6 +50,10 @@
 \setkomafont{author}{\normalsize\scshape}
 \setkomafont{date}{\normalsize}
 
+\RedeclareSectionCommand[
+	beforeskip = .4\baselineskip
+]{paragraph}
+
 \ifchezfancy
 	\usepackage{scrlayer-scrpage}
 	\setkomafont{pageheadfoot}{\normalcolor}
