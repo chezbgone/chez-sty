@@ -1,11 +1,13 @@
 \ProvidesPackage{chez}[2017/10/09]
 
 \newif\ifchezdate      \chezdatetrue
+\newif\ifchezssf       \chezssffalse
 \newif\ifchezfancy     \chezfancytrue
 \newif\ifchezcolor     \chezcolortrue
 \newif\ifchezcode      \chezcodefalse
 
 \DeclareOption{nodate}{\chezdatefalse}
+\DeclareOption{sans}{\chezssftrue}
 \DeclareOption{nofancy}{\chezfancyfalse}
 \DeclareOption{nocolor}{\chezcolorfalse}
 \DeclareOption{code}{\chezcodetrue}
@@ -41,6 +43,10 @@
 
 \ifchezdate\else
 	\date{~\vspace{-5ex}}
+\fi
+
+\ifchezssf
+	\renewcommand{\familydefault}{\sfdefault}
 \fi
 
 \makeatletter
