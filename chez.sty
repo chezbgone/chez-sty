@@ -49,6 +49,10 @@
 	\renewcommand{\familydefault}{\sfdefault}
 \fi
 
+\ifchezcolor \else
+	\renewcommand{\vocab}[1]{\textbf{\boldmath #1}}
+\fi
+
 \makeatletter
 \patchcmd{\@maketitle}{\huge}{\Large}{}{}
 \makeatother
