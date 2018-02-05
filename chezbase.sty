@@ -8,6 +8,7 @@
 \usepackage[inline]{asymptote}
 
 \usepackage{graphicx}
+\usepackage{subcaption}
 
 \usepackage{mathrsfs}
 \usepackage[T1]{fontenc}
@@ -94,9 +95,12 @@
 \DeclareMathOperator*{\lcm}{lcm}
 	
 % Calculus
+\newcommand{\dv}[2]{\frac{d #1}{d #2}}
+\newcommand{\ddv}[2]{\frac{d^2 #1}{d #2^2}}
+\newcommand{\dnv}[3]{\frac{d^{#3} #1}{d #2^{#3}}}
 \newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\pddv}[2]{\frac{\partial^2 #1}{\partial #2^2}}
-\newcommand{\pdnv}[3]{\frac{\partial^#3 #1}{\partial #2^#3}}
+\newcommand{\pdnv}[3]{\frac{\partial^{#3} #1}{\partial #2^{#3}}}
 
 % Algebra
 \DeclareMathOperator{\ord}{ord}
