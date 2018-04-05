@@ -18,6 +18,8 @@
 \KOMAoptions{fontsize = 10pt, paper = letter, DIV = 20}
 \KOMAoptions{numbers = noendperiod}
 
+\PassOptionsToPackage{svgnames, dvipsnames, usenames}{xcolor}
+
 \usepackage[nodisplayskipstretch, onehalfspacing]{setspace}
 
 \usepackage{lmodern}
@@ -30,11 +32,11 @@
 \usepackage{endnotes}
 \usepackage[obeyFinal, textsize = scriptsize]{todonotes}
 
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
+	\hypersetup{urlcolor = RubineRed, linkcolor = RoyalBlue, citecolor = ForestGreen}
 \usepackage{cleveref} % must be loaded after hyperref
 
 \usepackage{thmtools}
-\PassOptionsToPackage{svgnames, dvipsnames, usenames}{xcolor}
 \usepackage[framemethod = TikZ]{mdframed}
 \usepackage{silence} % for suppressing warnings
 
