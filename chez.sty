@@ -32,8 +32,12 @@
 \usepackage{endnotes}
 \usepackage[obeyFinal, textsize = scriptsize]{todonotes}
 
-\usepackage[colorlinks]{hyperref}
+\ifchezcolor
+	\usepackage[colorlinks]{hyperref}
 	\hypersetup{urlcolor = RubineRed, linkcolor = RoyalBlue, citecolor = ForestGreen}
+\else
+	\usepackage[]{hyperref}
+\fi
 \usepackage{cleveref} % must be loaded after hyperref
 
 \usepackage{thmtools}
