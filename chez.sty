@@ -23,6 +23,7 @@
 \usepackage[nodisplayskipstretch, onehalfspacing]{setspace}
 
 \usepackage{lmodern}
+\usepackage[defaultsans, scale = 0.95]{lato} % copying daniel zhu
 \usepackage{microtype}
 
 \usepackage{enumitem}
@@ -93,9 +94,9 @@
 \renewcommand{\arraystretch}{0.8}
 
 \mdfsetup{
-	roundcorner = 2pt,
-	linewidth = 1pt,
-	innertopmargin = 0.5em,
+	roundcorner = 1pt,
+	hidealllines = true,
+	innertopmargin = 0.6em,
 	innerbottommargin = 1em,
 }
 
@@ -103,11 +104,11 @@
 
 \ifchezcolor
 	\colorlet{defforeground}{red!70!black}
-	\colorlet{defbackground}{red!5}
+	\colorlet{defbackground}{red!7}
 	\colorlet{thmforeground}{blue}
-	\colorlet{thmbackground}{blue!5}
+	\colorlet{thmbackground}{blue!7}
 	\colorlet{exforeground}{green!50!black}
-	\colorlet{exbackground}{green!5}
+	\colorlet{exbackground}{green!7}
 \else
 	\colorlet{defforeground}{black}
 	\colorlet{defbackground}{white}
