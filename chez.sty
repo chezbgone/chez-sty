@@ -164,9 +164,17 @@
 \declaretheorem[style = thmbox, name = Corollary, sibling = theorem]{corollary}
 \declaretheorem[style = thmbox, name = Conjecture, sibling = theorem]{conjecture}
 \declaretheorem[style = thmbox, name = Algorithm, sibling = theorem]{algorithm}
+\declaretheorem[style = thmbox, name = Theorem, numbered = no]{theorem*}
+\declaretheorem[style = thmbox, name = Lemma, numbered = no]{lemma*}
+\declaretheorem[style = thmbox, name = Proposition, numbered = no]{proposition*}
+\declaretheorem[style = thmbox, name = Corollary, numbered = no]{corollary*}
+\declaretheorem[style = thmbox, name = Conjecture, numbered = no]{conjecture*}
+\declaretheorem[style = thmbox, name = Algorithm, numbered = no]{algorithm*}
 
 \declaretheorem[style = defbox, name = Definition, sibling = theorem]{definition}
 \declaretheorem[style = defbox, name = Fact, sibling = theorem]{fact}
+\declaretheorem[style = defbox, name = Definition, numbered = no]{definition*}
+\declaretheorem[style = defbox, name = Fact, numbered = no]{fact*}
 
 \declaretheorem[style = plain, name = Exercise, numbered = no]{exercise}
 \declaretheorem[style = plain, name = Problem, numbered = no]{problem}
@@ -176,9 +184,12 @@
 
 \declaretheorem[style = plain, name = Case, numberwithin = theorem]{case}
 \declaretheorem[style = plain, name = Claim, numberwithin = theorem]{claim}
+\declaretheorem[style = plain, name = Case, numbered = no]{case*}
+\declaretheorem[style = plain, name = Claim, numbered = no]{claim*}
 	
 \declaretheorem[style = exbox, name = Example, sibling = theorem]{example}
 \declaretheorem[style = exbox, name = Example, numbered = no]{example*}
+
 
 % Suppress mdframed warnings
 \WarningFilter{mdframed}{You got a bad break} % 'Cause you've had a bad day...
