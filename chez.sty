@@ -5,14 +5,20 @@
 \newif\ifchezfancy     \chezfancytrue
 \newif\ifchezcolor     \chezcolortrue
 \newif\ifchezcode      \chezcodefalse
+\newif\ifchezdiagram   \chezdiagramfalse
 
 \DeclareOption{nodate}{\chezdatefalse}
 \DeclareOption{serif}{\chezssffalse}
 \DeclareOption{nofancy}{\chezfancyfalse}
 \DeclareOption{nocolor}{\chezcolorfalse}
 \DeclareOption{code}{\chezcodetrue}
+\DeclareOption{diagram}{\chezdiagramtrue}
 
 \ProcessOptions\relax
+
+\ifchezcolor
+	\PassOptionsToPackage{colorlinks}{hyperref}
+\fi
 
 \usepackage{chezbase}
 \KOMAoptions{fontsize = 10pt, paper = letter, DIV = 18}
@@ -33,17 +39,21 @@
 \usepackage{endnotes}
 \usepackage[obeyFinal, textsize = scriptsize]{todonotes}
 
+\ifchezdiagram
+	\usepackage{tikz-cd}
+\fi
+
+\usepackage{thmtools}
+\usepackage[framemethod = TikZ]{mdframed}
+\usepackage{silence} % for suppressing warnings
+
 \ifchezcolor
-	\usepackage[colorlinks]{hyperref}
+	\usepackage[colorlinks]{hyperref} % load this last generally
 	\hypersetup{urlcolor = RubineRed, linkcolor = RoyalBlue, citecolor = ForestGreen}
 \else
 	\usepackage[]{hyperref}
 \fi
 \usepackage{cleveref} % must be loaded after hyperref
-
-\usepackage{thmtools}
-\usepackage[framemethod = TikZ]{mdframed}
-\usepackage{silence} % for suppressing warnings
 
 % SETUP
 
@@ -57,7 +67,7 @@
 	\setkomafont{disposition}{\normalcolor\bfseries}
 \fi
 
-\ifchezcolor \else
+\ifchezcolor\else
 	\renewcommand{\vocab}[1]{\textbf{\boldmath #1}}
 \fi
 
@@ -101,6 +111,12 @@
 }
 
 \newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+\newenvironment{theoremproof}[1][\proofname]
+	{\begin{proof}[#1]\renewcommand*{\qedsymbol}{\(\blacksquare\)}}
+	{\end{proof}}
+\newenvironment{lemmaproof}[1][\proofname]
+	{\begin{proof}[#1]\renewcommand*{\qedsymbol}{\textcolor{blue!70}{\(\blacksquare\)}}}
+	{\end{proof}}
 
 \ifchezcolor
 	\colorlet{defforeground}{red!70!black}
@@ -164,23 +180,28 @@
 \declaretheorem[style = thmbox, name = Corollary, sibling = theorem]{corollary}
 \declaretheorem[style = thmbox, name = Conjecture, sibling = theorem]{conjecture}
 \declaretheorem[style = thmbox, name = Algorithm, sibling = theorem]{algorithm}
+\declaretheorem[style = thmbox, name = Fact, sibling = theorem]{fact}
 \declaretheorem[style = thmbox, name = Theorem, numbered = no]{theorem*}
 \declaretheorem[style = thmbox, name = Lemma, numbered = no]{lemma*}
 \declaretheorem[style = thmbox, name = Proposition, numbered = no]{proposition*}
 \declaretheorem[style = thmbox, name = Corollary, numbered = no]{corollary*}
 \declaretheorem[style = thmbox, name = Conjecture, numbered = no]{conjecture*}
 \declaretheorem[style = thmbox, name = Algorithm, numbered = no]{algorithm*}
+\declaretheorem[style = thmbox, name = Fact, numbered = no]{fact*}
 
 \declaretheorem[style = defbox, name = Definition, sibling = theorem]{definition}
-\declaretheorem[style = defbox, name = Fact, sibling = theorem]{fact}
 \declaretheorem[style = defbox, name = Definition, numbered = no]{definition*}
-\declaretheorem[style = defbox, name = Fact, numbered = no]{fact*}
 
-\declaretheorem[style = plain, name = Exercise, numbered = no]{exercise}
-\declaretheorem[style = plain, name = Problem, numbered = no]{problem}
-\declaretheorem[style = plain, name = Question, numbered = no]{question}
-\declaretheorem[style = plain, name = Answer, numbered = no]{answer}
-\declaretheorem[style = plain, name = Remark, numbered = no]{remark}
+\declaretheorem[style = plain, name = Exercise, sibling = theorem]{exercise}
+\declaretheorem[style = plain, name = Problem, sibling = theorem]{problem}
+\declaretheorem[style = plain, name = Question, sibling = theorem]{question}
+\declaretheorem[style = plain, name = Answer, sibling = theorem]{answer}
+\declaretheorem[style = plain, name = Remark, sibling = theorem]{remark}
+\declaretheorem[style = plain, name = Exercise, numbered = no]{exercise*}
+\declaretheorem[style = plain, name = Problem, numbered = no]{problem*}
+\declaretheorem[style = plain, name = Question, numbered = no]{question*}
+\declaretheorem[style = plain, name = Answer, numbered = no]{answer*}
+\declaretheorem[style = plain, name = Remark, numbered = no]{remark*}
 
 \declaretheorem[style = plain, name = Case, numberwithin = theorem]{case}
 \declaretheorem[style = plain, name = Claim, numberwithin = theorem]{claim}
@@ -189,7 +210,6 @@
 	
 \declaretheorem[style = exbox, name = Example, sibling = theorem]{example}
 \declaretheorem[style = exbox, name = Example, numbered = no]{example*}
-
 
 % Suppress mdframed warnings
 \WarningFilter{mdframed}{You got a bad break} % 'Cause you've had a bad day...

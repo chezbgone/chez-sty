@@ -50,6 +50,7 @@
 \newcommand{\size}{\verts}
 \newcommand{\norm}{\Verts}
 \newcommand{\tuple}{\angles}
+\newcommand{\gen}{\angles}
 
 % Symbols
 \newcommand{\eps}{\varepsilon}
@@ -70,10 +71,15 @@
 \newcommand{\CC}{\mathbb C}
 \newcommand{\HH}{\mathbb H}
 
+\newcommand{\intersect}{\cap}
+\newcommand{\bigintersect}{\bigcap}
+\newcommand{\union}{\cup}
+\newcommand{\bigunion}{\bigcup}
+
 % General
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
-\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Re}{\operatorname{Re}} % can't use DeclareMathOperator because already defined
 \renewcommand{\Im}{\operatorname{Im}}
 \DeclareMathOperator{\cis}{cis}
 
@@ -109,3 +115,13 @@
 % Algebra
 \DeclareMathOperator{\ord}{ord}
 \newcommand{\iso}{\cong}
+\newcommand{\inv}{^{-1}}
+\renewcommand{\ker}{\operatorname{ker}} % already defined
+\DeclareMathOperator{\img}{im}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Img}{Im}
+
+% Algebraic Geometry
+\newcommand{\VV}{\mathcal V}
+\newcommand{\II}{\mathcal I}
+\DeclareMathOperator{\Spec}{Spec}
