@@ -4,6 +4,7 @@
 \newif\ifchezssf       \chezssftrue
 \newif\ifchezfancy     \chezfancytrue
 \newif\ifchezcolor     \chezcolortrue
+\newif\ifchezbox       \chezboxtrue
 \newif\ifchezcode      \chezcodefalse
 \newif\ifchezdiagram   \chezdiagramfalse
 
@@ -11,6 +12,7 @@
 \DeclareOption{serif}{\chezssffalse}
 \DeclareOption{nofancy}{\chezfancyfalse}
 \DeclareOption{nocolor}{\chezcolorfalse}
+\DeclareOption{nobox}{\chezboxfalse}
 \DeclareOption{code}{\chezcodetrue}
 \DeclareOption{diagram}{\chezdiagramtrue}
 
@@ -118,55 +120,38 @@
 	{\begin{proof}[#1]\renewcommand*{\qedsymbol}{\textcolor{blue!70}{\(\blacksquare\)}}}
 	{\end{proof}}
 
-\ifchezcolor
-	\colorlet{defforeground}{red!70!black}
-	\colorlet{defbackground}{red!7}
-	\colorlet{thmforeground}{blue}
-	\colorlet{thmbackground}{blue!7}
-	\colorlet{exforeground}{green!50!black}
-	\colorlet{exbackground}{green!7}
-\else
-	\colorlet{defforeground}{black}
-	\colorlet{defbackground}{white}
-	\colorlet{thmforeground}{black}
-	\colorlet{thmbackground}{white}
-	\colorlet{exforeground}{black}
-	\colorlet{exbackground}{white}
-\fi
 
-\mdfdefinestyle{mdredbox}{
-	linecolor = defforeground,
-	backgroundcolor = defbackground,
+\newcommand{\thmboxstyle}[4]{
+	\ifchezcolor
+		\mdfdefinestyle{#2}{
+			linecolor = #3,
+			backgroundcolor = #4,
+		}
+		\declaretheoremstyle[
+			headfont = \sffamily\bfseries\color{#3},
+			mdframed = {style = #2},
+			headpunct = {\\[0.4pt]},
+			postheadspace = {0pt}
+		]{#1}
+	\else
+		\mdfdefinestyle{#2}{
+			linecolor = black,
+			backgroundcolor = white,
+		}
+		\declaretheoremstyle[
+			headfont = \sffamily\bfseries\color{black},
+			mdframed = {style = #2},
+			headpunct = {\\[0.4pt]},
+			postheadspace = {0pt}
+		]{#1}
+	\fi
 }
-\declaretheoremstyle[
-	headfont = \sffamily\bfseries\color{defforeground},
-	mdframed = {style = mdredbox},
-	headpunct = {\\[0.4pt]},
-	postheadspace = {0pt}
-]{defbox}
 
-\mdfdefinestyle{mdbluebox}{
-	linecolor = thmforeground,
-	backgroundcolor = thmbackground,
-}
-\declaretheoremstyle[
-	headfont = \sffamily\bfseries\color{thmforeground},
-	mdframed = {style = mdbluebox},
-	headpunct = {\\[3pt]},
-	postheadspace = {0pt}
-]{thmbox}
-
-\mdfdefinestyle{mdgreenbox}{
-	linecolor = exforeground,
-	backgroundcolor = exbackground,
-}
-\declaretheoremstyle[
-	headfont = \sffamily\bfseries\color{exforeground},
-	mdframed = {style = mdgreenbox},
-	headpunct = {\\[3pt]},
-	postheadspace = {0pt},
-	preheadhook = {~\vspace{-6pt}},
-]{exbox}
+\thmboxstyle{graybox}{mdgraybox}{grayforeground}{graybackground}
+\thmboxstyle{defbox}{mdredbox}{red!70!black}{red!7}
+\thmboxstyle{thmbox}{mdbluebox}{blue}{blue!7}
+\thmboxstyle{exbox}{mdgreenbox}{green!50!black}{green!7}
+\thmboxstyle{notebox}{mdorangebox}{orange!98!black}{orange!8}
 
 \declaretheoremstyle[
 	bodyfont = \normalfont
@@ -174,23 +159,55 @@
 
 \newcommand{\boxhack}{~\vspace{-2em}}
 
-\declaretheorem[style = thmbox, name = Theorem]{theorem}
-\declaretheorem[style = thmbox, name = Lemma, sibling = theorem]{lemma}
-\declaretheorem[style = thmbox, name = Proposition, sibling = theorem]{proposition}
-\declaretheorem[style = thmbox, name = Corollary, sibling = theorem]{corollary}
-\declaretheorem[style = thmbox, name = Conjecture, sibling = theorem]{conjecture}
-\declaretheorem[style = thmbox, name = Algorithm, sibling = theorem]{algorithm}
-\declaretheorem[style = thmbox, name = Fact, sibling = theorem]{fact}
-\declaretheorem[style = thmbox, name = Theorem, numbered = no]{theorem*}
-\declaretheorem[style = thmbox, name = Lemma, numbered = no]{lemma*}
-\declaretheorem[style = thmbox, name = Proposition, numbered = no]{proposition*}
-\declaretheorem[style = thmbox, name = Corollary, numbered = no]{corollary*}
-\declaretheorem[style = thmbox, name = Conjecture, numbered = no]{conjecture*}
-\declaretheorem[style = thmbox, name = Algorithm, numbered = no]{algorithm*}
-\declaretheorem[style = thmbox, name = Fact, numbered = no]{fact*}
+\ifchezbox
+	\declaretheorem[style = thmbox, name = Theorem]{theorem}
+	\declaretheorem[style = thmbox, name = Lemma, sibling = theorem]{lemma}
+	\declaretheorem[style = thmbox, name = Proposition, sibling = theorem]{proposition}
+	\declaretheorem[style = thmbox, name = Corollary, sibling = theorem]{corollary}
+	\declaretheorem[style = thmbox, name = Conjecture, sibling = theorem]{conjecture}
+	\declaretheorem[style = thmbox, name = Algorithm, sibling = theorem]{algorithm}
+	\declaretheorem[style = thmbox, name = Theorem, numbered = no]{theorem*}
+	\declaretheorem[style = thmbox, name = Lemma, numbered = no]{lemma*}
+	\declaretheorem[style = thmbox, name = Proposition, numbered = no]{proposition*}
+	\declaretheorem[style = thmbox, name = Corollary, numbered = no]{corollary*}
+	\declaretheorem[style = thmbox, name = Conjecture, numbered = no]{conjecture*}
+	\declaretheorem[style = thmbox, name = Algorithm, numbered = no]{algorithm*}
 
-\declaretheorem[style = defbox, name = Definition, sibling = theorem]{definition}
-\declaretheorem[style = defbox, name = Definition, numbered = no]{definition*}
+	\declaretheorem[style = defbox, name = Definition, sibling = theorem]{definition}
+	\declaretheorem[style = defbox, name = Definition, numbered = no]{definition*}
+
+	\declaretheorem[style = exbox, name = Example, sibling = theorem]{example}
+	\declaretheorem[style = exbox, name = Example, numbered = no]{example*}
+
+	\declaretheorem[style = notebox, name = Fact, sibling = theorem]{fact}
+	\declaretheorem[style = notebox, name = Fact, numbered = no]{fact*}
+	\declaretheorem[style = notebox, name = Note, sibling = theorem]{note}
+	\declaretheorem[style = notebox, name = Note, numbered = no]{note*}
+\else
+	\declaretheorem[style = plain, name = Theorem]{theorem}
+	\declaretheorem[style = plain, name = Lemma, sibling = theorem]{lemma}
+	\declaretheorem[style = plain, name = Proposition, sibling = theorem]{proposition}
+	\declaretheorem[style = plain, name = Corollary, sibling = theorem]{corollary}
+	\declaretheorem[style = plain, name = Conjecture, sibling = theorem]{conjecture}
+	\declaretheorem[style = plain, name = Algorithm, sibling = theorem]{algorithm}
+	\declaretheorem[style = plain, name = Theorem, numbered = no]{theorem*}
+	\declaretheorem[style = plain, name = Lemma, numbered = no]{lemma*}
+	\declaretheorem[style = plain, name = Proposition, numbered = no]{proposition*}
+	\declaretheorem[style = plain, name = Corollary, numbered = no]{corollary*}
+	\declaretheorem[style = plain, name = Conjecture, numbered = no]{conjecture*}
+	\declaretheorem[style = plain, name = Algorithm, numbered = no]{algorithm*}
+
+	\declaretheorem[style = plain, name = Definition, sibling = theorem]{definition}
+	\declaretheorem[style = plain, name = Definition, numbered = no]{definition*}
+
+	\declaretheorem[style = plain, name = Example, sibling = theorem]{example}
+	\declaretheorem[style = plain, name = Example, numbered = no]{example*}
+
+	\declaretheorem[style = plain, name = Fact, sibling = theorem]{fact}
+	\declaretheorem[style = plain, name = Fact, numbered = no]{fact*}
+	\declaretheorem[style = plain, name = Note, sibling = theorem]{note}
+	\declaretheorem[style = plain, name = Note, numbered = no]{note*}
+\fi
 
 \declaretheorem[style = plain, name = Exercise, sibling = theorem]{exercise}
 \declaretheorem[style = plain, name = Problem, sibling = theorem]{problem}
@@ -208,9 +225,6 @@
 \declaretheorem[style = plain, name = Case, numbered = no]{case*}
 \declaretheorem[style = plain, name = Claim, numbered = no]{claim*}
 	
-\declaretheorem[style = exbox, name = Example, sibling = theorem]{example}
-\declaretheorem[style = exbox, name = Example, numbered = no]{example*}
-
 % Suppress mdframed warnings
 \WarningFilter{mdframed}{You got a bad break} % 'Cause you've had a bad day...
 
