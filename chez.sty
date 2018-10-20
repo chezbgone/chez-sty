@@ -1,4 +1,4 @@
-\ProvidesPackage{chez}[2017/10/09]
+\ProvidesPackage{chez}
 
 \newif\ifchezdate      \chezdatetrue
 \newif\ifchezssf       \chezssftrue
@@ -16,7 +16,7 @@
 \DeclareOption{code}{\chezcodetrue}
 \DeclareOption{diagram}{\chezdiagramtrue}
 
-\ProcessOptions\relax
+\ProcessOptions*
 
 \ifchezcolor
 	\PassOptionsToPackage{colorlinks}{hyperref}
@@ -31,7 +31,7 @@
 \usepackage[nodisplayskipstretch, onehalfspacing]{setspace}
 
 \usepackage{lmodern}
-\usepackage[defaultsans, scale = 0.95]{lato} % copying daniel zhu
+\usepackage[defaultsans, scale = 0.95]{lato}
 \usepackage{microtype}
 
 \usepackage{enumitem}
@@ -224,9 +224,9 @@
 \declaretheorem[style = plain, name = Claim, numberwithin = theorem]{claim}
 \declaretheorem[style = plain, name = Case, numbered = no]{case*}
 \declaretheorem[style = plain, name = Claim, numbered = no]{claim*}
-	
+
 % Suppress mdframed warnings
-\WarningFilter{mdframed}{You got a bad break} % 'Cause you've had a bad day...
+\WarningFilter{mdframed}{You got a bad break}
 
 \ifchezcode
 	\usepackage{minted}
