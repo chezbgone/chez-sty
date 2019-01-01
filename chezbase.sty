@@ -36,16 +36,20 @@
 
 % Syntactically-named delimiters
 \DeclarePairedDelimiter{\braces}{\{}{\}}
-\DeclarePairedDelimiter{\parens}{(}{)}
-\DeclarePairedDelimiter{\brackets}{[}{]}
+\DeclarePairedDelimiter{\parens}{\lparen}{\rparen}
+\DeclarePairedDelimiter{\brackets}{\lbrack}{\rbrack}
 \DeclarePairedDelimiter{\angles}{\langle}{\rangle}
 \DeclarePairedDelimiter{\verts}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\Verts}{\lVert}{\rVert}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
+\DeclarePairedDelimiterX{\set}[1]{\{}{\}}{
+	\renewcommand{\mid}{\;\delimsize\vert\;}
+	#1
+}
+
 % Semantically-named delimiters
-\newcommand{\set}{\braces}
 \newcommand{\abs}{\verts}
 \newcommand{\size}{\verts}
 \newcommand{\norm}{\Verts}
@@ -55,8 +59,6 @@
 % Symbols
 \newcommand{\eps}{\varepsilon}
 \newcommand{\nullset}{\varnothing}
-\newcommand{\st}{\; \middle\vert \;}
-\newcommand{\divides}{\; \middle\vert \;}
 
 % Basic Math
 \newcommand{\half}{\ensuremath{\frac{1}{2}}}
@@ -136,3 +138,8 @@
 \newcommand{\VV}{\mathcal V}
 \newcommand{\II}{\mathcal I}
 \DeclareMathOperator{\Spec}{Spec}
+
+% Physics (rip)
+\DeclarePairedDelimiter{\bra}{\langle}{\vert}
+\DeclarePairedDelimiter{\ket}{\langle}{\vert}
+\DeclarePairedDelimiterX{\braket}[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
