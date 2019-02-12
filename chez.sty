@@ -6,7 +6,6 @@
 \newif\ifchezcolor     \chezcolortrue
 \newif\ifchezbox       \chezboxtrue
 \newif\ifchezcode      \chezcodefalse
-\newif\ifchezdiagram   \chezdiagramfalse
 
 \DeclareOption{nodate}{\chezdatefalse}
 \DeclareOption{serif}{\chezssffalse}
@@ -14,7 +13,6 @@
 \DeclareOption{nocolor}{\chezcolorfalse}
 \DeclareOption{nobox}{\chezboxfalse}
 \DeclareOption{code}{\chezcodetrue}
-\DeclareOption{diagram}{\chezdiagramtrue}
 
 \ProcessOptions*
 
@@ -41,9 +39,7 @@
 \usepackage{endnotes}
 \usepackage[obeyFinal, textsize = scriptsize]{todonotes}
 
-\ifchezdiagram
-	\usepackage{tikz-cd}
-\fi
+\usepackage{tikz-cd}
 
 \usepackage{thmtools}
 \usepackage[framemethod = TikZ]{mdframed}
@@ -226,6 +222,9 @@
 
 % Suppress mdframed warnings
 \WarningFilter{mdframed}{You got a bad break}
+
+\usepackage[noend]{algpseudocode}
+\newcommand{\ElseIf}{\ElsIf}
 
 \ifchezcode
 	\usepackage{minted}
