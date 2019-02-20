@@ -8,9 +8,8 @@ These are the .sty files that I use to compile all of my documents.
    * `serif` reverts the section headers to a serif font, like the default LaTeX style.
    * `nofancy` removes the headers.
    * `nocolor` changes formatting to use grayscale instead of color.
+   * `nobox` styles theorems traditionally, as opposed to with boxes.
    * `code` enables code boxes for displaying code. Note that you need to compile with option `-shell-escape` when this is enabled.
-   *`diagram` enables the commutative diagram packages `tikz-cd`.
 * **chezb.sty** contains the configuration for beamer presentations. This is currently unfinished.
 
 To use, include the line `\usepackage{chez}` (and similar for beamer) with the desired options in the header of the document.
-
