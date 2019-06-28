@@ -1,4 +1,4 @@
-\ProvidesPackage{chezbase}[2017/10/09]
+\ProvidesPackage{chezbase}
 
 \usepackage{mathtools, amssymb, amsthm}
 \usepackage{nccmath}
@@ -28,14 +28,28 @@
 % Macros
 \newcommand{\NewPage}{\vfill\eject}
 \newcommand{\ds}{\displaystyle}
+\newcommand{\opname}{\operatorname}
 
 % Emphasizing
-\newcommand{\vocab}[1]{\textbf{\color{blue}\boldmath #1}}
+\newcommand{\vocab}[1]{\textbf{\textcolor{blue}{#1}}}
 \newcommand{\ol}[1]{\overline{#1}}
 \newcommand{\ul}[1]{\underline{#1}}
 
+% better \tilde
+\usepackage{scalerel}[2014/03/10]
+\usepackage{stackengine}
+\renewcommand\tilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{-.1\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.4467\wd0}}{.3\ht0}%
+%    .2mu is the kern imbalance when clipping white space
+%    .4467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
+  }{O}{c}{F}{T}{S}%
+}}
+
+
 % Syntactically-named delimiters
-\DeclarePairedDelimiter{\braces}{\{}{\}}
+\DeclarePairedDelimiter{\braces}{\lbrace}{\rbrace}
 \DeclarePairedDelimiter{\parens}{\lparen}{\rparen}
 \DeclarePairedDelimiter{\brackets}{\lbrack}{\rbrack}
 \DeclarePairedDelimiter{\angles}{\langle}{\rangle}
@@ -44,7 +58,7 @@
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
-\DeclarePairedDelimiterX{\set}[1]{\{}{\}}{
+\DeclarePairedDelimiterX{\set}[1]{\lbrace}{\rbrace}{
 	\renewcommand{\mid}{\;\delimsize\vert\;}
 	#1
 }
@@ -60,8 +74,8 @@
 \newcommand{\eps}{\varepsilon}
 \newcommand{\nullset}{\varnothing}
 
-% Basic Math
-\newcommand{\half}{\ensuremath{\frac{1}{2}}}
+% Common Math
+\newcommand{\half}{\frac{1}{2}}
 \newcommand{\cbrt}[1]{\sqrt[3]{#1}}
 
 % Sets
@@ -124,11 +138,13 @@
 \newcommand{\inv}{^{-1}}
 \newcommand{\transp}{^{\mathsf T}}
 \DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\id}{id}
 \renewcommand{\ker}{\operatorname{ker}} % already defined
-\DeclareMathOperator{\fchar}{char} % field characteristic; \char already exists
+\DeclareMathOperator{\Char}{char} % characteristic of a ring; \char already exists
 \DeclareMathOperator{\img}{im}
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Ind}{Ind}
 
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\SL}{SL}
@@ -136,12 +152,15 @@
 \DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\Orth}{O}
 
+\DeclareMathOperator{\Gal}{Gal}
+
 % Algebraic Geometry
 \newcommand{\VV}{\mathcal V}
 \newcommand{\II}{\mathcal I}
 \DeclareMathOperator{\Spec}{Spec}
 
-% Physics (rip)
+% Quantum Mechanics
 \DeclarePairedDelimiter{\bra}{\langle}{\vert}
-\DeclarePairedDelimiter{\ket}{\langle}{\vert}
+\DeclarePairedDelimiter{\ket}{\vert}{\rangle}
 \DeclarePairedDelimiterX{\braket}[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+\DeclarePairedDelimiterX{\Braket}[3]{\langle}{\rangle}{#1 \,\delimsize\vert\, \mathopen{}#2 \,\delimsize\vert\, \mathopen{}#3}

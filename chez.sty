@@ -1,18 +1,20 @@
 \ProvidesPackage{chez}
 
 \newif\ifchezdate      \chezdatetrue
-\newif\ifchezssf       \chezssftrue
-\newif\ifchezfancy     \chezfancytrue
+\newif\ifchezsf        \chezsftrue
+\newif\ifchezfancy     \chezfancyfalse
 \newif\ifchezcolor     \chezcolortrue
 \newif\ifchezbox       \chezboxtrue
 \newif\ifchezcode      \chezcodefalse
+\newif\ifchezcompact   \chezcompactfalse
 
 \DeclareOption{nodate}{\chezdatefalse}
-\DeclareOption{serif}{\chezssffalse}
-\DeclareOption{nofancy}{\chezfancyfalse}
+\DeclareOption{serif}{\chezsffalse}
+\DeclareOption{fancy}{\chezfancytrue}
 \DeclareOption{nocolor}{\chezcolorfalse}
 \DeclareOption{nobox}{\chezboxfalse}
 \DeclareOption{code}{\chezcodetrue}
+\DeclareOption{compact}{\chezcompacttrue}
 
 \ProcessOptions*
 
@@ -21,37 +23,52 @@
 \fi
 
 \usepackage{chezbase}
-\KOMAoptions{fontsize = 10pt, paper = letter, DIV = 18}
-\KOMAoptions{numbers = noendperiod}
+\KOMAoptions{fontsize=10pt, paper=letter, DIV=18}
+\KOMAoptions{numbers=noendperiod}
 
 \PassOptionsToPackage{svgnames, dvipsnames, usenames}{xcolor}
 
 \usepackage[nodisplayskipstretch, onehalfspacing]{setspace}
 
 \usepackage{lmodern}
-\usepackage[defaultsans, scale = 0.95]{lato}
+\usepackage[defaultsans, scale=0.95]{lato}
 \usepackage{microtype}
 
-\usepackage{enumitem}
+\ifchezcompact
+	\usepackage[extreme, title=normal]{savetrees}
+\fi
+\usepackage[shortlabels, inline]{enumitem}
 \usepackage{multicol}
 
 \usepackage{float}
 \usepackage{endnotes}
-\usepackage[obeyFinal, textsize = scriptsize]{todonotes}
+\usepackage[obeyFinal, textsize=scriptsize]{todonotes}
 
 \usepackage{tikz-cd}
 
 \usepackage{thmtools}
-\usepackage[framemethod = TikZ]{mdframed}
+\usepackage[framemethod=TikZ]{mdframed}
 \usepackage{silence} % for suppressing warnings
 
+\ifchezfancy\usepackage{scrlayer-scrpage}\fi
+
+\usepackage[noend]{algpseudocode}
+\ifchezcode\usepackage{minted}\fi
+
+% For diagram stuff
+\usepackage{calc}
+\usepackage{import}
+
+\PassOptionsToPackage{pdftex, pdfcreator={LaTeX with chez.sty by Jason Chen}}{hyperref}
 \ifchezcolor
 	\usepackage[colorlinks]{hyperref} % load this last generally
-	\hypersetup{urlcolor = RubineRed, linkcolor = RoyalBlue, citecolor = ForestGreen}
+	\hypersetup{urlcolor=RubineRed, linkcolor=RoyalBlue, citecolor=ForestGreen}
 \else
-	\usepackage[]{hyperref}
+	\usepackage{hyperref}
 \fi
-\usepackage{cleveref} % must be loaded after hyperref
+% must be loaded after hyperref
+% also is really picky and wants to be loaded after everything
+\usepackage{cleveref}
 
 % SETUP
 
@@ -61,7 +78,7 @@
 	\date{~\vspace{-5ex}}
 \fi
 
-\ifchezssf\else
+\ifchezsf\else
 	\setkomafont{disposition}{\normalcolor\bfseries}
 \fi
 
@@ -76,12 +93,33 @@
 \setkomafont{author}{\normalsize\scshape}
 \setkomafont{date}{\normalsize}
 
+\ifchezcompact
+	\makeatletter
+	\def\@maketitle{%
+		\newpage
+		\mbox{}%
+		\begingroup
+		\centering
+			\let \footnote \thanks
+			{\large\sffamily \textbf{\@title}\par}
+			\vskip 0.5\baselineskip
+			\begin{tabular}[t]{c}%
+				\normalsize\scshape\@author
+			\end{tabular}\par
+			\vskip 0.5\baselineskip
+			\normalsize\@date
+			\par
+		\endgroup
+		\vskip \baselineskip
+	}
+	\makeatother
+\fi
+
 \RedeclareSectionCommand[
-	beforeskip = .4\baselineskip
+	beforeskip=.4\baselineskip
 ]{paragraph}
 
 \ifchezfancy
-	\usepackage{scrlayer-scrpage}
 	\setkomafont{pageheadfoot}{\normalcolor}
 \fi
 
@@ -97,16 +135,9 @@
 }
 
 % Make itemize bullets smaller
-\setlist{noitemsep, topsep = 0.4em, listparindent=\parindent}
-\renewcommand\labelitemi{\raisebox{0.15em}{\tiny\textbullet}}
+\setlist{noitemsep, topsep=0.4em, listparindent=\parindent}
 \renewcommand{\arraystretch}{0.8}
-
-\mdfsetup{
-	roundcorner = 1pt,
-	hidealllines = true,
-	innertopmargin = 0.6em,
-	innerbottommargin = 1em,
-}
+\renewcommand\labelitemi{\raisebox{0.15em}{\tiny\textbullet}}
 
 \newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
 \newenvironment{theoremproof}[1][\proofname]
@@ -116,29 +147,36 @@
 	{\begin{proof}[#1]\renewcommand*{\qedsymbol}{\textcolor{blue!70}{\(\blacksquare\)}}}
 	{\end{proof}}
 
+% Boxes inspired by Michael Diao
+\mdfsetup{
+	roundcorner=1pt,
+	hidealllines=true,
+	innertopmargin=0.6em,
+	innerbottommargin=1em,
+}
 
 \newcommand{\thmboxstyle}[4]{
 	\ifchezcolor
 		\mdfdefinestyle{#2}{
-			linecolor = #3,
-			backgroundcolor = #4,
+			linecolor=#3,
+			backgroundcolor=#4,
 		}
 		\declaretheoremstyle[
-			headfont = \sffamily\bfseries\color{#3},
-			mdframed = {style = #2},
-			headpunct = {\\[0.4pt]},
-			postheadspace = {0pt}
+			headfont=\sffamily\bfseries\color{#3},
+			mdframed={style=#2},
+			headpunct={\\[0.4pt]},
+			postheadspace={0pt}
 		]{#1}
 	\else
 		\mdfdefinestyle{#2}{
-			linecolor = black,
-			backgroundcolor = white,
+			linecolor=black,
+			backgroundcolor=white,
 		}
 		\declaretheoremstyle[
-			headfont = \sffamily\bfseries\color{black},
-			mdframed = {style = #2},
-			headpunct = {\\[0.4pt]},
-			postheadspace = {0pt}
+			headfont=\sffamily\bfseries\color{black},
+			mdframed={style=#2},
+			headpunct={\\[0.4pt]},
+			postheadspace={0pt}
 		]{#1}
 	\fi
 }
@@ -150,88 +188,93 @@
 \thmboxstyle{notebox}{mdorangebox}{orange!98!black}{orange!8}
 
 \declaretheoremstyle[
-	bodyfont = \normalfont
+	bodyfont=\normalfont
 ]{plain}
 
 \newcommand{\boxhack}{~\vspace{-2em}}
 
 \ifchezbox
-	\declaretheorem[style = thmbox, name = Theorem]{theorem}
-		\declaretheorem[style = thmbox, name = Theorem, numbered = no]{theorem*}
-	\declaretheorem[style = thmbox, name = Lemma, sibling = theorem]{lemma}
-		\declaretheorem[style = thmbox, name = Lemma, numbered = no]{lemma*}
-	\declaretheorem[style = thmbox, name = Proposition, sibling = theorem]{proposition}
-		\declaretheorem[style = thmbox, name = Proposition, numbered = no]{proposition*}
-	\declaretheorem[style = thmbox, name = Corollary, sibling = theorem]{corollary}
-		\declaretheorem[style = thmbox, name = Corollary, numbered = no]{corollary*}
-	\declaretheorem[style = thmbox, name = Conjecture, sibling = theorem]{conjecture}
-		\declaretheorem[style = thmbox, name = Conjecture, numbered = no]{conjecture*}
-	\declaretheorem[style = thmbox, name = Algorithm, sibling = theorem]{algorithm}
-		\declaretheorem[style = thmbox, name = Algorithm, numbered = no]{algorithm*}
-	\declaretheorem[style = defbox, name = Definition, sibling = theorem]{definition}
-		\declaretheorem[style = defbox, name = Definition, numbered = no]{definition*}
+	\declaretheorem[style=thmbox, name=Theorem]{theorem}
+		\declaretheorem[style=thmbox, name=Theorem, numbered=no]{theorem*}
+	\declaretheorem[style=thmbox, name=Lemma, sibling=theorem]{lemma}
+		\declaretheorem[style=thmbox, name=Lemma, numbered=no]{lemma*}
+	\declaretheorem[style=thmbox, name=Proposition, sibling=theorem]{proposition}
+		\declaretheorem[style=thmbox, name=Proposition, numbered=no]{proposition*}
+	\declaretheorem[style=thmbox, name=Corollary, sibling=theorem]{corollary}
+		\declaretheorem[style=thmbox, name=Corollary, numbered=no]{corollary*}
+	\declaretheorem[style=thmbox, name=Conjecture, sibling=theorem]{conjecture}
+		\declaretheorem[style=thmbox, name=Conjecture, numbered=no]{conjecture*}
+	\declaretheorem[style=thmbox, name=Algorithm, sibling=theorem]{algorithm}
+		\declaretheorem[style=thmbox, name=Algorithm, numbered=no]{algorithm*}
 
-	\declaretheorem[style = exbox, name = Example, sibling = theorem]{example}
-		\declaretheorem[style = exbox, name = Example, numbered = no]{example*}
+	\declaretheorem[style=defbox, name=Definition, sibling=theorem]{definition}
+		\declaretheorem[style=defbox, name=Definition, numbered=no]{definition*}
+
+	\declaretheorem[style=exbox, name=Example, sibling=theorem]{example}
+		\declaretheorem[style=exbox, name=Example, numbered=no]{example*}
 	
-	\declaretheorem[style = notebox, name = Fact, sibling = theorem]{fact}
-		\declaretheorem[style = notebox, name = Fact, numbered = no]{fact*}
-	\declaretheorem[style = notebox, name = Note, sibling = theorem]{note}
-		\declaretheorem[style = notebox, name = Note, numbered = no]{note*}
+	\declaretheorem[style=notebox, name=Fact, sibling=theorem]{fact}
+		\declaretheorem[style=notebox, name=Fact, numbered=no]{fact*}
+	\declaretheorem[style=notebox, name=Note, sibling=theorem]{note}
+		\declaretheorem[style=notebox, name=Note, numbered=no]{note*}
 \else
-	\declaretheorem[style = plain, name = Theorem]{theorem}
-		\declaretheorem[style = plain, name = Theorem, numbered = no]{theorem*}
-	\declaretheorem[style = plain, name = Lemma, sibling = theorem]{lemma}
-		\declaretheorem[style = plain, name = Lemma, numbered = no]{lemma*}
-	\declaretheorem[style = plain, name = Proposition, sibling = theorem]{proposition}
-		\declaretheorem[style = plain, name = Proposition, numbered = no]{proposition*}
-	\declaretheorem[style = plain, name = Corollary, sibling = theorem]{corollary}
-		\declaretheorem[style = plain, name = Corollary, numbered = no]{corollary*}
-	\declaretheorem[style = plain, name = Conjecture, sibling = theorem]{conjecture}
-		\declaretheorem[style = plain, name = Conjecture, numbered = no]{conjecture*}
-	\declaretheorem[style = plain, name = Algorithm, sibling = theorem]{algorithm}
-		\declaretheorem[style = plain, name = Algorithm, numbered = no]{algorithm*}
+	\declaretheorem[style=plain, name=Theorem]{theorem}
+		\declaretheorem[style=plain, name=Theorem, numbered=no]{theorem*}
+	\declaretheorem[style=plain, name=Lemma, sibling=theorem]{lemma}
+		\declaretheorem[style=plain, name=Lemma, numbered=no]{lemma*}
+	\declaretheorem[style=plain, name=Proposition, sibling=theorem]{proposition}
+		\declaretheorem[style=plain, name=Proposition, numbered=no]{proposition*}
+	\declaretheorem[style=plain, name=Corollary, sibling=theorem]{corollary}
+		\declaretheorem[style=plain, name=Corollary, numbered=no]{corollary*}
+	\declaretheorem[style=plain, name=Conjecture, sibling=theorem]{conjecture}
+		\declaretheorem[style=plain, name=Conjecture, numbered=no]{conjecture*}
+	\declaretheorem[style=plain, name=Algorithm, sibling=theorem]{algorithm}
+		\declaretheorem[style=plain, name=Algorithm, numbered=no]{algorithm*}
 
-	\declaretheorem[style = plain, name = Definition, sibling = theorem]{definition}
-		\declaretheorem[style = plain, name = Definition, numbered = no]{definition*}
+	\declaretheorem[style=plain, name=Definition, sibling=theorem]{definition}
+		\declaretheorem[style=plain, name=Definition, numbered=no]{definition*}
 
-	\declaretheorem[style = plain, name = Example, sibling = theorem]{example}
-		\declaretheorem[style = plain, name = Example, numbered = no]{example*}
+	\declaretheorem[style=plain, name=Example, sibling=theorem]{example}
+		\declaretheorem[style=plain, name=Example, numbered=no]{example*}
 
-	\declaretheorem[style = plain, name = Fact, sibling = theorem]{fact}
-		\declaretheorem[style = plain, name = Fact, numbered = no]{fact*}
-	\declaretheorem[style = plain, name = Note, sibling = theorem]{note}
-		\declaretheorem[style = plain, name = Note, numbered = no]{note*}
+	\declaretheorem[style=plain, name=Fact, sibling=theorem]{fact}
+		\declaretheorem[style=plain, name=Fact, numbered=no]{fact*}
+	\declaretheorem[style=plain, name=Note, sibling=theorem]{note}
+		\declaretheorem[style=plain, name=Note, numbered=no]{note*}
 \fi
 
-\declaretheorem[style = plain, name = Exercise, sibling = theorem]{exercise}
-	\declaretheorem[style = plain, name = Exercise, numbered = no]{exercise*}
-\declaretheorem[style = plain, name = Problem, sibling = theorem]{problem}
-	\declaretheorem[style = plain, name = Problem, numbered = no]{problem*}
-\declaretheorem[style = plain, name = Question, sibling = theorem]{question}
-	\declaretheorem[style = plain, name = Question, numbered = no]{question*}
-\declaretheorem[style = plain, name = Answer, sibling = theorem]{answer}
-	\declaretheorem[style = plain, name = Answer, numbered = no]{answer*}
-\declaretheorem[style = plain, name = Remark, sibling = theorem]{remark}
-	\declaretheorem[style = plain, name = Remark, numbered = no]{remark*}
+\declaretheorem[style=plain, name=Exercise, sibling=theorem]{exercise}
+	\declaretheorem[style=plain, name=Exercise, numbered=no]{exercise*}
+\declaretheorem[style=plain, name=Problem, sibling=theorem]{problem}
+	\declaretheorem[style=plain, name=Problem, numbered=no]{problem*}
+\declaretheorem[style=plain, name=Question, sibling=theorem]{question}
+	\declaretheorem[style=plain, name=Question, numbered=no]{question*}
+\declaretheorem[style=plain, name=Answer, sibling=theorem]{answer}
+	\declaretheorem[style=plain, name=Answer, numbered=no]{answer*}
+\declaretheorem[style=plain, name=Remark, sibling=theorem]{remark}
+	\declaretheorem[style=plain, name=Remark, numbered=no]{remark*}
 
-\declaretheorem[style = plain, name = Case, numberwithin = theorem]{case}
-	\declaretheorem[style = plain, name = Case, numbered = no]{case*}
-\declaretheorem[style = plain, name = Claim, numberwithin = theorem]{claim}
-	\declaretheorem[style = plain, name = Claim, numbered = no]{claim*}
+\declaretheorem[style=plain, name=Case, numberwithin=theorem]{case}
+	\declaretheorem[style=plain, name=Case, numbered=no]{case*}
+\declaretheorem[style=plain, name=Claim, numberwithin=theorem]{claim}
+	\declaretheorem[style=plain, name=Claim, numbered=no]{claim*}
 
 % Suppress mdframed warnings
 \WarningFilter{mdframed}{You got a bad break}
 
-\usepackage[noend]{algpseudocode}
+% CODE STUFF
 \newcommand{\ElseIf}{\ElsIf}
 
 \ifchezcode
-	\usepackage{minted}
-	\setminted{linenos = true, breaklines = true, tabsize = 4}
-
-	%TODO doesnt work???
-	\usepackage{accsupp} % prevents selection of line numbers
-	\let\oldfancyVerbLine\theFancyVerbLine
-	\renewcommand{\theFancyVerbLine}{\BeginAccSupp{ActualText={}}\oldfancyVerbLine\EndAccSupp{}}
+	\setminted{linenos=true, breaklines=true, tabsize=4}
 \fi
+
+% Diagram stuff
+% Largely copied from https://castel.dev/post/lecture-notes-2/
+\newcommand{\svgsize}[1]{\def\svgscale{#1}}
+\NewDocumentCommand{\incfig}{ O{1.0} m }{%
+	%\def\svgwidth{\columnwidth}
+	\svgsize{#1}
+	\import{./figures/}{#2.pdf_tex}
+}
+\pdfsuppresswarningpagegroup=1

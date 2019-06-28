@@ -6,8 +6,6 @@
 \newif\ifchezsetup   \chezsetuptrue
 \newif\ifchezshorts  \chezshortstrue
 \newif\ifchezasy     \chezasytrue
-\newif\ifchezauthor  \chezauthortrue
-\newif\ifchezdate    \chezdatetrue
 
 \DeclareOption{nosetup}{\chezasyfalse}
 \DeclareOption{noshortcuts}{\chezshortsfalse}
@@ -27,8 +25,6 @@
 
 \ProcessOptions\relax
 
-\ifchezauthor \PassOptionsToPackage{noauthor}{chezbase} \fi
-\ifchezdate \PassOptionsToPackage{nodate}{chezbase} \fi
 \usepackage{chezbase}
 
 \ifchezsetup
@@ -102,7 +98,7 @@
 \ifchezbeamernice
 	\IfFileExists{beamerthememetropolis.sty}{
 		\usepackage[sfdefault, lf]{FiraSans}
-		\usetheme[block = fill]{metropolis}
+		\usetheme[block=fill, background=dark]{metropolis}
 		\ifchezallsmallcaps
 			\metroset{titleformat = allsmallcaps}
 			\setbeamerfont{title}{size=\Large, series=\mdseries}
