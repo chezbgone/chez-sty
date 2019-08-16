@@ -265,6 +265,17 @@
 % CODE STUFF
 \newcommand{\ElseIf}{\ElsIf}
 
+% Fix https://tex.stackexchange.com/questions/177025/ issue with
+% hyperref, cleverref, and algpseudocode
+\makeatletter
+\newcounter{algorithmicH} % New algorithmic-like hyperref counter
+\let\oldalgorithmic\algorithmic
+\renewcommand{\algorithmic}{%
+	\stepcounter{algorithmicH}%
+	\oldalgorithmic} % Do what was always done with algorithmic environment
+\newcommand{\theHALG@line}{ALG@line.\thealgorithmicH.\arabic{ALG@line}}
+\makeatother
+
 \ifchezcode
 	\setminted{linenos=true, breaklines=true, tabsize=4}
 \fi
