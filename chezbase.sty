@@ -1,52 +1,26 @@
 \ProvidesPackage{chezbase}
 
-\usepackage{mathtools, amssymb, amsthm}
-\usepackage{nccmath}
+\RequirePackage{xparse}
 
-%\PassOptionsToPackage{noplaybutton}{media9}
-\usepackage[inline]{asymptote}
+\RequirePackage{mathtools, amssymb, amsthm}
+\RequirePackage{nccmath}
 
-\usepackage{graphicx}
-\usepackage{subcaption}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[frak=boondox, frakscaled=0.98, scr=boondoxo]{mathalfa}
+\RequirePackage{chezint} % More integrals (e.g. \oiint)
 
-\usepackage{mathrsfs}
-\usepackage[T1]{fontenc}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
 
-\usepackage{etoolbox}
-\usepackage{adjustbox}
-
-% makes \oint circle smaller
-\let\origointop\ointop
-\usepackage{esint}
-\let\ointop\origointop
 
 % Make \bfseries include \boldmath
-\makeatletter
 \g@addto@macro\bfseries{\boldmath}
-\makeatother
-
-% Macros
-\newcommand{\NewPage}{\vfill\eject}
-\newcommand{\ds}{\displaystyle}
-\newcommand{\opname}{\operatorname}
 
 % Emphasizing
-\newcommand{\vocab}[1]{\textbf{\textcolor{blue}{#1}}}
-\newcommand{\ol}[1]{\overline{#1}}
-\newcommand{\ul}[1]{\underline{#1}}
-
-% better \tilde
-\usepackage{scalerel}[2014/03/10]
-\usepackage{stackengine}
-\renewcommand\tilde[1]{\ThisStyle{%
-  \setbox0=\hbox{$\SavedStyle#1$}%
-  \stackengine{-.1\LMpt}{$\SavedStyle#1$}{%
-    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.4467\wd0}}{.3\ht0}%
-%    .2mu is the kern imbalance when clipping white space
-%    .4467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
-  }{O}{c}{F}{T}{S}%
-}}
-
+\definecolor{emphcolor}{rgb}{0, 0.4, 1}
+\NewDocumentCommand{\vocab}{m}{\textbf{\textcolor{emphcolor}{#1}}}
+\NewDocumentCommand{\ol}{}{\overline}
+\NewDocumentCommand{\ul}{}{\underline}
 
 % Syntactically-named delimiters
 \DeclarePairedDelimiter{\braces}{\lbrace}{\rbrace}
@@ -59,44 +33,44 @@
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
 \DeclarePairedDelimiterX{\set}[1]{\lbrace}{\rbrace}{
-	\renewcommand{\mid}{\;\delimsize\vert\;}
+	\RenewDocumentCommand{\mid}{}{\;\delimsize\vert\;}%
 	#1
 }
 
 % Semantically-named delimiters
-\newcommand{\abs}{\verts}
-\newcommand{\size}{\verts}
-\newcommand{\norm}{\Verts}
-\newcommand{\tuple}{\angles}
-\newcommand{\gen}{\angles}
+\NewDocumentCommand{\abs}{}{\verts}
+\NewDocumentCommand{\size}{}{\verts}
+\NewDocumentCommand{\norm}{}{\Verts}
+\NewDocumentCommand{\tuple}{}{\angles}
+\NewDocumentCommand{\gen}{}{\angles}
 
 % Symbols
-\newcommand{\eps}{\varepsilon}
-\newcommand{\nullset}{\varnothing}
+\NewDocumentCommand{\eps}{}{\varepsilon}
+\NewDocumentCommand{\nullset}{}{\varnothing}
 
 % Common Math
-\newcommand{\half}{\frac{1}{2}}
-\newcommand{\cbrt}[1]{\sqrt[3]{#1}}
+\NewDocumentCommand{\half}{}{\frac{1}{2}}
+\NewDocumentCommand{\cbrt}{m}{\sqrt[3]{#1}}
 
 % Sets
-\newcommand{\FF}{\mathbb F}
-\newcommand{\NN}{\mathbb N}
-\newcommand{\ZZ}{\mathbb Z}
-\newcommand{\QQ}{\mathbb Q}
-\newcommand{\RR}{\mathbb R}
-\newcommand{\CC}{\mathbb C}
-\newcommand{\HH}{\mathbb H}
+\NewDocumentCommand{\FF}{}{\mathbb F}
+\NewDocumentCommand{\NN}{}{\mathbb N}
+\NewDocumentCommand{\ZZ}{}{\mathbb Z}
+\NewDocumentCommand{\QQ}{}{\mathbb Q}
+\NewDocumentCommand{\RR}{}{\mathbb R}
+\NewDocumentCommand{\CC}{}{\mathbb C}
+\NewDocumentCommand{\HH}{}{\mathbb H}
 
-\newcommand{\intersect}{\cap}
-\newcommand{\bigintersect}{\bigcap}
-\newcommand{\union}{\cup}
-\newcommand{\bigunion}{\bigcup}
+\NewDocumentCommand{\intersect}{}{\cap}
+\NewDocumentCommand{\bigintersect}{}{\bigcap}
+\NewDocumentCommand{\union}{}{\cup}
+\NewDocumentCommand{\bigunion}{}{\bigcup}
 
 % General
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
-\renewcommand{\Re}{\operatorname{Re}} % can't use DeclareMathOperator because already defined
-\renewcommand{\Im}{\operatorname{Im}}
+\RenewDocumentCommand{\Re}{}{\operatorname{Re}} % can't use DeclareMathOperator because already defined
+\RenewDocumentCommand{\Im}{}{\operatorname{Im}}
 \DeclareMathOperator{\cis}{cis}
 \DeclareMathOperator{\arccosh}{arccosh}
 \DeclareMathOperator{\arcsinh}{arcsinh}
@@ -104,29 +78,29 @@
 \DeclareMathOperator{\sign}{sign}
 
 % Combinatorics / Statistics
-\newcommand{\EE}{\mathbb E}
-\newcommand{\PP}{\mathbb P}
+\NewDocumentCommand{\EE}{}{\mathbb E}
+\NewDocumentCommand{\PP}{}{\mathbb P}
 \DeclareMathOperator{\Var}{Var}
 
 % Geometry
-\newcommand{\dg}{^\circ}
-\newcommand{\seg}[1]{\overrightarrow{#1}}
-\newcommand{\ray}[1]{\overrightarrow{#1}}
-\newcommand{\dang}{\measuredangle}
+\NewDocumentCommand{\dg}{}{^\circ}
+\NewDocumentCommand{\seg}{m}{\overrightarrow{#1}}
+\NewDocumentCommand{\ray}{m}{\overrightarrow{#1}}
+\NewDocumentCommand{\dang}{}{\measuredangle}
 
 % Number Theory
-\newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
-\renewcommand{\mod}[1]{\ \text{mod}\ #1}
+\RenewDocumentCommand{\mod}{m}{\ \mathrm{mod}\ #1}
 \DeclareMathOperator*{\lcm}{lcm}
-	
-% Calculus
-\newcommand{\dv}[2]{\frac{d #1}{d #2}}
-\newcommand{\ddv}[2]{\frac{d^2 #1}{d #2^2}}
-\newcommand{\dnv}[3]{\frac{d^{#3} #1}{d #2^{#3}}}
-\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
-\newcommand{\pddv}[2]{\frac{\partial^2 #1}{\partial #2^2}}
-\newcommand{\pdnv}[3]{\frac{\partial^{#3} #1}{\partial #2^{#3}}}
 
+% Calculus
+\NewDocumentCommand{\dv}{m m}{\frac{d #1}{d #2}}
+\NewDocumentCommand{\ddv}{m m}{\frac{d^2 #1}{d #2^2}}
+\NewDocumentCommand{\dnv}{m m m}{\frac{d^{#3} #1}{d #2^{#3}}}
+\NewDocumentCommand{\pdv}{m m}{\frac{\partial #1}{\partial #2}}
+\NewDocumentCommand{\pddv}{m m}{\frac{\partial^2 #1}{\partial #2^2}}
+\NewDocumentCommand{\pdnv}{m m m}{\frac{\partial^{#3} #1}{\partial #2^{#3}}}
+
+\let\obelus\div
 \let\div\relax % was originally the division symbol
 \DeclareMathOperator{\grad}{grad}
 \DeclareMathOperator{\div}{div}
@@ -134,14 +108,13 @@
 
 % Algebra
 \DeclareMathOperator{\ord}{ord}
-\newcommand{\iso}{\cong}
-\newcommand{\inv}{^{-1}}
-\newcommand{\transp}{^{\mathsf T}}
+\NewDocumentCommand{\iso}{}{\DOTSB\cong}
+\NewDocumentCommand{\inv}{}{^{-1}}
+\NewDocumentCommand{\transp}{}{^{\mathsf T}}
 \DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\id}{id}
-\renewcommand{\ker}{\operatorname{ker}} % already defined
 \DeclareMathOperator{\Char}{char} % characteristic of a ring; \char already exists
-\DeclareMathOperator{\img}{im}
+\DeclareMathOperator{\img}{im} % \ker is already defined
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\Ind}{Ind}
@@ -155,8 +128,8 @@
 \DeclareMathOperator{\Gal}{Gal}
 
 % Algebraic Geometry
-\newcommand{\VV}{\mathcal V}
-\newcommand{\II}{\mathcal I}
+\NewDocumentCommand{\VV}{}{\mathcal V}
+\NewDocumentCommand{\II}{}{\mathcal I}
 \DeclareMathOperator{\Spec}{Spec}
 
 % Quantum Mechanics
@@ -164,3 +137,5 @@
 \DeclarePairedDelimiter{\ket}{\vert}{\rangle}
 \DeclarePairedDelimiterX{\braket}[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
 \DeclarePairedDelimiterX{\Braket}[3]{\langle}{\rangle}{#1 \,\delimsize\vert\, \mathopen{}#2 \,\delimsize\vert\, \mathopen{}#3}
+
+\endinput

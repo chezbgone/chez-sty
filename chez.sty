@@ -1,130 +1,103 @@
 \ProvidesPackage{chez}
 
-\newif\ifchezdate      \chezdatetrue
-\newif\ifchezsf        \chezsftrue
-\newif\ifchezfancy     \chezfancyfalse
-\newif\ifchezcolor     \chezcolortrue
-\newif\ifchezbox       \chezboxtrue
-\newif\ifchezcode      \chezcodefalse
-\newif\ifchezcompact   \chezcompactfalse
+\newif\ifchez@date        \chez@datetrue
+\newif\ifchez@sf          \chez@sftrue
+\newif\ifchez@header      \chez@headerfalse
+\newif\ifchez@gray        \chez@grayfalse
+\newif\ifchez@box         \chez@boxtrue
+\newif\ifchez@algos       \chez@algosfalse
+\newif\ifchez@asy         \chez@asyfalse
+\newif\ifchez@code        \chez@codefalse
+\newif\ifchez@compact     \chez@compactfalse
+\newif\ifchez@marginnum   \chez@marginnumtrue
+\newif\ifchez@sepcounters \chez@sepcountersfalse
 
-\DeclareOption{nodate}{\chezdatefalse}
-\DeclareOption{serif}{\chezsffalse}
-\DeclareOption{fancy}{\chezfancytrue}
-\DeclareOption{nocolor}{\chezcolorfalse}
-\DeclareOption{nobox}{\chezboxfalse}
-\DeclareOption{code}{\chezcodetrue}
-\DeclareOption{compact}{\chezcompacttrue}
+\DeclareOption{nodate}{\chez@datefalse}
+\DeclareOption{serif}{\chez@sffalse}
+\DeclareOption{header}{\chez@headertrue}
+\DeclareOption{gray}{\chez@graytrue}
+\DeclareOption{nobox}{\chez@boxfalse}
+\DeclareOption{asy}{\chez@asytrue}
+\DeclareOption{algos}{\chez@algostrue}
+\DeclareOption{code}{\chez@codetrue\chez@algostrue}
+\DeclareOption{compact}{\chez@compacttrue}
+\DeclareOption{nomarginnum}{\chez@marginnumfalse}
+\DeclareOption{sepcounters}{\chez@sepcounterstrue}
 
 \ProcessOptions*
 
-\ifchezcolor
-	\PassOptionsToPackage{colorlinks}{hyperref}
-\fi
+\KOMAoptions{
+	paper=letter,
+	fontsize=10pt,
+	DIV=18,
+	numbers=noendperiod,
+}
 
-\usepackage{chezbase}
-\KOMAoptions{fontsize=10pt, paper=letter, DIV=18}
-\KOMAoptions{numbers=noendperiod}
+% General
+\ifchez@gray\PassOptionsToPackage{gray}{xcolor}\fi
+\RequirePackage{chezbase}
 
-\PassOptionsToPackage{svgnames, dvipsnames, usenames}{xcolor}
+% Typography
+\RequirePackage{lmodern}
+\ifchez@sf\RequirePackage[defaultsans, scale=0.95]{lato}\fi
+\RequirePackage{microtype}
+\RequirePackage[nodisplayskipstretch, onehalfspacing]{setspace}
 
-\usepackage[nodisplayskipstretch, onehalfspacing]{setspace}
+% Headers
+\ifchez@header\RequirePackage{scrlayer-scrpage}\fi
 
-\usepackage{lmodern}
-\usepackage[defaultsans, scale=0.95]{lato}
-\usepackage{microtype}
+% Compact Option
+\ifchez@compact\RequirePackage[extreme]{savetrees}\fi
 
-\ifchezcompact
-	\usepackage[extreme, title=normal]{savetrees}
-\fi
-\usepackage[shortlabels, inline]{enumitem}
-\usepackage{multicol}
+% Diagrams
+\RequirePackage{tikz}
+\usetikzlibrary{calc, cd, math, positioning}
+\ifchez@asy\RequirePackage[inline]{asymptote}\fi
 
-\usepackage{float}
-\usepackage{endnotes}
-\usepackage[obeyFinal, textsize=scriptsize]{todonotes}
+% Macros
+\RequirePackage[shortlabels, inline]{enumitem}
 
-\usepackage{tikz-cd}
+% Theorem Boxes
+\ifchez@box\RequirePackage{tcolorbox}\fi
 
-\usepackage{thmtools}
-\usepackage[framemethod=TikZ]{mdframed}
-\usepackage{silence} % for suppressing warnings
-
-\ifchezfancy\usepackage{scrlayer-scrpage}\fi
-
-\usepackage[noend]{algpseudocode}
-\ifchezcode\usepackage{minted}\fi
-
-% For diagram stuff
-\usepackage{calc}
-\usepackage{import}
+% Algorithms/Code
+\ifchez@algos\RequirePackage[noend]{algpseudocode}\fi
+\ifchez@code\RequirePackage{minted}\fi
 
 \PassOptionsToPackage{pdftex, pdfcreator={LaTeX with chez.sty by Jason Chen}}{hyperref}
-\ifchezcolor
-	\usepackage[colorlinks]{hyperref} % load this last generally
-	\hypersetup{urlcolor=RubineRed, linkcolor=RoyalBlue, citecolor=ForestGreen}
+\ifchez@gray
+	\RequirePackage{hyperref}
 \else
-	\usepackage{hyperref}
+	\RequirePackage[colorlinks]{hyperref} % load this last generally
+	\definecolor{urlcolor}{rgb}{0.9, 0, 0.5}
+	\definecolor{citecolor}{rgb}{0, 0.6, 0.3}
+	\hypersetup{urlcolor=urlcolor, linkcolor=blue, citecolor=citecolor}
 \fi
-% must be loaded after hyperref
+
+% cleverref must be loaded after hyperref
 % also is really picky and wants to be loaded after everything
-\usepackage{cleveref}
+\RequirePackage{cleveref}
 
 % SETUP
-
 \author{Jason Chen}
 
-\ifchezdate\else
-	\date{~\vspace{-5ex}}
-\fi
+\ifchez@date\else\date{~\vspace{-3em}}\fi
 
-\ifchezsf\else
-	\setkomafont{disposition}{\normalcolor\bfseries}
-\fi
-
-\ifchezcolor\else
-	\renewcommand{\vocab}[1]{\textbf{\boldmath #1}}
-\fi
-
-\makeatletter
-\patchcmd{\@maketitle}{\huge}{\Large}{}{}
-\makeatother
-
+% Stylize things
+\patchcmd{\@maketitle}{\huge}{\large}{}{}
 \setkomafont{author}{\normalsize\scshape}
 \setkomafont{date}{\normalsize}
+\ifchez@sf\else\setkomafont{disposition}{\normalcolor\bfseries}\fi
+\ifchez@header\setkomafont{pageheadfoot}{\normalcolor}\fi
+\RedeclareSectionCommand[beforeskip=0.4\baselineskip]{paragraph}
 
-\ifchezcompact
-	\makeatletter
-	\def\@maketitle{%
-		\newpage
-		\mbox{}%
-		\begingroup
-		\centering
-			\let \footnote \thanks
-			{\large\sffamily \textbf{\@title}\par}
-			\vskip 0.5\baselineskip
-			\begin{tabular}[t]{c}%
-				\normalsize\scshape\@author
-			\end{tabular}\par
-			\vskip 0.5\baselineskip
-			\normalsize\@date
-			\par
-		\endgroup
-		\vskip \baselineskip
-	}
-	\makeatother
+% Section numbers in the margin
+\ifchez@marginnum
+	\RenewDocumentCommand{\sectionlinesformat}{m m m m}{\makebox[0pt][r]{#3}#4}
 \fi
 
-\RedeclareSectionCommand[
-	beforeskip=.4\baselineskip
-]{paragraph}
-
-\ifchezfancy
-	\setkomafont{pageheadfoot}{\normalcolor}
-\fi
-
-% Section heading numbers in the margin
-\renewcommand{\sectionlinesformat}[4]{\makebox[0pt][r]{#3}#4}
+% Compact title
+\ifchez@compact\patchcmd{\@maketitle}{\large}{\large\sffamily}\fi
 
 \allowdisplaybreaks
 \AtBeginDocument{
@@ -134,158 +107,167 @@
 	\setlength{\abovedisplayshortskip}{0.2em}
 }
 
-% Make itemize bullets smaller
+\RenewDocumentCommand{\arraystretch}{}{0.8}
 \setlist{noitemsep, topsep=0.4em, listparindent=\parindent}
-\renewcommand{\arraystretch}{0.8}
-\renewcommand\labelitemi{\raisebox{0.15em}{\tiny\textbullet}}
 
-\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
-\newenvironment{theoremproof}[1][\proofname]
-	{\begin{proof}[#1]\renewcommand*{\qedsymbol}{\(\blacksquare\)}}
-	{\end{proof}}
-\newenvironment{lemmaproof}[1][\proofname]
-	{\begin{proof}[#1]\renewcommand*{\qedsymbol}{\textcolor{blue!70}{\(\blacksquare\)}}}
-	{\end{proof}}
+% Make itemize bullets smaller
+\RenewDocumentCommand{\labelitemi}{}{$\vcenter{\hbox{\tiny\textbullet}}$}
 
-% Boxes inspired by Michael Diao
-\mdfsetup{
-	roundcorner=1pt,
-	hidealllines=true,
-	innertopmargin=0.6em,
-	innerbottommargin=1em,
-}
+% Better default bracket width/height
+\let\oldunderbracket\underbracket
+\RenewDocumentCommand{\underbracket}{O{0.12ex} O{0.6ex} m}{\oldunderbracket[#1][#2]{#3}}
 
-\newcommand{\thmboxstyle}[4]{
-	\ifchezcolor
-		\mdfdefinestyle{#2}{
-			linecolor=#3,
-			backgroundcolor=#4,
-		}
-		\declaretheoremstyle[
-			headfont=\sffamily\bfseries\color{#3},
-			mdframed={style=#2},
-			headpunct={\\[0.4pt]},
-			postheadspace={0pt}
-		]{#1}
-	\else
-		\mdfdefinestyle{#2}{
-			linecolor=black,
-			backgroundcolor=white,
-		}
-		\declaretheoremstyle[
-			headfont=\sffamily\bfseries\color{black},
-			mdframed={style=#2},
-			headpunct={\\[0.4pt]},
-			postheadspace={0pt}
-		]{#1}
+% Theorem boxes (Heavily copied from DZhu)
+\ifchez@box
+	\tcbuselibrary{skins, theorems, xparse, breakable}
+	\newcommand*{\chez@drawmarginnumber}[1]{
+		\node[anchor=north east,
+			inner sep=0pt,
+			xshift=-0.8em,
+			yshift=-1.865ex,
+			font=\sffamily\bfseries\color{tcbcoltitle}\mathstrut\small] at (frame.north west)
+		{#1};
+	}
+	\tcbset{
+		chezbox/.style={
+			enhanced jigsaw,
+			breakable,
+			fonttitle=\sffamily\bfseries,
+			sharp corners,
+			boxrule=0pt,
+			leftrule=2pt,
+			left=5pt,
+			coltitle=black,
+			attach title to upper=\par,
+		},
+		chezbluebox/.style={
+			chezbox,
+			coltitle=blue!80!black,
+			colframe=blue!80,
+			colback=blue!7,
+		},
+		chezgreenbox/.style={
+			chezbox,
+			coltitle=green!40!black,
+			colframe=green!70!black,
+			colback=green!7,
+		},
+		chezorangebox/.style={
+			chezbox,
+			coltitle=orange!80!black,
+			colframe=orange!98!black,
+			colback=orange!8,
+		},
+		chezredbox/.style={
+			chezbox,
+			coltitle=red!60!black,
+			colframe=red!80!black,
+			colback=red!7,
+		},
+	}
+	\tcbset{
+		chezthm/.style={
+			theorem style=break,
+			separator sign none,
+			description delimiters parenthesis,
+			description font=\normalfont\sffamily\small,
+			terminator sign none,
+		},
+		chezthmmargin/.style={
+			enhanced jigsaw,
+			theorem name,
+			extras unbroken and first={
+				overlay={
+					\ifdef{\thetcbthmcounter}{
+						\chez@drawmarginnumber{\thetcbthmcounter}
+					}{
+						\ifdef{\thetcbcounter}{\chez@drawmarginnumber{\thetcbcounter}}
+					}
+				},
+			},
+		},
+		chezbluethm/.style={chezbluebox, chezthm},
+		chezgreenthm/.style={chezgreenbox, chezthm},
+		chezorangethm/.style={chezorangebox, chezthm},
+		chezredthm/.style={chezredbox, chezthm},
+	}
+
+	\ifchez@marginnum
+		\tcbset{chezthm/.append style=chezthmmargin}
 	\fi
-}
 
-\thmboxstyle{graybox}{mdgraybox}{grayforeground}{graybackground}
-\thmboxstyle{defbox}{mdredbox}{red!70!black}{red!7}
-\thmboxstyle{thmbox}{mdbluebox}{blue}{blue!7}
-\thmboxstyle{exbox}{mdgreenbox}{green!50!black}{green!7}
-\thmboxstyle{notebox}{mdorangebox}{orange!98!black}{orange!8}
-
-\declaretheoremstyle[
-	bodyfont=\normalfont
-]{plain}
-
-\newcommand{\boxhack}{~\vspace{-2em}}
-
-\ifchezbox
-	\declaretheorem[style=thmbox, name=Theorem]{theorem}
-		\declaretheorem[style=thmbox, name=Theorem, numbered=no]{theorem*}
-	\declaretheorem[style=thmbox, name=Lemma, sibling=theorem]{lemma}
-		\declaretheorem[style=thmbox, name=Lemma, numbered=no]{lemma*}
-	\declaretheorem[style=thmbox, name=Proposition, sibling=theorem]{proposition}
-		\declaretheorem[style=thmbox, name=Proposition, numbered=no]{proposition*}
-	\declaretheorem[style=thmbox, name=Corollary, sibling=theorem]{corollary}
-		\declaretheorem[style=thmbox, name=Corollary, numbered=no]{corollary*}
-	\declaretheorem[style=thmbox, name=Conjecture, sibling=theorem]{conjecture}
-		\declaretheorem[style=thmbox, name=Conjecture, numbered=no]{conjecture*}
-	\declaretheorem[style=thmbox, name=Algorithm, sibling=theorem]{algorithm}
-		\declaretheorem[style=thmbox, name=Algorithm, numbered=no]{algorithm*}
-
-	\declaretheorem[style=defbox, name=Definition, sibling=theorem]{definition}
-		\declaretheorem[style=defbox, name=Definition, numbered=no]{definition*}
-
-	\declaretheorem[style=exbox, name=Example, sibling=theorem]{example}
-		\declaretheorem[style=exbox, name=Example, numbered=no]{example*}
+	% Better theorem declaration syntax (from DZhu)
+	\renewcommand{\new@tcbtheorem}[5][]{%
+		\@@newtcolorbox[auto counter,#1]{#2}{O{} D<>{}}{#4,%
+			title={\tcb@theo@title{#3}{\thetcbcounter}{##1}},%
+			list entry={\protect\numberline{\thetcbcounter}##1},%
+			nameref={##1},%
+			code={\tcb@theo@label{#5}{##2}},%
+		}%
+		\@@newtcolorbox[#1,no counter,list inside=]{#2*}{O{}}{#4,%
+			title={\tcb@theo@title{#3}{\@empty}{##1}},%
+		}%
+	}
+	\def\newtcbtheorem{\let\@@newtcolorbox\NewTColorBox%
+		\new@tcbtheorem}
+	\def\renewtcbtheorem{\let\@@newtcolorbox\RenewTColorBox%
+		\new@tcbtheorem}
 	
-	\declaretheorem[style=notebox, name=Fact, sibling=theorem]{fact}
-		\declaretheorem[style=notebox, name=Fact, numbered=no]{fact*}
-	\declaretheorem[style=notebox, name=Note, sibling=theorem]{note}
-		\declaretheorem[style=notebox, name=Note, numbered=no]{note*}
-\else
-	\declaretheorem[style=plain, name=Theorem]{theorem}
-		\declaretheorem[style=plain, name=Theorem, numbered=no]{theorem*}
-	\declaretheorem[style=plain, name=Lemma, sibling=theorem]{lemma}
-		\declaretheorem[style=plain, name=Lemma, numbered=no]{lemma*}
-	\declaretheorem[style=plain, name=Proposition, sibling=theorem]{proposition}
-		\declaretheorem[style=plain, name=Proposition, numbered=no]{proposition*}
-	\declaretheorem[style=plain, name=Corollary, sibling=theorem]{corollary}
-		\declaretheorem[style=plain, name=Corollary, numbered=no]{corollary*}
-	\declaretheorem[style=plain, name=Conjecture, sibling=theorem]{conjecture}
-		\declaretheorem[style=plain, name=Conjecture, numbered=no]{conjecture*}
-	\declaretheorem[style=plain, name=Algorithm, sibling=theorem]{algorithm}
-		\declaretheorem[style=plain, name=Algorithm, numbered=no]{algorithm*}
+	\newcommand*\zbs@newtheorem[4]{
+		\newtcbtheorem[use counter*=#3]{#1}{#2}{#4}{#1}
+	}
+	
+	\newcommand*\zbs@numberwithin[2]{
+		\ifx#2\zbs@empty\else\numberwithin{#1}{#2}\fi
+	}
+	\newcounter{cthm} \zbs@numberwithin{cthm}{\zbs@thm@numberwithin}
+	\newcommand\zbs@thmctrmain{cthm}
+	\ifchez@sepcounters
+		\newcounter{cprob} \zbs@numberwithin{cprob}{\zbs@thm@numberwithinalt}
+		\newcommand\zbs@thmctralt{cprob}
+	\else
+		\newcommand\zbs@thmctralt{cthm}
+	\fi
 
-	\declaretheorem[style=plain, name=Definition, sibling=theorem]{definition}
-		\declaretheorem[style=plain, name=Definition, numbered=no]{definition*}
+	\NewDocumentCommand\zbsnewtheorem{s m m m}{
+		\zbs@newtheorem{#2}{#3}{\IfBooleanTF{#1}{\zbs@thmctralt}{\zbs@thmctrmain}}{#4}
+	}
 
-	\declaretheorem[style=plain, name=Example, sibling=theorem]{example}
-		\declaretheorem[style=plain, name=Example, numbered=no]{example*}
+	\zbsnewtheorem{theorem}{Theorem}{chezbluethm}
+	\zbsnewtheorem{lemma}{Lemma}{chezbluethm}
+	\zbsnewtheorem{claim}{Claim}{chezbluethm}
+	\zbsnewtheorem{proposition}{Proposition}{chezbluethm}
+	\zbsnewtheorem{corollary}{Corollary}{chezbluethm}
+	\zbsnewtheorem{conjecture}{Conjecture}{chezbluethm}
+	\zbsnewtheorem{algorithm}{Algorithm}{chezbluethm}
 
-	\declaretheorem[style=plain, name=Fact, sibling=theorem]{fact}
-		\declaretheorem[style=plain, name=Fact, numbered=no]{fact*}
-	\declaretheorem[style=plain, name=Note, sibling=theorem]{note}
-		\declaretheorem[style=plain, name=Note, numbered=no]{note*}
+	\zbsnewtheorem{definition}{Definition}{chezredthm}
+
+	\zbsnewtheorem{example}{Example}{chezgreenthm}
+
+	\zbsnewtheorem{fact}{Fact}{chezorangethm}
+	\zbsnewtheorem{note}{Note}{chezorangethm}
+
+	\zbsnewtheorem*{exercise}{Exercise}{chezorangethm}
+	\zbsnewtheorem*{remark}{Remark}{chezorangethm}
+
+	% TODO: non-box case
+	% TODO: non-color case
+	% TODO: cleverref integration
 \fi
 
-\declaretheorem[style=plain, name=Exercise, sibling=theorem]{exercise}
-	\declaretheorem[style=plain, name=Exercise, numbered=no]{exercise*}
-\declaretheorem[style=plain, name=Problem, sibling=theorem]{problem}
-	\declaretheorem[style=plain, name=Problem, numbered=no]{problem*}
-\declaretheorem[style=plain, name=Question, sibling=theorem]{question}
-	\declaretheorem[style=plain, name=Question, numbered=no]{question*}
-\declaretheorem[style=plain, name=Answer, sibling=theorem]{answer}
-	\declaretheorem[style=plain, name=Answer, numbered=no]{answer*}
-\declaretheorem[style=plain, name=Remark, sibling=theorem]{remark}
-	\declaretheorem[style=plain, name=Remark, numbered=no]{remark*}
+% Algorithms
+\ifchez@algos
+	\NewDocumentCommand{\ElseIf}{}{\ElsIf}
 
-\declaretheorem[style=plain, name=Case, numberwithin=theorem]{case}
-	\declaretheorem[style=plain, name=Case, numbered=no]{case*}
-\declaretheorem[style=plain, name=Claim, numberwithin=theorem]{claim}
-	\declaretheorem[style=plain, name=Claim, numbered=no]{claim*}
-
-% Suppress mdframed warnings
-\WarningFilter{mdframed}{You got a bad break}
-
-% CODE STUFF
-\newcommand{\ElseIf}{\ElsIf}
-
-% Fix https://tex.stackexchange.com/questions/177025/ issue with
-% hyperref, cleverref, and algpseudocode
-\makeatletter
-\newcounter{algorithmicH} % New algorithmic-like hyperref counter
-\let\oldalgorithmic\algorithmic
-\renewcommand{\algorithmic}{%
-	\stepcounter{algorithmicH}%
-	\oldalgorithmic} % Do what was always done with algorithmic environment
-\newcommand{\theHALG@line}{ALG@line.\thealgorithmicH.\arabic{ALG@line}}
-\makeatother
-
-\ifchezcode
-	\setminted{linenos=true, breaklines=true, tabsize=4}
+	% Fix https://tex.stackexchange.com/questions/177025/ issue with
+	% hyperref, cleverref, and algpseudocode
+	\newcounter{algorithmicH} % New algorithmic-like hyperref counter
+	\let\oldalgorithmic\algorithmic
+	\RenewDocumentCommand{\algorithmic}{}{%
+		\stepcounter{algorithmicH}%
+		\oldalgorithmic}%
+	\NewDocumentCommand{\theHALG@line}{}{ALG@line.\thealgorithmicH.\arabic{ALG@line}}
 \fi
 
-% Diagram stuff
-% Largely copied from https://castel.dev/post/lecture-notes-2/
-\newcommand{\svgsize}[1]{\def\svgscale{#1}}
-\NewDocumentCommand{\incfig}{ O{1.0} m }{%
-	%\def\svgwidth{\columnwidth}
-	\svgsize{#1}
-	\import{./figures/}{#2.pdf_tex}
-}
-\pdfsuppresswarningpagegroup=1
+\ifchez@code\setminted{linenos=true, breaklines=true, tabsize=4}\fi
