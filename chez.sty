@@ -39,7 +39,11 @@
 
 % Typography
 \RequirePackage{lmodern}
-\ifchez@sf\RequirePackage[defaultsans, scale=0.95]{lato}\fi
+\ifchez@sf
+	\RequirePackage[defaultsans, scale=0.95]{lato}
+	\usepackage[italic]{mathastext}
+	% todo: extract important parts of this package
+\fi
 \RequirePackage{microtype}
 \RequirePackage[nodisplayskipstretch, onehalfspacing]{setspace}
 
@@ -70,13 +74,14 @@
 \else
 	\RequirePackage[colorlinks]{hyperref} % load this last generally
 	\definecolor{urlcolor}{rgb}{0.9, 0, 0.5}
+	\definecolor{linkcolor}{rgb}{0, 0.2, 0.8}
 	\definecolor{citecolor}{rgb}{0, 0.6, 0.3}
-	\hypersetup{urlcolor=urlcolor, linkcolor=blue, citecolor=citecolor}
+	\hypersetup{urlcolor=urlcolor, linkcolor=linkcolor, citecolor=citecolor}
 \fi
 
-% cleverref must be loaded after hyperref
+% cleveref must be loaded after hyperref
 % also is really picky and wants to be loaded after everything
-\RequirePackage{cleveref}
+\RequirePackage[nameinlink]{cleveref}
 
 % SETUP
 \author{Jason Chen}
@@ -197,8 +202,11 @@
 	\fi
 
 	% Better theorem declaration syntax (from DZhu)
-	\renewcommand{\new@tcbtheorem}[5][]{%
-		\@@newtcolorbox[auto counter,#1]{#2}{O{} D<>{}}{#4,%
+	\renewcommand{\new@tcbtheorem}[7][]{%
+		\@@newtcolorbox[
+			auto counter,%
+			crefname={#6}{#7},#1
+		]{#2}{O{} D<>{}}{#4,%
 			title={\tcb@theo@title{#3}{\thetcbcounter}{##1}},%
 			list entry={\protect\numberline{\thetcbcounter}##1},%
 			nameref={##1},%
@@ -208,13 +216,11 @@
 			title={\tcb@theo@title{#3}{\@empty}{##1}},%
 		}%
 	}
-	\def\newtcbtheorem{\let\@@newtcolorbox\NewTColorBox%
-		\new@tcbtheorem}
-	\def\renewtcbtheorem{\let\@@newtcolorbox\RenewTColorBox%
-		\new@tcbtheorem}
+	\def\newtcbtheorem{\let\@@newtcolorbox\NewTColorBox\new@tcbtheorem}
+	\def\renewtcbtheorem{\let\@@newtcolorbox\RenewTColorBox\new@tcbtheorem}
 	
-	\newcommand*\zbs@newtheorem[4]{
-		\newtcbtheorem[use counter*=#3]{#1}{#2}{#4}{#1}
+	\newcommand*\zbs@newtheorem[7]{
+		\newtcbtheorem[use counter*=#3]{#1}{#2}{#4}{#5}{#6}{#7}
 	}
 	
 	\newcommand*\zbs@numberwithin[2]{
@@ -228,40 +234,47 @@
 	\else
 		\newcommand\zbs@thmctralt{cthm}
 	\fi
-
-	\NewDocumentCommand\zbsnewtheorem{s m m m}{
-		\zbs@newtheorem{#2}{#3}{\IfBooleanTF{#1}{\zbs@thmctralt}{\zbs@thmctrmain}}{#4}
+	
+	% the last three arguments are for cleveref names
+	\NewDocumentCommand\zbsnewtheorem{s m m m m m m}{
+		\zbs@newtheorem{#2}{#3}{\IfBooleanTF{#1}{\zbs@thmctralt}{\zbs@thmctrmain}}{#4}{#5}{#6}{#7}
 	}
 
-	\zbsnewtheorem{theorem}{Theorem}{chezbluethm}
-	\zbsnewtheorem{lemma}{Lemma}{chezbluethm}
-	\zbsnewtheorem{claim}{Claim}{chezbluethm}
-	\zbsnewtheorem{proposition}{Proposition}{chezbluethm}
-	\zbsnewtheorem{corollary}{Corollary}{chezbluethm}
-	\zbsnewtheorem{conjecture}{Conjecture}{chezbluethm}
-	\zbsnewtheorem{algorithm}{Algorithm}{chezbluethm}
+	\zbsnewtheorem{theorem}{Theorem}{chezbluethm}{thm}{theorem}{theorems}
+	\zbsnewtheorem{lemma}{Lemma}{chezbluethm}{lem}{lemma}{lemmas}
+	\zbsnewtheorem{claim}{Claim}{chezbluethm}{claim}{claim}{claims}
+	\zbsnewtheorem{proposition}{Proposition}{chezbluethm}{prop}{proposition}{propositions}
+	\zbsnewtheorem{corollary}{Corollary}{chezbluethm}{cor}{corollary}{corollaries}
+	\zbsnewtheorem{conjecture}{Conjecture}{chezbluethm}{conj}{conjecture}{conjectures}
+	\zbsnewtheorem{algorithm}{Algorithm}{chezbluethm}{alg}{algorithm}{algorithms}
 
-	\zbsnewtheorem{definition}{Definition}{chezredthm}
+	\zbsnewtheorem{definition}{Definition}{chezredthm}{def}{definition}{definitions}
 
-	\zbsnewtheorem{example}{Example}{chezgreenthm}
+	\zbsnewtheorem{example}{Example}{chezgreenthm}{ex}{example}{examples}
 
-	\zbsnewtheorem{fact}{Fact}{chezorangethm}
-	\zbsnewtheorem{note}{Note}{chezorangethm}
+	\zbsnewtheorem{fact}{Fact}{chezorangethm}{fact}{fact}{facts}
+	\zbsnewtheorem{note}{Note}{chezorangethm}{note}{note}{notes}
 
-	\zbsnewtheorem*{exercise}{Exercise}{chezorangethm}
-	\zbsnewtheorem*{remark}{Remark}{chezorangethm}
+	\zbsnewtheorem*{problem}{Problem}{chezorangethm}{problem}{problem}{problems}
+	\zbsnewtheorem*{exercise}{Exercise}{chezorangethm}{ex}{exercise}{exercises}
+	\zbsnewtheorem*{remark}{Remark}{chezorangethm}{remark}{remark}{remarks}
 
+	% TODO: footnotes
 	% TODO: non-box case
 	% TODO: non-color case
-	% TODO: cleverref integration
+	% TODO: ad hoc?
 \fi
+
+% Redefine to reduce spacing
+\RenewDocumentEnvironment{proof}{o}{\pushQED{\qed}\par\noindent\textit{Proof\IfNoValueF{#1}{ (#1)}}.}{\popQED\par\medskip}
+\NewDocumentEnvironment{proof*}{m}{\pushQED{\qed}\par\noindent\textit{#1}.}{\popQED\par\medskip}
 
 % Algorithms
 \ifchez@algos
 	\NewDocumentCommand{\ElseIf}{}{\ElsIf}
 
 	% Fix https://tex.stackexchange.com/questions/177025/ issue with
-	% hyperref, cleverref, and algpseudocode
+	% hyperref, cleveref, and algpseudocode
 	\newcounter{algorithmicH} % New algorithmic-like hyperref counter
 	\let\oldalgorithmic\algorithmic
 	\RenewDocumentCommand{\algorithmic}{}{%
@@ -270,4 +283,4 @@
 	\NewDocumentCommand{\theHALG@line}{}{ALG@line.\thealgorithmicH.\arabic{ALG@line}}
 \fi
 
-\ifchez@code\setminted{linenos=true, breaklines=true, tabsize=4}\fi
+\ifchez@code\setminted{linenos=true, breaklines=true, tabsize=4, python3=true}\fi

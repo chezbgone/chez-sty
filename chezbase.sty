@@ -1,6 +1,7 @@
 \ProvidesPackage{chezbase}
 
 \RequirePackage{xparse}
+\RequirePackage{etoolbox}
 
 \RequirePackage{mathtools, amssymb, amsthm}
 \RequirePackage{nccmath}
@@ -15,6 +16,9 @@
 
 % Make \bfseries include \boldmath
 \g@addto@macro\bfseries{\boldmath}
+
+% Make cases environment use \lbrack instead of \lbrace
+\patchcmd{\env@cases}{\lbrace}{\lbrack}{}{}
 
 % Emphasizing
 \definecolor{emphcolor}{rgb}{0, 0.4, 1}
@@ -47,6 +51,8 @@
 % Symbols
 \NewDocumentCommand{\eps}{}{\varepsilon}
 \NewDocumentCommand{\nullset}{}{\varnothing}
+\NewDocumentCommand{\bigand}{}{\bigwedge}
+\NewDocumentCommand{\bigor}{}{\bigvee}
 
 % Common Math
 \NewDocumentCommand{\half}{}{\frac{1}{2}}
