@@ -41,8 +41,8 @@
 \RequirePackage{lmodern}
 \ifchez@sf
 	\RequirePackage[defaultsans, scale=0.95]{lato}
-	\usepackage[italic]{mathastext}
-	% todo: extract important parts of this package
+	\SetMathAlphabet\mathsf{normal}{OT1}{\sfdefault}{m}{n}
+	\SetMathAlphabet\mathsf{bold}{OT1}{\sfdefault}{b}{n}
 \fi
 \RequirePackage{microtype}
 \RequirePackage[nodisplayskipstretch, onehalfspacing]{setspace}
@@ -64,10 +64,7 @@
 % Theorem Boxes
 \ifchez@box\RequirePackage{tcolorbox}\fi
 
-% Algorithms/Code
-\ifchez@algos\RequirePackage[noend]{algpseudocode}\fi
-\ifchez@code\RequirePackage{minted}\fi
-
+% References
 \PassOptionsToPackage{pdftex, pdfcreator={LaTeX with chez.sty by Jason Chen}}{hyperref}
 \ifchez@gray
 	\RequirePackage{hyperref}
@@ -78,6 +75,10 @@
 	\definecolor{citecolor}{rgb}{0, 0.6, 0.3}
 	\hypersetup{urlcolor=urlcolor, linkcolor=linkcolor, citecolor=citecolor}
 \fi
+
+% Algorithms/Code
+\ifchez@algos\RequirePackage[noend]{algpseudocode}\fi % after hyperref because counter problem
+\ifchez@code\RequirePackage{minted}\fi
 
 % cleveref must be loaded after hyperref
 % also is really picky and wants to be loaded after everything
@@ -256,6 +257,7 @@
 	\zbsnewtheorem{note}{Note}{chezorangethm}{note}{note}{notes}
 
 	\zbsnewtheorem*{problem}{Problem}{chezorangethm}{problem}{problem}{problems}
+	\zbsnewtheorem*{question}{Question}{chezorangethm}{question}{question}{questions}
 	\zbsnewtheorem*{exercise}{Exercise}{chezorangethm}{ex}{exercise}{exercises}
 	\zbsnewtheorem*{remark}{Remark}{chezorangethm}{remark}{remark}{remarks}
 
@@ -280,7 +282,7 @@
 	\RenewDocumentCommand{\algorithmic}{}{%
 		\stepcounter{algorithmicH}%
 		\oldalgorithmic}%
-	\NewDocumentCommand{\theHALG@line}{}{ALG@line.\thealgorithmicH.\arabic{ALG@line}}
+	\RenewDocumentCommand{\theHALG@line}{}{ALG@line.\thealgorithmicH.\arabic{ALG@line}}
 \fi
 
 \ifchez@code\setminted{linenos=true, breaklines=true, tabsize=4, python3=true}\fi
