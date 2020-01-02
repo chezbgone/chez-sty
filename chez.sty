@@ -77,7 +77,7 @@
 \fi
 
 % Algorithms/Code
-\ifchez@algos\RequirePackage[noend]{algpseudocode}\fi % after hyperref because counter problem
+\ifchez@algos\RequirePackage[noend]{algpseudocode}\fi % after hyperref because of counter issue
 \ifchez@code\RequirePackage{minted}\fi
 
 % cleveref must be loaded after hyperref
@@ -123,7 +123,7 @@
 \let\oldunderbracket\underbracket
 \RenewDocumentCommand{\underbracket}{O{0.12ex} O{0.6ex} m}{\oldunderbracket[#1][#2]{#3}}
 
-% Theorem boxes (Heavily copied from DZhu)
+% Theorem boxes (Heavily copied from Daniel Zhu)
 \ifchez@box
 	\tcbuselibrary{skins, theorems, xparse, breakable}
 	\newcommand*{\chez@drawmarginnumber}[1]{
@@ -263,11 +263,10 @@
 
 	% TODO: footnotes
 	% TODO: non-box case
-	% TODO: non-color case
 	% TODO: ad hoc?
 \fi
 
-% Redefine to reduce spacing
+% Redefine to reduce surrounding spacing
 \RenewDocumentEnvironment{proof}{o}{\pushQED{\qed}\par\noindent\textit{Proof\IfNoValueF{#1}{ (#1)}}.}{\popQED\par\medskip}
 \NewDocumentEnvironment{proof*}{m}{\pushQED{\qed}\par\noindent\textit{#1}.}{\popQED\par\medskip}
 
