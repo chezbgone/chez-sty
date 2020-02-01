@@ -13,7 +13,7 @@
 \newif\ifchez@sepcounters \chez@sepcountersfalse
 
 \DeclareOption{nodate}{\chez@datefalse}
-\DeclareOption{serif}{\chez@sffalse}
+\DeclareOption{serifs}{\chez@sffalse}
 \DeclareOption{header}{\chez@headertrue}
 \DeclareOption{gray}{\chez@graytrue}
 \DeclareOption{nobox}{\chez@boxfalse}
@@ -126,19 +126,11 @@
 % Theorem boxes (Heavily copied from Daniel Zhu)
 \ifchez@box
 	\tcbuselibrary{skins, theorems, xparse, breakable}
-	\newcommand*{\chez@drawmarginnumber}[1]{
-		\node[anchor=north east,
-			inner sep=0pt,
-			xshift=-0.8em,
-			yshift=-1.865ex,
-			font=\sffamily\bfseries\color{tcbcoltitle}\mathstrut\small] at (frame.north west)
-		{#1};
-	}
 	\tcbset{
 		chezbox/.style={
 			enhanced jigsaw,
 			breakable,
-			fonttitle=\sffamily\bfseries,
+			fonttitle=\ifchez@sf\sffamily\fi\bfseries,
 			sharp corners,
 			boxrule=0pt,
 			leftrule=2pt,
@@ -170,36 +162,44 @@
 			colframe=red!80!black,
 			colback=red!7,
 		},
-	}
-	\tcbset{
-		chezthm/.style={
-			theorem style=break,
-			separator sign none,
-			description delimiters parenthesis,
-			description font=\normalfont\sffamily\small,
-			terminator sign none,
-		},
-		chezthmmargin/.style={
-			enhanced jigsaw,
-			theorem name,
-			extras unbroken and first={
-				overlay={
-					\ifdef{\thetcbthmcounter}{
-						\chez@drawmarginnumber{\thetcbthmcounter}
-					}{
-						\ifdef{\thetcbcounter}{\chez@drawmarginnumber{\thetcbcounter}}
-					}
-				},
-			},
-		},
 		chezbluethm/.style={chezbluebox, chezthm},
 		chezgreenthm/.style={chezgreenbox, chezthm},
 		chezorangethm/.style={chezorangebox, chezthm},
 		chezredthm/.style={chezredbox, chezthm},
+		chezthm/.style={
+			theorem style=break,
+			separator sign none,
+			description delimiters parenthesis,
+			description font=\normalfont\ifchez@sf\sffamily\fi\small,
+			terminator sign none,
+		},
 	}
 
 	\ifchez@marginnum
-		\tcbset{chezthm/.append style=chezthmmargin}
+		\newcommand*{\chez@drawmarginnumber}[1]{
+			\node[anchor=north east,
+				inner sep=0pt,
+				xshift=-0.8em,
+				yshift=-1.865ex,
+				font=\ifchez@sf\sffamily\fi\bfseries\color{tcbcoltitle}\mathstrut\small]
+				at (frame.north west) {#1};
+		}
+		\tcbset{
+			chezthmmargin/.style={
+				enhanced jigsaw,
+				theorem name,
+				extras unbroken and first={
+					overlay={
+						\ifdef{\thetcbthmcounter}{
+							\chez@drawmarginnumber{\thetcbthmcounter}
+						}{
+							\ifdef{\thetcbcounter}{\chez@drawmarginnumber{\thetcbcounter}}
+						}
+					},
+				},
+			},
+			chezthm/.append style=chezthmmargin,
+		}
 	\fi
 
 	% Better theorem declaration syntax (from DZhu)
@@ -227,18 +227,28 @@
 	\newcommand*\zbs@numberwithin[2]{
 		\ifx#2\zbs@empty\else\numberwithin{#1}{#2}\fi
 	}
-	\newcounter{cthm} \zbs@numberwithin{cthm}{\zbs@thm@numberwithin}
-	\newcommand\zbs@thmctrmain{cthm}
+	\newcounter{thmcounter} \zbs@numberwithin{thmcounter}{\zbs@thm@numberwithin}
+	\newcommand\zbs@thmctrmain{thmcounter}
 	\ifchez@sepcounters
-		\newcounter{cprob} \zbs@numberwithin{cprob}{\zbs@thm@numberwithinalt}
+		\newcounter{probcounter} \zbs@numberwithin{probcounter}{\zbs@thm@numberwithinalt}
 		\newcommand\zbs@thmctralt{cprob}
 	\else
-		\newcommand\zbs@thmctralt{cthm}
+		\newcommand\zbs@thmctralt{thmcounter}
 	\fi
 	
 	% the last three arguments are for cleveref names
 	\NewDocumentCommand\zbsnewtheorem{s m m m m m m}{
 		\zbs@newtheorem{#2}{#3}{\IfBooleanTF{#1}{\zbs@thmctralt}{\zbs@thmctrmain}}{#4}{#5}{#6}{#7}
+	}
+
+	\NewTColorBox{adhoctheorem}{O{} m !D(){\zbs@thmctralt} !O{} !D<>{}}{
+		chezorangethm,
+		code={\letcs\thetcbthmcounter{the#3}},
+		theorem={#2}{#3}{#4}{#5},#1
+	}
+	\NewTColorBox{adhoctheorem*}{O{} m O{}}{
+		chezorangethm,
+		title={\tcb@theo@title{#2}{\@empty}{#3}},#1
 	}
 
 	\zbsnewtheorem{theorem}{Theorem}{chezbluethm}{thm}{theorem}{theorems}
@@ -263,7 +273,6 @@
 
 	% TODO: footnotes
 	% TODO: non-box case
-	% TODO: ad hoc?
 \fi
 
 % Redefine to reduce surrounding spacing
@@ -284,4 +293,4 @@
 	\RenewDocumentCommand{\theHALG@line}{}{ALG@line.\thealgorithmicH.\arabic{ALG@line}}
 \fi
 
-\ifchez@code\setminted{linenos=true, breaklines=true, tabsize=4, python3=true}\fi
+\ifchez@code\setminted{linenos=true, breaklines=true, tabsize=4, python3=true, baselinestretch=1}\fi

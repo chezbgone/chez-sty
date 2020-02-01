@@ -17,8 +17,8 @@
 % Make \bfseries include \boldmath
 \g@addto@macro\bfseries{\boldmath}
 
-% Make cases environment use \lbrack instead of \lbrace
-\patchcmd{\env@cases}{\lbrace}{\lbrack}{}{}
+%% Make cases environment use \lbrack instead of \lbrace
+%\patchcmd{\env@cases}{\lbrace}{\lbrack}{}{}
 
 % Emphasizing
 \definecolor{emphcolor}{rgb}{0, 0.4, 1}
@@ -143,5 +143,9 @@
 \DeclarePairedDelimiter{\ket}{\vert}{\rangle}
 \DeclarePairedDelimiterX{\braket}[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
 \DeclarePairedDelimiterX{\Braket}[3]{\langle}{\rangle}{#1 \,\delimsize\vert\, \mathopen{}#2 \,\delimsize\vert\, \mathopen{}#3}
+
+% Category Theory
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\Hom}{Hom}
 
 \endinput
