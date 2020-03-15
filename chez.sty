@@ -108,7 +108,10 @@
 \fi
 
 % Compact title
-\ifchez@compact\patchcmd{\@maketitle}{\large}{\large\sffamily}\fi
+\ifchez@compact
+	\patchcmd{\@maketitle}{\@author}{\scshape\@author}{}{}
+	\patchcmd{\@maketitle}{\large}{\large\sffamily}{}{}
+\fi
 
 \allowdisplaybreaks
 \AtBeginDocument{
