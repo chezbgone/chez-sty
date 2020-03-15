@@ -20,6 +20,10 @@
 %% Make cases environment use \lbrack instead of \lbrace
 %\patchcmd{\env@cases}{\lbrace}{\lbrack}{}{}
 
+% I use this enough to need this
+\definecolor{todocolor}{rgb}{0.8, 0.1, 0.1}
+\NewDocumentCommand{\TODO}{o}{\textcolor{todocolor}{TODO\IfNoValueF{#1}{: #1}}}
+
 % Emphasizing
 \definecolor{emphcolor}{rgb}{0, 0.4, 1}
 \NewDocumentCommand{\vocab}{m}{\textbf{\textcolor{emphcolor}{#1}}}
@@ -84,8 +88,8 @@
 \DeclareMathOperator{\sign}{sign}
 
 % Combinatorics / Statistics
-\NewDocumentCommand{\EE}{}{\mathbb E}
-\NewDocumentCommand{\PP}{}{\mathbb P}
+\NewDocumentCommand{\EExp}{}{\operatorname{\mathbb E}}
+\NewDocumentCommand{\PProb}{}{\operatorname{\mathbb P}}
 \DeclareMathOperator{\Var}{Var}
 
 % Geometry
@@ -99,12 +103,36 @@
 \DeclareMathOperator*{\lcm}{lcm}
 
 % Calculus
-\NewDocumentCommand{\dv}{m m}{\frac{d #1}{d #2}}
-\NewDocumentCommand{\ddv}{m m}{\frac{d^2 #1}{d #2^2}}
-\NewDocumentCommand{\dnv}{m m m}{\frac{d^{#3} #1}{d #2^{#3}}}
-\NewDocumentCommand{\pdv}{m m}{\frac{\partial #1}{\partial #2}}
-\NewDocumentCommand{\pddv}{m m}{\frac{\partial^2 #1}{\partial #2^2}}
-\NewDocumentCommand{\pdnv}{m m m}{\frac{\partial^{#3} #1}{\partial #2^{#3}}}
+\NewDocumentCommand{\dv}{s m m}{
+	\IfBooleanTF{#1}
+		{d#2/d#3}
+		{\frac{d #2}{d #3}}
+}
+\NewDocumentCommand{\dnv}{s m m m}{
+	\IfBooleanTF{#1}
+		{d^{#4}#2/d{#3}^{#4}}
+		{\frac{d^{#4} #2}{d {#3}^{#4}}}
+}
+\NewDocumentCommand{\ddv}{s m m}{
+	\IfBooleanTF{#1}
+		{\dnv*{#2}{#3}{2}}
+		{\dnv{#2}{#3}{2}}
+}
+\NewDocumentCommand{\pdv}{s m m}{
+	\IfBooleanTF{#1}
+		{\partial #2/\partial #3}
+		{\frac{\partial #2}{\partial #3}}
+}
+\NewDocumentCommand{\pdnv}{s m m m}{
+	\IfBooleanTF{#1}
+		{\partial^{#4}#2/\partial{#3}^{#4}}
+		{\frac{\partial^{#4} #2}{\partial {#3}^{#4}}}
+}
+\NewDocumentCommand{\pddv}{s m m}{
+	\IfBooleanTF{#1}
+		{\pdnv*{#2}{#3}{2}}
+		{\pdnv{#2}{#3}{2}}
+}
 
 \let\obelus\div
 \let\div\relax % was originally the division symbol
@@ -117,6 +145,8 @@
 \NewDocumentCommand{\iso}{}{\DOTSB\cong}
 \NewDocumentCommand{\inv}{}{^{-1}}
 \NewDocumentCommand{\transp}{}{^{\mathsf T}}
+
+\DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\id}{id}
 \DeclareMathOperator{\Char}{char} % characteristic of a ring; \char already exists
@@ -134,6 +164,7 @@
 \DeclareMathOperator{\Gal}{Gal}
 
 % Algebraic Geometry
+\NewDocumentCommand{\PP}{}{\mathbb P}
 \NewDocumentCommand{\VV}{}{\mathcal V}
 \NewDocumentCommand{\II}{}{\mathcal I}
 \DeclareMathOperator{\Spec}{Spec}
