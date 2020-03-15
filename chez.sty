@@ -29,7 +29,7 @@
 \KOMAoptions{
 	paper=letter,
 	fontsize=10pt,
-	DIV=18,
+	usegeometry,
 	numbers=noendperiod,
 }
 
@@ -46,6 +46,11 @@
 \fi
 \RequirePackage{microtype}
 \RequirePackage[nodisplayskipstretch, onehalfspacing]{setspace}
+
+% Page Margins
+\RequirePackage{geometry}
+\geometry{margin=1.5cm, includefoot}
+\ifchez@header\geometry{includehead}\fi
 
 % Headers
 \ifchez@header\RequirePackage{scrlayer-scrpage}\fi
