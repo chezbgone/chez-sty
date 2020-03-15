@@ -120,9 +120,6 @@
 \RenewDocumentCommand{\arraystretch}{}{0.8}
 \setlist{noitemsep, topsep=0.4em, listparindent=\parindent}
 
-% Make itemize bullets smaller
-\RenewDocumentCommand{\labelitemi}{}{$\vcenter{\hbox{\tiny\textbullet}}$}
-
 % Better default bracket width/height
 \let\oldunderbracket\underbracket
 \RenewDocumentCommand{\underbracket}{O{0.12ex} O{0.6ex} m}{\oldunderbracket[#1][#2]{#3}}
