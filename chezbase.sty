@@ -5,10 +5,10 @@
 
 \RequirePackage[T1]{fontenc}
 \RequirePackage[frak=boondox, frakscaled=0.98, scr=boondoxo]{mathalfa}
-\RequirePackage{chezint} % More integrals (e.g. \oiint)
 
 \RequirePackage{mathtools, amssymb, amsthm}
 \RequirePackage{nccmath}
+\RequirePackage{chezint} % More integrals (e.g. \oiint)
 
 \RequirePackage{xcolor}
 \RequirePackage{graphicx}
@@ -89,9 +89,10 @@
 \DeclareMathOperator{\sign}{sign}
 
 % Combinatorics / Statistics
-\NewDocumentCommand{\EExp}{}{\operatorname{\mathbb E}}
-\NewDocumentCommand{\PProb}{}{\operatorname{\mathbb P}}
+\NewDocumentCommand{\EExp}{}{\operatorname*{\mathbb E}}
+\NewDocumentCommand{\PProb}{}{\operatorname*{\mathbb P}}
 \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
 
 % Geometry
 \NewDocumentCommand{\dg}{}{^\circ}
