@@ -42,17 +42,17 @@
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
-\DeclarePairedDelimiterX{\set}[1]{\lbrace}{\rbrace}{
-	\RenewDocumentCommand{\mid}{}{\;\delimsize\vert\;}%
-	#1
-}
-
 % Semantically-named delimiters
 \NewDocumentCommand{\abs}{}{\verts}
 \NewDocumentCommand{\size}{}{\verts}
 \NewDocumentCommand{\norm}{}{\Verts}
 \NewDocumentCommand{\tuple}{}{\angles}
 \NewDocumentCommand{\gen}{}{\angles}
+\NewDocumentCommand{\fgen}{}{\braces} %free
+\DeclarePairedDelimiterX{\set}[1]{\lbrace}{\rbrace}{
+	\RenewDocumentCommand{\mid}{}{\;\delimsize\vert\;}%
+	#1%
+}
 
 % Symbols
 \NewDocumentCommand{\eps}{}{\varepsilon}
@@ -65,13 +65,13 @@
 \NewDocumentCommand{\cbrt}{m}{\sqrt[3]{#1}}
 
 % Sets
-\NewDocumentCommand{\FF}{}{\mathbb F}
-\NewDocumentCommand{\NN}{}{\mathbb N}
-\NewDocumentCommand{\ZZ}{}{\mathbb Z}
-\NewDocumentCommand{\QQ}{}{\mathbb Q}
-\NewDocumentCommand{\RR}{}{\mathbb R}
-\NewDocumentCommand{\CC}{}{\mathbb C}
-\NewDocumentCommand{\HH}{}{\mathbb H}
+\NewDocumentCommand{\FF}{}{\mathbb{F}}
+\NewDocumentCommand{\NN}{}{\mathbb{N}}
+\NewDocumentCommand{\ZZ}{}{\mathbb{Z}}
+\NewDocumentCommand{\QQ}{}{\mathbb{Q}}
+\NewDocumentCommand{\RR}{}{\mathbb{R}}
+\NewDocumentCommand{\CC}{}{\mathbb{C}}
+\NewDocumentCommand{\HH}{}{\mathbb{H}}
 
 \NewDocumentCommand{\intersect}{}{\cap}
 \NewDocumentCommand{\bigintersect}{}{\bigcap}
@@ -81,7 +81,7 @@
 % General
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
-\RenewDocumentCommand{\Re}{}{\operatorname{Re}} % can't use DeclareMathOperator because already defined
+\RenewDocumentCommand{\Re}{}{\operatorname{Re}}
 \RenewDocumentCommand{\Im}{}{\operatorname{Im}}
 \DeclareMathOperator{\cis}{cis}
 \DeclareMathOperator{\arccosh}{arccosh}
@@ -90,8 +90,8 @@
 \DeclareMathOperator{\sign}{sign}
 
 % Combinatorics / Statistics
-\NewDocumentCommand{\EExp}{}{\operatorname*{\mathbb E}}
-\NewDocumentCommand{\PProb}{}{\operatorname*{\mathbb P}}
+\NewDocumentCommand{\EExp}{}{\operatorname*{\mathbb{E}}}
+\NewDocumentCommand{\PProb}{}{\operatorname*{\mathbb{P}}}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\Cov}{Cov}
 
@@ -123,13 +123,13 @@
 }
 \NewDocumentCommand{\pdv}{s m m}{
 	\IfBooleanTF{#1}
-		{\partial #2/\partial #3}
-		{\frac{\partial #2}{\partial #3}}
+		{\partial{#2}/\partial{#3}}
+		{\frac{\partial{#2}}{\partial{#3}}}
 }
 \NewDocumentCommand{\pdnv}{s m m m}{
 	\IfBooleanTF{#1}
 		{\partial^{#4}#2/\partial{#3}^{#4}}
-		{\frac{\partial^{#4} #2}{\partial {#3}^{#4}}}
+		{\frac{\partial^{#4} #2}{\partial{#3}^{#4}}}
 }
 \NewDocumentCommand{\pddv}{s m m}{
 	\IfBooleanTF{#1}
@@ -137,7 +137,7 @@
 		{\pdnv{#2}{#3}{2}}
 }
 
-\let\obelus\div
+\let\obelus\div%
 \let\div\relax % was originally the division symbol
 \DeclareMathOperator{\grad}{grad}
 \DeclareMathOperator{\div}{div}
@@ -152,7 +152,7 @@
 \DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\id}{id}
 \DeclareMathOperator{\Char}{char} % characteristic of a ring; \char already exists
-\DeclareMathOperator{\img}{im} % \ker is already defined
+\DeclareMathOperator{\img}{im} % \im is already defined for imaginary part
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\Ind}{Ind}
@@ -166,15 +166,16 @@
 \DeclareMathOperator{\Gal}{Gal}
 
 % Algebraic Geometry
-\NewDocumentCommand{\PP}{}{\mathbb P}
-\NewDocumentCommand{\VV}{}{\mathcal V}
-\NewDocumentCommand{\II}{}{\mathcal I}
+\NewDocumentCommand{\PP}{}{\mathbb{P}}
+\NewDocumentCommand{\VV}{}{\mathcal{V}}
+\NewDocumentCommand{\II}{}{\mathcal{I}}
 \DeclareMathOperator{\Spec}{Spec}
+\NewDocumentCommand{\RP}{}{\mathbb{RP}}
 
 % Quantum Mechanics
 \DeclarePairedDelimiter{\bra}{\langle}{\vert}
 \DeclarePairedDelimiter{\ket}{\vert}{\rangle}
-\DeclarePairedDelimiterX{\braket}[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+\DeclarePairedDelimiterX{\braket}[2]{\langle}{\rangle}{#1 \delimsize\vert{#2}}
 \DeclarePairedDelimiterX{\Braket}[3]{\langle}{\rangle}{#1 \,\delimsize\vert\, \mathopen{}#2 \,\delimsize\vert\, \mathopen{}#3}
 
 % Category Theory
