@@ -155,8 +155,10 @@
 \DeclareMathOperator{\img}{im} % \im is already defined for imaginary part
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\Img}{Im}
-\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\Ext}{Ext}
 
+\NewDocumentCommand{\RP}{}{\mathbb{RP}}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\SL}{SL}
 \DeclareMathOperator{\SO}{SO}
@@ -170,13 +172,6 @@
 \NewDocumentCommand{\VV}{}{\mathcal{V}}
 \NewDocumentCommand{\II}{}{\mathcal{I}}
 \DeclareMathOperator{\Spec}{Spec}
-\NewDocumentCommand{\RP}{}{\mathbb{RP}}
-
-% Quantum Mechanics
-\DeclarePairedDelimiter{\bra}{\langle}{\vert}
-\DeclarePairedDelimiter{\ket}{\vert}{\rangle}
-\DeclarePairedDelimiterX{\braket}[2]{\langle}{\rangle}{#1 \delimsize\vert{#2}}
-\DeclarePairedDelimiterX{\Braket}[3]{\langle}{\rangle}{#1 \,\delimsize\vert\, \mathopen{}#2 \,\delimsize\vert\, \mathopen{}#3}
 
 % Category Theory
 \DeclareMathOperator{\Obj}{Obj}
