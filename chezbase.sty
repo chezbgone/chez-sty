@@ -145,7 +145,7 @@
 
 % Algebra
 \DeclareMathOperator{\ord}{ord}
-\NewDocumentCommand{\iso}{}{\DOTSB\cong}
+\newcommand{\iso}{\cong} % can't use xparse because \DOTSB doesn't work
 \NewDocumentCommand{\inv}{}{^{-1}}
 
 \DeclareMathOperator{\rank}{rank}
@@ -159,6 +159,7 @@
 \DeclareMathOperator{\Ext}{Ext}
 
 \NewDocumentCommand{\RP}{}{\mathbb{RP}}
+\NewDocumentCommand{\CP}{}{\mathbb{CP}}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\SL}{SL}
 \DeclareMathOperator{\SO}{SO}
