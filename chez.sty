@@ -286,7 +286,25 @@
 
 	% TODO: footnotes
 	% TODO: non-box case
+\else
+  \RequirePackage{thmtools}
+  \declaretheoremstyle[bodyfont=\normalfont]{default}
+
+  \declaretheorem[name=Theorem, style=default]{theorem}
+  \declaretheorem[name=Lemma, style=default]{lemma}
+  \declaretheorem[name=Claim, style=default]{claim}
+  \declaretheorem[name=Corollary, style=default]{corollary}
+  \declaretheorem[name=Fact, style=default]{fact}
+  \declaretheorem[name=Generalization, style=default]{generalization}
+
+  \declaretheorem[name=Theorem, numbered=no, style=default]{theorem*}
+  \declaretheorem[name=Lemma, numbered=no, style=default]{lemma*}
+  \declaretheorem[name=Claim, numbered=no, style=default]{claim*}
+  \declaretheorem[name=Corollary, numbered=no, style=default]{corollary*}
+  \declaretheorem[name=Fact, numbered=no, style=default]{fact*}
+  \declaretheorem[name=Generalization, numbered=no, style=default]{generalization*}
 \fi
+
 
 % Redefine to reduce surrounding spacing
 \RenewDocumentEnvironment{proof}{o}{\pushQED{\qed}\par\noindent\textit{Proof\IfNoValueF{#1}{ (#1)}}.}{\popQED\par\medskip}
