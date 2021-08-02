@@ -129,8 +129,8 @@ and the second method is error prone as we have to remember the `\right`,
 which becomes increasingly easy to forget in the case of nested brackets
 
 In this package we present a solution to this.
-We define commands for each delimiter pair, e.g. `\parens*{content}`.
-The star indicates that the delimiters should be resized.
+We define commands for each delimiter pair, e.g. `\parens*{content}`,
+where the star indicates that the delimiters should be automatically sized.
 Omitting the star will give the normal sized delimiters.
 For manual sizing, you can use `\parens[\big]{content}`.
 
@@ -144,7 +144,7 @@ The delimiters provided are:
 - `\floor`
 - `\ceil`
 
-There are also semantically-named delimiters:
+There are also semantically-named delimiters to allow for more readable code:
 - `\abs` (for `\verts`)
 - `\size` (for `\verts`)
 - `\norm` (for `\Verts`)
