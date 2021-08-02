@@ -82,9 +82,9 @@ This is some content.
 #### Commands
 There are many commands defined for convenience and code readability.
 Notable ones are:
-- `\vocab{word}` to bold and color a word blue, to indicate an important term
+- `\vocab{text}` to bold and color text blue, to indicate an important term.
 
-- `\ol{text}` and `\ul{text}` for over
+- `\ol{text}` and `\ul{text}` for overline and underline.
 
 - `\FF`,
   `\NN`,
