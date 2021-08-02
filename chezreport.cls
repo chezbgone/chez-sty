@@ -4,11 +4,12 @@
 \LoadClass{scrreprt}
 
 \DeclareOption{header}{%
-	\PassOptionsToClass{headinclude}{scrreprt}%
-	\PassOptionsToPackage{header}{chez}%
+  \PassOptionsToClass{headinclude}{scrreprt}%
+  \PassOptionsToPackage{header}{chez}%
 }
+
 \DeclareOption{nodate}{\PassOptionsToPackage{nodate}{chez}}
-\DeclareOption{serif}{\PassOptionsToPackage{serif}{chez}}
+\DeclareOption{serifs}{\PassOptionsToPackage{serifs}{chez}}
 \DeclareOption{gray}{\PassOptionsToPackage{gray}{chez}}
 \DeclareOption{nobox}{\PassOptionsToPackage{nobox}{chez}}
 \DeclareOption{asy}{\PassOptionsToPackage{asy}{chez}}

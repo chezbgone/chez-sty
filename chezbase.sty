@@ -50,8 +50,8 @@
 \NewDocumentCommand{\gen}{}{\angles}
 \NewDocumentCommand{\fgen}{}{\braces} %free
 \DeclarePairedDelimiterX{\set}[1]{\lbrace}{\rbrace}{
-	\RenewDocumentCommand{\mid}{}{\;\delimsize\vert\;}%
-	#1%
+  \RenewDocumentCommand{\mid}{}{\;\delimsize\vert\;}%
+  #1%
 }
 
 % Symbols
@@ -73,9 +73,9 @@
 \NewDocumentCommand{\CC}{}{\mathbb{C}}
 \NewDocumentCommand{\HH}{}{\mathbb{H}}
 
-\NewDocumentCommand{\intersect}{}{\cap}
+\newcommand{\intersect}{\DOTSB\cap} % can't use xparse because it protects \DOTSB
 \NewDocumentCommand{\bigintersect}{}{\bigcap}
-\NewDocumentCommand{\union}{}{\cup}
+\newcommand{\union}{\DOTSB\cup} % can't use xparse because it protects \DOTSB
 \NewDocumentCommand{\bigunion}{}{\bigcup}
 
 % General
@@ -107,34 +107,34 @@
 
 % Calculus
 \NewDocumentCommand{\dv}{s m m}{
-	\IfBooleanTF{#1}
-		{d#2/d#3}
-		{\frac{d #2}{d #3}}
+  \IfBooleanTF{#1}
+    {d#2/d#3}
+    {\frac{d #2}{d #3}}
 }
 \NewDocumentCommand{\dnv}{s m m m}{
-	\IfBooleanTF{#1}
-		{d^{#4}#2/d{#3}^{#4}}
-		{\frac{d^{#4} #2}{d {#3}^{#4}}}
+  \IfBooleanTF{#1}
+    {d^{#4}#2/d{#3}^{#4}}
+    {\frac{d^{#4} #2}{d {#3}^{#4}}}
 }
 \NewDocumentCommand{\ddv}{s m m}{
-	\IfBooleanTF{#1}
-		{\dnv*{#2}{#3}{2}}
-		{\dnv{#2}{#3}{2}}
+  \IfBooleanTF{#1}
+    {\dnv*{#2}{#3}{2}}
+    {\dnv{#2}{#3}{2}}
 }
 \NewDocumentCommand{\pdv}{s m m}{
-	\IfBooleanTF{#1}
-		{\partial{#2}/\partial{#3}}
-		{\frac{\partial{#2}}{\partial{#3}}}
+  \IfBooleanTF{#1}
+    {\partial{#2}/\partial{#3}}
+    {\frac{\partial{#2}}{\partial{#3}}}
 }
 \NewDocumentCommand{\pdnv}{s m m m}{
-	\IfBooleanTF{#1}
-		{\partial^{#4}#2/\partial{#3}^{#4}}
-		{\frac{\partial^{#4} #2}{\partial{#3}^{#4}}}
+  \IfBooleanTF{#1}
+    {\partial^{#4}#2/\partial{#3}^{#4}}
+    {\frac{\partial^{#4} #2}{\partial{#3}^{#4}}}
 }
 \NewDocumentCommand{\pddv}{s m m}{
-	\IfBooleanTF{#1}
-		{\pdnv*{#2}{#3}{2}}
-		{\pdnv{#2}{#3}{2}}
+  \IfBooleanTF{#1}
+    {\pdnv*{#2}{#3}{2}}
+    {\pdnv{#2}{#3}{2}}
 }
 
 \let\obelus\div%
@@ -145,7 +145,7 @@
 
 % Algebra
 \DeclareMathOperator{\ord}{ord}
-\newcommand{\iso}{\cong} % can't use xparse because \DOTSB doesn't work
+\newcommand{\iso}{\DOTSB\cong} % can't use xparse because it protects \DOTSB
 \NewDocumentCommand{\inv}{}{^{-1}}
 
 \DeclareMathOperator{\rank}{rank}

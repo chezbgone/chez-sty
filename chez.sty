@@ -27,10 +27,10 @@
 \ProcessOptions*
 
 \KOMAoptions{
-	paper=letter,
-	fontsize=10pt,
-	usegeometry,
-	numbers=noendperiod,
+  paper=letter,
+  fontsize=10pt,
+  usegeometry,
+  numbers=noendperiod,
 }
 
 % General
@@ -79,13 +79,13 @@
 % References
 \PassOptionsToPackage{pdftex, pdfcreator={LaTeX with chez.sty by Jason Chen}}{hyperref}
 \ifchez@gray
-	\RequirePackage{hyperref}
+  \RequirePackage{hyperref}
 \else
-	\RequirePackage[colorlinks]{hyperref} % load this last generally
-	\definecolor{urlcolor}{rgb}{0.9, 0, 0.5}
-	\definecolor{linkcolor}{rgb}{0, 0.2, 0.8}
-	\definecolor{citecolor}{rgb}{0, 0.6, 0.3}
-	\hypersetup{urlcolor=urlcolor, linkcolor=linkcolor, citecolor=citecolor}
+  \RequirePackage[colorlinks]{hyperref} % load this last generally
+  \definecolor{urlcolor}{rgb}{0.9, 0, 0.5}
+  \definecolor{linkcolor}{rgb}{0, 0.2, 0.8}
+  \definecolor{citecolor}{rgb}{0, 0.6, 0.3}
+  \hypersetup{urlcolor=urlcolor, linkcolor=linkcolor, citecolor=citecolor}
 \fi
 
 % Algorithms/Code
@@ -111,21 +111,21 @@
 
 % Section numbers in the margin
 \ifchez@marginnum
-	\RenewDocumentCommand{\sectionlinesformat}{m m m m}{\makebox[0pt][r]{#3}#4}
+  \RenewDocumentCommand{\sectionlinesformat}{m m m m}{\makebox[0pt][r]{#3}#4}
 \fi
 
 % Compact title
 \ifchez@compact
-	\patchcmd{\@maketitle}{\@author}{\scshape\@author}{}{}
-	\patchcmd{\@maketitle}{\large}{\large\sffamily}{}{}
+  \patchcmd{\@maketitle}{\@author}{\scshape\@author}{}{}
+  \patchcmd{\@maketitle}{\large}{\large\sffamily}{}{}
 \fi
 
 \allowdisplaybreaks
 \AtBeginDocument{
-	\setlength{\belowdisplayskip}{0.5em}
-	\setlength{\belowdisplayshortskip}{0.2em}
-	\setlength{\abovedisplayskip}{0.5em}
-	\setlength{\abovedisplayshortskip}{0.2em}
+  \setlength{\belowdisplayskip}{0.5em}
+  \setlength{\belowdisplayshortskip}{0.2em}
+  \setlength{\abovedisplayskip}{0.5em}
+  \setlength{\abovedisplayshortskip}{0.2em}
 }
 
 \RenewDocumentCommand{\arraystretch}{}{0.8}
@@ -137,155 +137,155 @@
 
 % Theorem boxes (Heavily copied from Daniel Zhu)
 \ifchez@box
-	\tcbuselibrary{skins, theorems, xparse, breakable}
-	\tcbset{
-		chezbox/.style={
-			enhanced jigsaw,
-			breakable,
-			fonttitle=\ifchez@sf\sffamily\fi\bfseries,
-			sharp corners,
-			boxrule=0pt,
-			leftrule=2pt,
-			left=5pt,
-			coltitle=black,
-			attach title to upper=\par,
-			lines before break=4,
-		},
-		chezbluebox/.style={
-			chezbox,
-			coltitle=blue!80!black,
-			colframe=blue!80,
-			colback=blue!7,
-		},
-		chezgreenbox/.style={
-			chezbox,
-			coltitle=green!40!black,
-			colframe=green!70!black,
-			colback=green!6,
-		},
-		chezorangebox/.style={
-			chezbox,
-			coltitle=orange!80!black,
-			colframe=orange!98!black,
-			colback=orange!8,
-		},
-		chezredbox/.style={
-			chezbox,
-			coltitle=red!60!black,
-			colframe=red!80!black,
-			colback=red!6,
-		},
-		chezbluethm/.style={chezbluebox, chezthm},
-		chezgreenthm/.style={chezgreenbox, chezthm},
-		chezorangethm/.style={chezorangebox, chezthm},
-		chezredthm/.style={chezredbox, chezthm},
-		chezthm/.style={
-			theorem style=break,
-			separator sign none,
-			description delimiters parenthesis,
-			description font=\normalfont\ifchez@sf\sffamily\fi\small,
-			terminator sign none,
-		},
-	}
+  \tcbuselibrary{skins, theorems, xparse, breakable}
+  \tcbset{
+    chezbox/.style={
+      enhanced jigsaw,
+      breakable,
+      fonttitle=\ifchez@sf\sffamily\fi\bfseries,
+      sharp corners,
+      boxrule=0pt,
+      leftrule=2pt,
+      left=5pt,
+      coltitle=black,
+      attach title to upper=\par,
+      lines before break=4,
+    },
+    chezbluebox/.style={
+      chezbox,
+      coltitle=blue!80!black,
+      colframe=blue!80,
+      colback=blue!7,
+    },
+    chezgreenbox/.style={
+      chezbox,
+      coltitle=green!40!black,
+      colframe=green!70!black,
+      colback=green!6,
+    },
+    chezorangebox/.style={
+      chezbox,
+      coltitle=orange!80!black,
+      colframe=orange!98!black,
+      colback=orange!8,
+    },
+    chezredbox/.style={
+      chezbox,
+      coltitle=red!60!black,
+      colframe=red!80!black,
+      colback=red!6,
+    },
+    chezbluethm/.style={chezbluebox, chezthm},
+    chezgreenthm/.style={chezgreenbox, chezthm},
+    chezorangethm/.style={chezorangebox, chezthm},
+    chezredthm/.style={chezredbox, chezthm},
+    chezthm/.style={
+      theorem style=break,
+      separator sign none,
+      description delimiters parenthesis,
+      description font=\normalfont\ifchez@sf\sffamily\fi\small,
+      terminator sign none,
+    },
+  }
 
-	\ifchez@marginnum
-		\newcommand*{\chez@drawmarginnumber}[1]{
-			\node[anchor=north east,
-				inner sep=0pt,
-				xshift=-0.8em,
-				yshift=-1.865ex,
-				font=\ifchez@sf\sffamily\fi\bfseries\color{tcbcoltitle}\mathstrut\small]
-				at (frame.north west) {#1};
-		}
-		\tcbset{
-			chezthmmargin/.style={
-				enhanced jigsaw,
-				theorem name,
-				extras unbroken and first={
-					overlay={
-						\ifdef{\thetcbthmcounter}{
-							\chez@drawmarginnumber{\thetcbthmcounter}
-						}{
-							\ifdef{\thetcbcounter}{\chez@drawmarginnumber{\thetcbcounter}}
-						}
-					},
-				},
-			},
-			chezthm/.append style=chezthmmargin,
-		}
-	\fi
+  \ifchez@marginnum
+    \newcommand*{\chez@drawmarginnumber}[1]{
+      \node[anchor=north east,
+        inner sep=0pt,
+        xshift=-0.8em,
+        yshift=-1.865ex,
+        font=\ifchez@sf\sffamily\fi\bfseries\color{tcbcoltitle}\mathstrut\small]
+        at (frame.north west) {#1};
+    }
+    \tcbset{
+      chezthmmargin/.style={
+        enhanced jigsaw,
+        theorem name,
+        extras unbroken and first={
+          overlay={
+            \ifdef{\thetcbthmcounter}{
+              \chez@drawmarginnumber{\thetcbthmcounter}
+            }{
+              \ifdef{\thetcbcounter}{\chez@drawmarginnumber{\thetcbcounter}}
+            }
+          },
+        },
+      },
+      chezthm/.append style=chezthmmargin,
+    }
+  \fi
 
-	% Better theorem declaration syntax (from DZhu)
-	\renewcommand{\new@tcbtheorem}[7][]{%
-		\@@newtcolorbox[
-			auto counter,%
-			crefname={#6}{#7},#1
-		]{#2}{O{} D<>{}}{#4,%
-			title={\tcb@theo@title{#3}{\thetcbcounter}{##1}},%
-			list entry={\protect\numberline{\thetcbcounter}##1},%
-			nameref={##1},%
-			code={\tcb@theo@label{#5}{##2}},%
-		}%
-		\@@newtcolorbox[#1,no counter,list inside=]{#2*}{O{}}{#4,%
-			title={\tcb@theo@title{#3}{\@empty}{##1}},%
-		}%
-	}
-	\def\newtcbtheorem{\let\@@newtcolorbox\NewTColorBox\new@tcbtheorem}
-	\def\renewtcbtheorem{\let\@@newtcolorbox\RenewTColorBox\new@tcbtheorem}
-	
-	\newcommand*\zbs@newtheorem[7]{
-		\newtcbtheorem[use counter*=#3]{#1}{#2}{#4}{#5}{#6}{#7}
-	}
-	
-	\newcommand*\zbs@numberwithin[2]{
-		\ifx#2\zbs@empty\else\numberwithin{#1}{#2}\fi
-	}
-	\newcounter{thmcounter} \zbs@numberwithin{thmcounter}{\zbs@thm@numberwithin}
-	\newcommand\zbs@thmctrmain{thmcounter}
-	\ifchez@sepcounters
-		\newcounter{probcounter} \zbs@numberwithin{probcounter}{\zbs@thm@numberwithinalt}
-		\newcommand\zbs@thmctralt{cprob}
-	\else
-		\newcommand\zbs@thmctralt{thmcounter}
-	\fi
-	
-	% the last three arguments are for cleveref names
-	\NewDocumentCommand\zbsnewtheorem{s m m m m m m}{
-		\zbs@newtheorem{#2}{#3}{\IfBooleanTF{#1}{\zbs@thmctralt}{\zbs@thmctrmain}}{#4}{#5}{#6}{#7}
-	}
+  % Better theorem declaration syntax (from DZhu)
+  \renewcommand{\new@tcbtheorem}[7][]{%
+    \@@newtcolorbox[
+      auto counter,%
+      crefname={#6}{#7},#1
+    ]{#2}{O{} D<>{}}{#4,%
+      title={\tcb@theo@title{#3}{\thetcbcounter}{##1}},%
+      list entry={\protect\numberline{\thetcbcounter}##1},%
+      nameref={##1},%
+      code={\tcb@theo@label{#5}{##2}},%
+    }%
+    \@@newtcolorbox[#1,no counter,list inside=]{#2*}{O{}}{#4,%
+      title={\tcb@theo@title{#3}{\@empty}{##1}},%
+    }%
+  }
+  \def\newtcbtheorem{\let\@@newtcolorbox\NewTColorBox\new@tcbtheorem}
+  \def\renewtcbtheorem{\let\@@newtcolorbox\RenewTColorBox\new@tcbtheorem}
+  
+  \newcommand*\zbs@newtheorem[7]{
+    \newtcbtheorem[use counter*=#3]{#1}{#2}{#4}{#5}{#6}{#7}
+  }
+  
+  \newcommand*\zbs@numberwithin[2]{
+    \ifx#2\zbs@empty\else\numberwithin{#1}{#2}\fi
+  }
+  \newcounter{thmcounter} \zbs@numberwithin{thmcounter}{\zbs@thm@numberwithin}
+  \newcommand\zbs@thmctrmain{thmcounter}
+  \ifchez@sepcounters
+    \newcounter{probcounter} \zbs@numberwithin{probcounter}{\zbs@thm@numberwithinalt}
+    \newcommand\zbs@thmctralt{cprob}
+  \else
+    \newcommand\zbs@thmctralt{thmcounter}
+  \fi
+  
+  % the last three arguments are for cleveref names
+  \NewDocumentCommand\zbsnewtheorem{s m m m m m m}{
+    \zbs@newtheorem{#2}{#3}{\IfBooleanTF{#1}{\zbs@thmctralt}{\zbs@thmctrmain}}{#4}{#5}{#6}{#7}
+  }
 
-	\NewTColorBox{adhoctheorem}{O{} m !D(){\zbs@thmctralt} !O{} !D<>{}}{
-		chezorangethm,
-		code={\letcs\thetcbthmcounter{the#3}},
-		theorem={#2}{#3}{#4}{#5},#1
-	}
-	\NewTColorBox{adhoctheorem*}{O{} m O{}}{
-		chezorangethm,
-		title={\tcb@theo@title{#2}{\@empty}{#3}},#1
-	}
+  \NewTColorBox{adhoctheorem}{O{} m !D(){\zbs@thmctralt} !O{} !D<>{}}{
+    chezorangethm,
+    code={\letcs\thetcbthmcounter{the#3}},
+    theorem={#2}{#3}{#4}{#5},#1
+  }
+  \NewTColorBox{adhoctheorem*}{O{} m O{}}{
+    chezorangethm,
+    title={\tcb@theo@title{#2}{\@empty}{#3}},#1
+  }
 
-	\zbsnewtheorem{theorem}{Theorem}{chezbluethm}{thm}{theorem}{theorems}
-	\zbsnewtheorem{lemma}{Lemma}{chezbluethm}{lem}{lemma}{lemmas}
-	\zbsnewtheorem{claim}{Claim}{chezbluethm}{claim}{claim}{claims}
-	\zbsnewtheorem{proposition}{Proposition}{chezbluethm}{prop}{proposition}{propositions}
-	\zbsnewtheorem{corollary}{Corollary}{chezbluethm}{cor}{corollary}{corollaries}
-	\zbsnewtheorem{conjecture}{Conjecture}{chezbluethm}{conj}{conjecture}{conjectures}
-	\zbsnewtheorem{algorithm}{Algorithm}{chezbluethm}{alg}{algorithm}{algorithms}
+  \zbsnewtheorem{theorem}{Theorem}{chezbluethm}{thm}{theorem}{theorems}
+  \zbsnewtheorem{lemma}{Lemma}{chezbluethm}{lem}{lemma}{lemmas}
+  \zbsnewtheorem{claim}{Claim}{chezbluethm}{claim}{claim}{claims}
+  \zbsnewtheorem{proposition}{Proposition}{chezbluethm}{prop}{proposition}{propositions}
+  \zbsnewtheorem{corollary}{Corollary}{chezbluethm}{cor}{corollary}{corollaries}
+  \zbsnewtheorem{conjecture}{Conjecture}{chezbluethm}{conj}{conjecture}{conjectures}
+  \zbsnewtheorem{algorithm}{Algorithm}{chezbluethm}{alg}{algorithm}{algorithms}
 
-	\zbsnewtheorem{definition}{Definition}{chezredthm}{def}{definition}{definitions}
+  \zbsnewtheorem{definition}{Definition}{chezredthm}{def}{definition}{definitions}
 
-	\zbsnewtheorem{example}{Example}{chezgreenthm}{ex}{example}{examples}
+  \zbsnewtheorem{example}{Example}{chezgreenthm}{ex}{example}{examples}
 
-	\zbsnewtheorem{fact}{Fact}{chezorangethm}{fact}{fact}{facts}
-	\zbsnewtheorem{note}{Note}{chezorangethm}{note}{note}{notes}
+  \zbsnewtheorem{fact}{Fact}{chezorangethm}{fact}{fact}{facts}
+  \zbsnewtheorem{note}{Note}{chezorangethm}{note}{note}{notes}
 
-	\zbsnewtheorem*{problem}{Problem}{chezorangethm}{problem}{problem}{problems}
-	\zbsnewtheorem*{question}{Question}{chezorangethm}{question}{question}{questions}
-	\zbsnewtheorem*{exercise}{Exercise}{chezorangethm}{ex}{exercise}{exercises}
-	\zbsnewtheorem*{remark}{Remark}{chezorangethm}{remark}{remark}{remarks}
+  \zbsnewtheorem*{problem}{Problem}{chezorangethm}{problem}{problem}{problems}
+  \zbsnewtheorem*{question}{Question}{chezorangethm}{question}{question}{questions}
+  \zbsnewtheorem*{exercise}{Exercise}{chezorangethm}{ex}{exercise}{exercises}
+  \zbsnewtheorem*{remark}{Remark}{chezorangethm}{remark}{remark}{remarks}
 
-	% TODO: footnotes
-	% TODO: non-box case
+  % TODO: footnotes
+  % TODO: non-box case
 \else
   \RequirePackage{thmtools}
   \declaretheoremstyle[bodyfont=\normalfont]{default}
@@ -312,16 +312,16 @@
 
 % Algorithms
 \ifchez@algos
-	\NewDocumentCommand{\ElseIf}{}{\ElsIf}
+  \NewDocumentCommand{\ElseIf}{}{\ElsIf}
 
-	% Fix https://tex.stackexchange.com/questions/177025/ issue with
-	% hyperref, cleveref, and algpseudocode
-	\newcounter{algorithmicH} % New algorithmic-like hyperref counter
-	\let\oldalgorithmic\algorithmic
-	\RenewDocumentCommand{\algorithmic}{}{%
-		\stepcounter{algorithmicH}%
-		\oldalgorithmic}%
-	\RenewDocumentCommand{\theHALG@line}{}{ALG@line.\thealgorithmicH.\arabic{ALG@line}}
+  % Fix https://tex.stackexchange.com/questions/177025/ issue with
+  % hyperref, cleveref, and algpseudocode
+  \newcounter{algorithmicH} % New algorithmic-like hyperref counter
+  \let\oldalgorithmic\algorithmic
+  \RenewDocumentCommand{\algorithmic}{}{%
+    \stepcounter{algorithmicH}%
+    \oldalgorithmic}%
+  \RenewDocumentCommand{\theHALG@line}{}{ALG@line.\thealgorithmicH.\arabic{ALG@line}}
 \fi
 
 \ifchez@code\setminted{linenos=true, breaklines=true, tabsize=4, python3=true, baselinestretch=1}\fi
