@@ -106,9 +106,9 @@ Notable ones are:
   `\pdv{y}{x}` gives the partial derivative fraction
     `\frac{\partial y}{\partial x}`.  
   `\pddv{y}{x}` gives the partial derivative fraction
-    `\frac{\partial^2y}{\partial x^2}`.  
+    `\frac{\partial^2 y}{\partial x^2}`.  
   `\pdnv{y}{x}{n}` gives the partial derivative fraction
-    `\frac{\partial^ny}{\partial x^n}`.
+    `\frac{\partial^n y}{\partial x^n}`.
 
   There exists starred versions of all of these commands
   that produce inline versions.
@@ -213,7 +213,7 @@ There are many options that can be used in the documentclass, e.g.
 - `asy` enables [Asymptote](https://asymptote.sourceforge.io/) support.
 - `algos` enables algorithm typesetting with the `algpseudocode` package.
 - `code` enables code snippet typesetting with the `minted` package.  
-  This has a dependency of Pygments,
+  This has a dependency of [Pygments](https://pygments.org/),
   and requires the document to be compiled with the option `-shell-escape`
   (so that TeX can externally run Pygments).
 - `compact` significantly reduces the spacing everywhere.
@@ -244,3 +244,12 @@ There are many options that can be used in the documentclass, e.g.
 The class files are simple wrappers around these internal files
 - `chezarticle.cls` defines the documentclass corresponding to `article`.
 - `chezreport.cls` defines the documentclass corresponding to `report`.
+
+
+## Contributing
+If something is missing, feel free to fork and make a change yourself.
+Since these are my personal styles,
+I probably will accept few pull requests,
+and only those that I can see myself using.
+
+Big thanks to Daniel Zhu for helping with the code for the boxed environments.
