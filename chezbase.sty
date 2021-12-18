@@ -21,6 +21,12 @@
 %% Make cases environment use \lbrack instead of \lbrace
 %\patchcmd{\env@cases}{\lbrace}{\lbrack}{}{}
 
+\definecolor{chezred}{rgb}{0.8, 0.05, 0.05}
+\definecolor{chezgreen}{rgb}{0.1, 0.4, 0.1}
+\definecolor{chezblue}{rgb}{0, 0.3, 0.8}
+\definecolor{chezorange}{rgb}{0.86, 0.4, 0}
+\definecolor{chezpurple}{rgb}{0.4, 0, 0.7}
+
 % I use this enough to need this
 \definecolor{todocolor}{rgb}{0.8, 0.1, 0.1}
 \NewDocumentCommand{\TODO}{o}{\textcolor{todocolor}{TODO\IfNoValueF{#1}{: #1}}}
@@ -36,6 +42,7 @@
 \DeclarePairedDelimiter{\braces}{\lbrace}{\rbrace}
 \DeclarePairedDelimiter{\parens}{\lparen}{\rparen}
 \DeclarePairedDelimiter{\brackets}{\lbrack}{\rbrack}
+\DeclarePairedDelimiter{\bbrackets}{\llbracket}{\rrbracket}
 \DeclarePairedDelimiter{\angles}{\langle}{\rangle}
 \DeclarePairedDelimiter{\verts}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\Verts}{\lVert}{\rVert}

@@ -126,7 +126,7 @@ There are typically two approaches people take when doing so:
 
 The first method is inconvenient as we have to move the cursor back and forth,
 and the second method is error prone as we have to remember the `\right`,
-which becomes increasingly easy to forget in the case of nested brackets
+which becomes increasingly easy to forget in the case of nested brackets.
 
 In this package we present a solution to this.
 We define commands for each delimiter pair, e.g. `\parens*{content}`,
@@ -156,7 +156,7 @@ There are also semantically-named delimiters to allow for more readable code:
 #### Boxes
 One main feature of the style is colored boxes environments
 for definitions, examples, and theorems.
-These can be used with, e.g.
+These can be used with, e.g.:
 ```tex
 \begin{example}[Title]<label>
   content
