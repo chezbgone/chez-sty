@@ -215,24 +215,58 @@
     }
   \fi
 
-  % Better theorem declaration syntax (from DZhu)
-  \renewcommand{\new@tcbtheorem}[7][]{%
-    \@@newtcolorbox[
-      auto counter,%
-      crefname={#6}{#7},#1
-    ]{#2}{O{} D<>{}}{#4,%
-      title={\tcb@theo@title{#3}{\thetcbcounter}{##1}},%
-      list entry={\protect\numberline{\thetcbcounter}##1},%
-      nameref={##1},%
-      code={\tcb@theo@label{#5}{##2}},%
-    }%
-    \@@newtcolorbox[#1,no counter,list inside=]{#2*}{O{}}{#4,%
-      title={\tcb@theo@title{#3}{\@empty}{##1}},%
-    }%
-  }
-  \def\newtcbtheorem{\let\@@newtcolorbox\NewTColorBox\new@tcbtheorem}
-  \def\renewtcbtheorem{\let\@@newtcolorbox\RenewTColorBox\new@tcbtheorem}
+  % Better theorem declaration syntax
+  % (from DZhu, modified for expl3 by Jason Chen)
+  \ExplSyntaxOn
+  % #1: extra options
+  % #2: name
+  % #3: display name
+  % #4: box style
+  % #5: ref prefix
+  % #6: ref display
+  % #7: ref display plural
+  \RenewDocumentCommand \new@tcbtheorem { O{} m m +m m m m }
+    { % \@@newtcolorbox is either \NewTColorBox or \RenewTColorBox
+      \@@newtcolorbox[auto~counter,crefname={#6}{#7},#1]{#2}{ O{} D<>{} }
+        {
+          #4,
+          title      = {\__tcobox_theo_title:nnn{#3}{\thetcbcounter}{##1}},
+          list~entry = {\protect\numberline{\thetcbcounter}##1},
+          nameref    = {##1},
+          theo@label = {#5}{##2},
+        }
+      \@@newtcolorbox[#1,no~counter,list~inside=]{#2*}{ O{} }
+        {
+          #4,
+          title = {\__tcobox_theo_title:nnn{#3}{}{##1}},%
+        }
+    }
+
+
+  \RenewDocumentCommand \newtcbtheorem {}
+    {
+      \cs_set_eq:NN \@@newtcolorbox \NewTColorBox
+      \new@tcbtheorem
+    }
+
+
+  \RenewDocumentCommand \renewtcbtheorem {}
+    {
+      \cs_set_eq:NN \@@newtcolorbox \RenewTColorBox
+      \new@tcbtheorem
+    }
+
+  \ExplSyntaxOff
+
+  %%%%%
   
+  % #1: environment name
+  % #2: environment display name
+  % #3: counter to use
+  % #4: box style
+  % #5: ref prefix
+  % #6: ref display
+  % #7: ref display plural
   \newcommand*\zbs@newtheorem[7]{
     \newtcbtheorem[use counter*=#3]{#1}{#2}{#4}{#5}{#6}{#7}
   }
@@ -249,20 +283,29 @@
     \newcommand\zbs@thmctralt{thmcounter}
   \fi
   
-  % the last three arguments are for cleveref names
+  % #1: star - true if alternate numbers
+  % #2: environment name
+  % #3: environment display name
+  % #4: box style
+  % #5: ref prefix
+  % #6: ref display
+  % #7: ref display plural
   \NewDocumentCommand\zbsnewtheorem{s m m m m m m}{
     \zbs@newtheorem{#2}{#3}{\IfBooleanTF{#1}{\zbs@thmctralt}{\zbs@thmctrmain}}{#4}{#5}{#6}{#7}
   }
 
+  \ExplSyntaxOn
+  % NOTE: math in adhoctheorem titles must be in $...$, not \(...\)
   \NewTColorBox{adhoctheorem}{O{} m !D(){\zbs@thmctralt} !O{} !D<>{}}{
     chezorangethm,
     code={\letcs\thetcbthmcounter{the#3}},
-    theorem={#2}{#3}{#4}{#5},#1
+    theorem={{#2}}{#3}{#4}{#5},#1
   }
   \NewTColorBox{adhoctheorem*}{O{} m O{}}{
     chezorangethm,
-    title={\tcb@theo@title{#2}{\@empty}{#3}},#1
+    title={\__tcobox_theo_title:nnn{#2}{\@empty}{#3}},#1
   }
+  \ExplSyntaxOff
 
   \zbsnewtheorem{theorem}{Theorem}{chezbluethm}{thm}{theorem}{theorems}
   \zbsnewtheorem{lemma}{Lemma}{chezbluethm}{lem}{lemma}{lemmas}
