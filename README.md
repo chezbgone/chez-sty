@@ -20,6 +20,10 @@ the same directory as the `.tex` file being compiled.
 The compiler should automatically detect the style files when compiling
 the main `.tex` file.
 
+#### Overleaf
+Download the package `.cls`, `.sty`, and `.tex` files
+and upload them into the document.
+
 ### Global usage
 It is also possible to install the styles globally
 so that all documents have access to them.
