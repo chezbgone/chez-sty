@@ -1,4 +1,7 @@
-\ProvidesPackage{chez}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{chezsimple}
+
+\LoadClass{scrartcl}
 
 \newif\ifchez@date        \chez@datetrue
 \newif\ifchez@sf          \chez@sftrue
@@ -34,10 +37,23 @@
 }
 
 % General
+\RequirePackage{xparse}
+\RequirePackage{etoolbox}
+
+\RequirePackage{mathtools, amssymb, amsthm}
+\RequirePackage{nccmath}
+%\RequirePackage{chezint} % More integrals (e.g. \oiint)
+
 \ifchez@gray\PassOptionsToPackage{gray}{xcolor}\fi
-\RequirePackage{chezbase}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{booktabs} % Better table commands
+\RequirePackage{array}
 
 % Typography
+\RequirePackage[T1]{fontenc}
+\RequirePackage[frak=boondox, frakscaled=0.98, scr=boondoxo]{mathalfa}
+
 \RequirePackage{libertine}
 \RequirePackage[libertine]{newtxmath}
 \RequirePackage[scaled=0.83]{beramono}
@@ -47,10 +63,7 @@
 \RequirePackage{microtype}
 \RequirePackage[nodisplayskipstretch, onehalfspacing]{setspace}
 
-% make math output copy-pasteable
-\pdfgentounicode=1
-\input{glyphtounicode}
-\input{chezglyphtounicode}
+\g@addto@macro\bfseries{\boldmath}
 
 % Page Margins
 \RequirePackage{geometry}
@@ -70,8 +83,6 @@
 
 % Macros
 \RequirePackage[shortlabels, inline]{enumitem}
-
-\NewDocumentCommand{\pog}{}{\qedhere}
 
 % Theorem Boxes
 \ifchez@box\RequirePackage{tcolorbox}\fi
@@ -95,6 +106,178 @@
 % cleveref must be loaded after hyperref
 % also is really picky and wants to be loaded after everything
 \RequirePackage[nameinlink]{cleveref}
+
+% make math output copy-pasteable
+\pdfgentounicode=1
+\input{glyphtounicode}
+\input{chezglyphtounicode}
+
+% colors
+\definecolor{chezred}{rgb}{0.8, 0.05, 0.05}
+\definecolor{chezgreen}{rgb}{0.1, 0.4, 0.1}
+\definecolor{chezblue}{rgb}{0, 0.3, 0.8}
+\definecolor{chezorange}{rgb}{0.86, 0.4, 0}
+\definecolor{chezpurple}{rgb}{0.4, 0, 0.7}
+
+\definecolor{chezlightred}{rgb}{1.0, 0.5, 0.05}
+\definecolor{chezlightgreen}{rgb}{0.6, 1.0, 0.6}
+\definecolor{chezlightblue}{rgb}{0.6, 0.7, 1}
+% \definecolor{chezlightorange}{rgb}{0.86, 0.4, 0}
+% \definecolor{chezlightpurple}{rgb}{0.4, 0, 0.7}
+
+% I use this enough to need this
+\definecolor{todocolor}{rgb}{0.8, 0.1, 0.1}
+\NewDocumentCommand{\TODO}{o}{\textcolor{todocolor}{TODO\IfNoValueF{#1}{: #1}}}
+
+% Emphasizing
+\definecolor{emphcolor}{rgb}{0, 0.4, 1}
+\NewDocumentCommand{\vocab}{m}{\textbf{\textcolor{emphcolor}{#1}}}
+\NewDocumentCommand{\answer}{m}{\textcolor{emphcolor}{#1}}
+\NewDocumentCommand{\ol}{}{\overline}
+\NewDocumentCommand{\ul}{}{\underline}
+
+% Syntactically-named delimiters
+\DeclarePairedDelimiter{\braces}{\lbrace}{\rbrace}
+\DeclarePairedDelimiter{\parens}{\lparen}{\rparen}
+\DeclarePairedDelimiter{\brackets}{\lbrack}{\rbrack}
+\DeclarePairedDelimiter{\bbrackets}{\llbracket}{\rrbracket}
+\DeclarePairedDelimiter{\angles}{\langle}{\rangle}
+\DeclarePairedDelimiter{\verts}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\Verts}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+% Semantically-named delimiters
+\NewDocumentCommand{\abs}{}{\verts}
+\NewDocumentCommand{\size}{}{\verts}
+\NewDocumentCommand{\norm}{}{\Verts}
+\NewDocumentCommand{\tuple}{}{\angles}
+\NewDocumentCommand{\gen}{}{\angles}
+\NewDocumentCommand{\fgen}{}{\braces} %free
+\DeclarePairedDelimiterX{\set}[1]{\lbrace}{\rbrace}{
+  \RenewDocumentCommand{\mid}{}{\;\delimsize\vert\;}%
+  #1%
+}
+
+% Symbols
+\NewDocumentCommand{\eps}{}{\varepsilon}
+\NewDocumentCommand{\nullset}{}{\varnothing}
+\NewDocumentCommand{\bigand}{}{\bigwedge}
+\NewDocumentCommand{\bigor}{}{\bigvee}
+
+% Common Math
+\NewDocumentCommand{\half}{}{\frac{1}{2}}
+\NewDocumentCommand{\cbrt}{m}{\sqrt[3]{#1}}
+
+% Sets
+\NewDocumentCommand{\FF}{}{\mathbb{F}}
+\NewDocumentCommand{\NN}{}{\mathbb{N}}
+\NewDocumentCommand{\ZZ}{}{\mathbb{Z}}
+\NewDocumentCommand{\QQ}{}{\mathbb{Q}}
+\NewDocumentCommand{\RR}{}{\mathbb{R}}
+\NewDocumentCommand{\CC}{}{\mathbb{C}}
+\NewDocumentCommand{\HH}{}{\mathbb{H}}
+
+\newcommand{\intersect}{\DOTSB\cap} % can't use xparse because it protects \DOTSB
+\NewDocumentCommand{\bigintersect}{}{\bigcap}
+\newcommand{\union}{\DOTSB\cup} % can't use xparse because it protects \DOTSB
+\NewDocumentCommand{\bigunion}{}{\bigcup}
+
+% General
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\RenewDocumentCommand{\Re}{}{\operatorname{Re}}
+\RenewDocumentCommand{\Im}{}{\operatorname{Im}}
+\DeclareMathOperator{\cis}{cis}
+\DeclareMathOperator{\arccosh}{arccosh}
+\DeclareMathOperator{\arcsinh}{arcsinh}
+\DeclareMathOperator{\arctanh}{arctanh}
+\DeclareMathOperator{\sign}{sign}
+
+% Combinatorics / Statistics
+\NewDocumentCommand{\EExp}{}{\operatorname*{\mathbb{E}}}
+\NewDocumentCommand{\PProb}{}{\operatorname*{\mathbb{P}}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+% Number Theory
+\RenewDocumentCommand{\mod}{m}{\ \mathrm{mod}\ #1}
+\DeclareMathOperator*{\lcm}{lcm}
+
+% Calculus
+\NewDocumentCommand{\dv}{s m m}{
+  \IfBooleanTF{#1}
+    {d#2/d#3}
+    {\frac{d #2}{d #3}}
+}
+\NewDocumentCommand{\dnv}{s m m m}{
+  \IfBooleanTF{#1}
+    {d^{#4}#2/d{#3}^{#4}}
+    {\frac{d^{#4} #2}{d {#3}^{#4}}}
+}
+\NewDocumentCommand{\ddv}{s m m}{
+  \IfBooleanTF{#1}
+    {\dnv*{#2}{#3}{2}}
+    {\dnv{#2}{#3}{2}}
+}
+\NewDocumentCommand{\pdv}{s m m}{
+  \IfBooleanTF{#1}
+    {\partial{#2}/\partial{#3}}
+    {\frac{\partial{#2}}{\partial{#3}}}
+}
+\NewDocumentCommand{\pdnv}{s m m m}{
+  \IfBooleanTF{#1}
+    {\partial^{#4}#2/\partial{#3}^{#4}}
+    {\frac{\partial^{#4} #2}{\partial{#3}^{#4}}}
+}
+\NewDocumentCommand{\pddv}{s m m}{
+  \IfBooleanTF{#1}
+    {\pdnv*{#2}{#3}{2}}
+    {\pdnv{#2}{#3}{2}}
+}
+
+\let\obelus\div%
+\let\div\relax % was originally the division symbol
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\curl}{curl}
+
+% Algebra
+\DeclareMathOperator{\ord}{ord}
+\newcommand{\iso}{\DOTSB\cong} % can't use xparse because it protects \DOTSB
+\NewDocumentCommand{\inv}{}{^{-1}}
+
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Char}{char} % characteristic of a ring; \char already exists
+\DeclareMathOperator{\img}{im} % \im is already defined for imaginary part
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\Ext}{Ext}
+
+\NewDocumentCommand{\RP}{}{\mathbb{RP}}
+\NewDocumentCommand{\CP}{}{\mathbb{CP}}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\SU}{SU}
+\DeclareMathOperator{\Orth}{O}
+
+\DeclareMathOperator{\Gal}{Gal}
+
+% Algebraic Geometry
+\NewDocumentCommand{\PP}{}{\mathbb{P}}
+\NewDocumentCommand{\VV}{}{\mathcal{V}}
+\NewDocumentCommand{\II}{}{\mathcal{I}}
+\DeclareMathOperator{\Spec}{Spec}
+
+% Category Theory
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\Hom}{Hom}
+\NewDocumentCommand{\cat}{}{\mathsf}
 
 % SETUP
 \author{Jason Chen}
@@ -129,7 +312,7 @@
 }
 
 \RenewDocumentCommand{\arraystretch}{}{0.8}
-\setlist{noitemsep, topsep=0.4em, listparindent=\parindent}
+\setlist{nosep, listparindent=\parindent}
 
 % Better default bracket width/height
 \let\oldunderbracket\underbracket
@@ -334,20 +517,23 @@
   \declaretheoremstyle[bodyfont=\normalfont]{default}
 
   \declaretheorem[name=Theorem, style=default]{theorem}
+  \declaretheorem[name=Definition, style=default]{definition}
   \declaretheorem[name=Lemma, style=default]{lemma}
   \declaretheorem[name=Claim, style=default]{claim}
   \declaretheorem[name=Corollary, style=default]{corollary}
   \declaretheorem[name=Fact, style=default]{fact}
   \declaretheorem[name=Generalization, style=default]{generalization}
+  \declaretheorem[name=Example, style=default]{example}
 
   \declaretheorem[name=Theorem, numbered=no, style=default]{theorem*}
+  \declaretheorem[name=Definition, numbered=no, style=default]{definition*}
   \declaretheorem[name=Lemma, numbered=no, style=default]{lemma*}
   \declaretheorem[name=Claim, numbered=no, style=default]{claim*}
   \declaretheorem[name=Corollary, numbered=no, style=default]{corollary*}
   \declaretheorem[name=Fact, numbered=no, style=default]{fact*}
   \declaretheorem[name=Generalization, numbered=no, style=default]{generalization*}
+  \declaretheorem[name=Example, numbered=no, style=default]{example*}
 \fi
-
 
 % Redefine to reduce surrounding spacing
 \RenewDocumentEnvironment{proof}{o}{\pushQED{\qed}\par\noindent\textit{Proof\IfNoValueF{#1}{ (#1)}}.}{\popQED\par\medskip}
