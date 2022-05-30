@@ -20,6 +20,12 @@ the same directory as the `.tex` file being compiled.
 The compiler should automatically detect the style files when compiling
 the main `.tex` file.
 
+#### Overleaf
+Currently, the version of TeX on Overleaf (2021) does not support
+tcolorbox v5.0.0, so use [this commit](https://github.com/chezbgone/chez-sty/tree/4e6dbf5bcdb9cf9992bdbc31cd731ffd6843164c).
+Download the package `.cls`, `.sty`, and `.tex` files
+and upload them into the document.
+
 ### Global usage
 It is also possible to install the styles globally
 so that all documents have access to them.
