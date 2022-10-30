@@ -70,6 +70,7 @@
 
 % Macros
 \RequirePackage[shortlabels, inline]{enumitem}
+\AtBeginDocument{\setlist{nosep}}
 
 \NewDocumentCommand{\pog}{}{\qedhere}
 
@@ -129,7 +130,7 @@
 }
 
 \RenewDocumentCommand{\arraystretch}{}{0.8}
-\setlist{noitemsep, topsep=0.4em, listparindent=\parindent}
+\setlist{nosep, topsep=0.4em, listparindent=\parindent}
 
 % Better default bracket width/height
 \let\oldunderbracket\underbracket
