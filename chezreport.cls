@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{chezreport}
 
-\LoadClass{scrreprt}
+\LoadClass{scrreport}
 
 \DeclareOption{header}{%
   \PassOptionsToClass{headinclude}{scrreprt}%
@@ -19,7 +19,7 @@
 \DeclareOption{nomarginnum}{\PassOptionsToPackage{nomarginnum}{chez}}
 \DeclareOption{sepcounters}{\PassOptionsToPackage{sepcounters}{chez}}
 
-\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{scrreprt}}
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{scrreport}}
 \ProcessOptions\relax
 
 \RequirePackage{chez}
