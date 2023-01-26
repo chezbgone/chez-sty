@@ -17,6 +17,7 @@
 \DeclareOption{code}{\PassOptionsToPackage{code}{chez}}
 \DeclareOption{compact}{\PassOptionsToPackage{compact}{chez}}
 \DeclareOption{nomarginnum}{\PassOptionsToPackage{nomarginnum}{chez}}
+\DeclareOption{numberwithinsection}{\PassOptionsToPackage{numberwithinsection}{chez}}
 \DeclareOption{sepcounters}{\PassOptionsToPackage{sepcounters}{chez}}
 
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{scrartcl}}

@@ -226,6 +226,8 @@ There are many options that can be used in the documentclass, e.g.
   Useful for *compact* note sheets.
 - `nomarginnum` disables section numbers and box environment numbers from
   appearing in the left margin.
+- `numberwithinsection` box environment numbers are now of the form `section.num`,
+  with `num` resetting every section
 - `sepcounters` causes the problem, question, exercise, and remarks
   to use a different counter from the other boxed environments.
 

@@ -1,16 +1,17 @@
 \ProvidesPackage{chez}
 
-\newif\ifchez@date        \chez@datetrue
-\newif\ifchez@sf          \chez@sftrue
-\newif\ifchez@header      \chez@headerfalse
-\newif\ifchez@gray        \chez@grayfalse
-\newif\ifchez@box         \chez@boxtrue
-\newif\ifchez@algos       \chez@algosfalse
-\newif\ifchez@asy         \chez@asyfalse
-\newif\ifchez@code        \chez@codefalse
-\newif\ifchez@compact     \chez@compactfalse
-\newif\ifchez@marginnum   \chez@marginnumtrue
-\newif\ifchez@sepcounters \chez@sepcountersfalse
+\newif\ifchez@date                  \chez@datetrue
+\newif\ifchez@sf                    \chez@sftrue
+\newif\ifchez@header                \chez@headerfalse
+\newif\ifchez@gray                  \chez@grayfalse
+\newif\ifchez@box                   \chez@boxtrue
+\newif\ifchez@algos                 \chez@algosfalse
+\newif\ifchez@asy                   \chez@asyfalse
+\newif\ifchez@code                  \chez@codefalse
+\newif\ifchez@compact               \chez@compactfalse
+\newif\ifchez@marginnum             \chez@marginnumtrue
+\newif\ifchez@numberwithinsection   \chez@numberwithinsectionfalse
+\newif\ifchez@sepcounters           \chez@sepcountersfalse
 
 \DeclareOption{nodate}{\chez@datefalse}
 \DeclareOption{serifs}{\chez@sffalse}
@@ -22,6 +23,7 @@
 \DeclareOption{code}{\chez@codetrue\chez@algostrue}
 \DeclareOption{compact}{\chez@compacttrue}
 \DeclareOption{nomarginnum}{\chez@marginnumfalse}
+\DeclareOption{numberwithinsection}{\chez@numberwithinsectiontrue}
 \DeclareOption{sepcounters}{\chez@sepcounterstrue}
 
 \ProcessOptions*
@@ -226,36 +228,30 @@
   % #5: ref prefix
   % #6: ref display
   % #7: ref display plural
-  \RenewDocumentCommand \new@tcbtheorem { O{} m m +m m m m }
-    { % \@@newtcolorbox is either \NewTColorBox or \RenewTColorBox
-      \@@newtcolorbox[auto~counter,crefname={#6}{#7},#1]{#2}{ O{} D<>{} }
-        {
-          #4,
-          title      = {\__tcobox_theo_title:nnn{#3}{\thetcbcounter}{##1}},
-          list~entry = {\protect\numberline{\thetcbcounter}##1},
-          nameref    = {##1},
-          theo@label = {#5}{##2},
-        }
-      \@@newtcolorbox[#1,no~counter,list~inside=]{#2*}{ O{} }
-        {
-          #4,
-          title = {\__tcobox_theo_title:nnn{#3}{}{##1}},%
-        }
+  \RenewDocumentCommand{\new@tcbtheorem}{ O{} m m +m m m m }{
+    % \@@newtcolorbox is either \NewTColorBox or \RenewTColorBox
+    \@@newtcolorbox[auto~counter,crefname={#6}{#7},#1]{#2}{ O{} D<>{} }{
+      #4,
+      title      = {\__tcobox_theo_title:nnn{#3}{\thetcbcounter}{##1}},
+      list~entry = {\protect\numberline{\thetcbcounter}##1},
+      nameref    = {##1},
+      theo@label = {#5}{##2},
     }
-
-
-  \RenewDocumentCommand \newtcbtheorem {}
-    {
-      \cs_set_eq:NN \@@newtcolorbox \NewTColorBox
-      \new@tcbtheorem
+    \@@newtcolorbox[#1,no~counter,list~inside=]{#2*}{ O{} }{
+      #4,
+      title = {\__tcobox_theo_title:nnn{#3}{}{##1}},%
     }
+  }
 
+  \RenewDocumentCommand{\newtcbtheorem}{}{
+    \cs_set_eq:NN \@@newtcolorbox \NewTColorBox
+    \new@tcbtheorem
+  }
 
-  \RenewDocumentCommand \renewtcbtheorem {}
-    {
-      \cs_set_eq:NN \@@newtcolorbox \RenewTColorBox
-      \new@tcbtheorem
-    }
+  \RenewDocumentCommand{\renewtcbtheorem}{}{
+    \cs_set_eq:NN \@@newtcolorbox \RenewTColorBox
+    \new@tcbtheorem
+  }
 
   \ExplSyntaxOff
 
@@ -269,7 +265,11 @@
   % #6: ref display
   % #7: ref display plural
   \newcommand*\zbs@newtheorem[7]{
-    \newtcbtheorem[use counter*=#3]{#1}{#2}{#4}{#5}{#6}{#7}
+    \ifchez@numberwithinsection
+      \newtcbtheorem[use counter=#3, number within=section]{#1}{#2}{#4}{#5}{#6}{#7}
+    \else
+      \newtcbtheorem[use counter=#3]{#1}{#2}{#4}{#5}{#6}{#7}
+    \fi
   }
   
   \newcommand*\zbs@numberwithin[2]{
